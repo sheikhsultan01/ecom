@@ -1,0 +1,12 @@
+RewriteEngine On
+
+# Allow existing directories and files
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# Rewrite URLs without extensions to .php
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+# Only rewrite .html to .php if .html file does NOT exist
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)\.html$ $1.php [L]
