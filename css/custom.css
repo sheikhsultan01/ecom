@@ -1,0 +1,105 @@
+:root {
+    --primary-green: #22c55e;
+    --dark-green: #16a34a;
+    --light-green: #dcfce7;
+    --text-gray: #6b7280;
+    --border-gray: #e5e7eb;
+    --green-gradient: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    --blue-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    --purple-gradient: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    --orange-gradient: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    --pink-gradient: linear-gradient(135deg, #ec4899 0%, #ec4899 100%);
+    --yellow-gradient: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    --red-gradient: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    --gray-gradient: linear-gradient(135deg, #7c7d7f 0%, #60636a 100%);
+    --black-gradient: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    --white-gradient: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+    --brown-gradient: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    --cyan-gradient: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%);
+    --teal-gradient: linear-gradient(135deg, #009688 0%, #00796b 100%);
+    --indigo-gradient: linear-gradient(135deg, #6610f2 0%, #5260ff 100%);
+    --lime-gradient: linear-gradient(135deg, #84cc16 0%, #65a30d 100%);
+    --amber-gradient: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+    --fuchsia-gradient: linear-gradient(135deg, #d946ef 0%, #a855f7 100%);
+    --violet-gradient: linear-gradient(135deg, #7e3af2 0%, #6b21a8 100%);
+    --rose-gradient: linear-gradient(135deg, #f43f5e 0%, #be123c 100%);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+}
+
+/* #region Style for sweetalert */
+.swal2-popup.swal2-modal.swal2-show {
+    border-radius: 25px;
+}
+
+.swal2-styled.swal2-cancel:focus,
+.swal2-styled:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.swal2-styled.swal2-cancel,
+.swal2-styled.swal2-confirm {
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.swal2-styled.swal2-cancel:hover,
+.swal2-styled.swal2-confirm:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.swal2-styled.swal2-confirm {
+    background: var(--green-gradient) !important;
+}
+
+.swal2-styled.swal2-cancel {
+    background: var(--gray-gradient) !important;
+}
+
+/* #endregion Style for sweetalert */
+
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn:active,
+.btn:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.label-group .error-message {
+    font-size: 12px;
+}
+
+.label-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
