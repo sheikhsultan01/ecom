@@ -32,6 +32,269 @@
             line-height: 1.6;
         }
 
+        /* image upload section */
+        .upload-container {
+            border-radius: 20px;
+            border: 1px solid #98FB98;
+            padding: 1rem;
+        }
+
+        .images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .image-item {
+            position: relative;
+            aspect-ratio: 16/10;
+            background: #f8f9fa;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: grab;
+        }
+
+        .image-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .image-item.dragging {
+            cursor: grabbing;
+            transform: rotate(5deg);
+            z-index: 1000;
+        }
+
+        .image-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .image-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .image-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 5px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-item:hover .image-controls {
+            opacity: 1;
+        }
+
+        .control-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .remove-btn {
+            background: rgba(255, 68, 68, 0.9);
+            color: white;
+        }
+
+        .remove-btn:hover {
+            background: #ff4444;
+            transform: scale(1.1);
+        }
+
+        .move-btn {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text-dark);
+        }
+
+        .move-btn:hover {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .primary-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--accent-color);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .image-position {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .add-photo-item {
+            position: relative;
+            aspect-ratio: 16/10;
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+            border: 2px dashed #e0e0e0;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .add-photo-item:hover {
+            border-color: var(--accent-color);
+            background: var(--secondary-gradient);
+            transform: translateY(-3px);
+        }
+
+        .add-photo-item.drag-over {
+            border-color: var(--accent-color);
+            background: var(--secondary-gradient);
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .upload-icon i {
+            font-size: 24px;
+            color: white;
+        }
+
+        .add-photo-item:hover .upload-icon {
+            transform: scale(1.1);
+        }
+
+        .upload-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+
+        .upload-subtext {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            text-align: center;
+            max-width: 200px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .btn-custom {
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary-custom {
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: var(--card-shadow);
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .btn-secondary-custom {
+            background: white;
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+        }
+
+        .btn-secondary-custom:hover {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .sortable-ghost {
+            opacity: 0.4;
+        }
+
+        .sortable-chosen {
+            transform: rotate(5deg);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .images-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .upload-container {
+                padding: 20px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .images-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .image-controls {
+                opacity: 1;
+            }
+        }
+
+        /* Admin Container */
         .admin-container {
             max-width: 1400px;
             margin: 0 auto;
@@ -107,196 +370,6 @@
         .section-title i {
             color: var(--accent-color);
             font-size: 1.4rem;
-        }
-
-        /* Image Upload Section */
-        .image-upload-zone {
-            border: 3px dashed #e0e0e0;
-            border-radius: 20px;
-            padding: 60px 40px;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            background: linear-gradient(135deg, #fafafa 0%, #f0f0f0 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .image-upload-zone:hover {
-            border-color: var(--accent-color);
-            background: var(--secondary-gradient);
-            transform: translateY(-2px);
-        }
-
-        .image-upload-zone.drag-over {
-            border-color: var(--accent-color);
-            background: var(--secondary-gradient);
-            transform: scale(1.02);
-            box-shadow: var(--hover-shadow);
-        }
-
-        .upload-content {
-            pointer-events: none;
-        }
-
-        .upload-icon {
-            font-size: 4rem;
-            color: var(--accent-color);
-            margin-bottom: 20px;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-
-            0%,
-            20%,
-            50%,
-            80%,
-            100% {
-                transform: translateY(0);
-            }
-
-            40% {
-                transform: translateY(-10px);
-            }
-
-            60% {
-                transform: translateY(-5px);
-            }
-        }
-
-        .upload-text {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 10px;
-        }
-
-        .upload-subtext {
-            color: var(--text-light);
-            font-size: 1rem;
-            margin-bottom: 20px;
-        }
-
-        .upload-button {
-            background: var(--primary-gradient);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 25px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            pointer-events: all;
-        }
-
-        .upload-button:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--hover-shadow);
-        }
-
-        /* Image Preview Grid */
-        .image-preview-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .image-preview-item {
-            position: relative;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: var(--card-shadow);
-            cursor: move;
-            transition: all 0.3s ease;
-            background: white;
-        }
-
-        .image-preview-item:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--hover-shadow);
-        }
-
-        .image-preview-item.sortable-ghost {
-            opacity: 0.5;
-            background: var(--secondary-gradient);
-        }
-
-        .image-preview-item.sortable-chosen {
-            transform: scale(1.05);
-        }
-
-        .image-preview-item img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .image-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .image-preview-item:hover .image-overlay {
-            opacity: 1;
-        }
-
-        .overlay-btn {
-            background: white;
-            border: none;
-            padding: 12px;
-            border-radius: 50%;
-            cursor: pointer;
-            color: var(--text-dark);
-            transition: all 0.3s ease;
-            font-size: 1.1rem;
-        }
-
-        .overlay-btn:hover {
-            background: var(--accent-color);
-            color: white;
-            transform: scale(1.1);
-        }
-
-        .overlay-btn.primary {
-            background: var(--accent-color);
-            color: white;
-        }
-
-        .primary-badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: var(--accent-color);
-            color: white;
-            padding: 6px 12px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            z-index: 10;
-        }
-
-        .drag-handle {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 8px;
-            border-radius: 50%;
-            cursor: move;
-            z-index: 10;
         }
 
         /* Form Styling */
@@ -620,10 +693,6 @@
                 justify-content: center;
             }
 
-            .image-preview-grid {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            }
-
             .pricing-grid,
             .inventory-grid {
                 grid-template-columns: 1fr;
@@ -681,22 +750,31 @@
                     <i class="fas fa-images"></i>
                     Product Images
                 </h2>
-                <div class="image-upload-zone" id="imageUploadZone">
-                    <div class="upload-content">
-                        <div class="upload-icon">
-                            <i class="fas fa-cloud-upload-alt"></i>
+                <!-- image upload section -->
+                <div class="upload-container">
+
+                    <!-- Images Grid -->
+                    <div class="images-grid" id="imagesGrid">
+                        <!-- Add Photo Item -->
+                        <div class="add-photo-item" id="addPhotoItem">
+                            <div class="upload-icon">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                            <div class="upload-text">Add a photo</div>
+                            <div class="upload-subtext">Drag & drop or click to upload</div>
                         </div>
-                        <div class="upload-text">Drag & Drop Images Here</div>
-                        <div class="upload-subtext">Or click to browse files</div>
-                        <button type="button" class="upload-button">
-                            <i class="fas fa-folder-open"></i>
-                            Browse Files
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <button class="btn-custom btn-secondary-custom" id="clearAllBtn">
+                            <i class="fas fa-trash"></i>
+                            Clear All
                         </button>
                     </div>
-                    <input type="file" id="imageInput" multiple accept="image/*" style="display: none;">
-                </div>
-                <div class="image-preview-grid" id="imagePreviewGrid">
-                    <!-- Dynamic image previews will be inserted here -->
+
+                    <!-- Hidden File Input -->
+                    <input type="file" class="file-input" id="fileInput" accept="image/*" multiple>
                 </div>
             </div>
 
@@ -883,14 +961,223 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 
     <script>
         $(document).ready(function() {
-            let imageFiles = [];
             let primaryImageIndex = 0;
             let sortableInstance = null;
+            let images = [];
+            let totalSize = 0;
+            let dragCounter = 0;
+
+            // Initialize Sortable
+            const sortable = Sortable.create(document.getElementById('imagesGrid'), {
+                animation: 150,
+                ghostClass: 'sortable-ghost',
+                chosenClass: 'sortable-chosen',
+                dragClass: 'dragging',
+                filter: '.add-photo-item',
+                onStart: function(evt) {
+                    evt.item.classList.add('dragging');
+                },
+                onEnd: function(evt) {
+                    evt.item.classList.remove('dragging');
+                    updateImagePositions();
+                },
+                onUpdate: function(evt) {
+                    // Update images array based on new order
+                    const newOrder = Array.from(evt.to.children)
+                        .filter(child => !child.classList.contains('add-photo-item'))
+                        .map(child => parseInt(child.dataset.index));
+
+                    const reorderedImages = newOrder.map(index => images[index]);
+                    images = reorderedImages;
+                    // updateStats();
+                }
+            });
+
+            // File input change handler
+            $('#fileInput').on('change', function(e) {
+                handleFiles(e.target.files);
+            });
+
+            // Add photo item click handler
+            $('#addPhotoItem').on('click', function() {
+                $('#fileInput').click();
+            });
+
+            // Drag and drop handlers
+            $('#addPhotoItem').on('dragover', function(e) {
+                e.preventDefault();
+                $(this).addClass('drag-over');
+            });
+
+            $('#addPhotoItem').on('dragleave', function(e) {
+                e.preventDefault();
+                $(this).removeClass('drag-over');
+            });
+
+            $('#addPhotoItem').on('drop', function(e) {
+                e.preventDefault();
+                $(this).removeClass('drag-over');
+                handleFiles(e.originalEvent.dataTransfer.files);
+            });
+
+            // Handle file processing
+            function handleFiles(files) {
+                Array.from(files).forEach(file => {
+                    if (file.type.startsWith('image/')) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const imageData = {
+                                src: e.target.result,
+                                name: file.name,
+                                size: file.size,
+                                file: file,
+                                isPrimary: images.length === 0
+                            };
+                            images.push(imageData);
+                            totalSize += file.size;
+                            renderImages();
+                            // updateStats();
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+
+            // Render images
+            function renderImages() {
+                const grid = $('#imagesGrid');
+                const addPhotoItem = $('#addPhotoItem');
+
+                // Remove existing image items
+                grid.find('.image-item').remove();
+
+                // Add image items before the add-photo-item
+                images.forEach((image, index) => {
+                    const imageItem = createImageItem(image, index);
+                    addPhotoItem.before(imageItem);
+                });
+
+                updateImagePositions();
+            }
+
+            // Create image item HTML
+            function createImageItem(image, index) {
+                const sizeInMB = (image.size / (1024 * 1024)).toFixed(2);
+                return `
+                    <div class="image-item" data-index="${index}">
+                        <img src="${image.src}" alt="${image.name}">
+                        ${image.isPrimary ? '<div class="primary-badge">Primary</div>' : ''}
+                        <div class="image-position">${index + 1}</div>
+                        <div class="image-controls">
+                            <button class="control-btn move-btn" onclick="moveImage(${index}, 'left')" title="Move Left">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="control-btn move-btn" onclick="moveImage(${index}, 'right')" title="Move Right">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                            <button class="control-btn remove-btn" onclick="removeImage(${index})" title="Remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Update image positions
+            function updateImagePositions() {
+                $('#imagesGrid .image-item').each(function(index) {
+                    $(this).find('.image-position').text(index + 1);
+                    $(this).attr('data-index', index);
+                });
+            }
+
+            // Move image function
+            window.moveImage = function(index, direction) {
+                if (direction === 'left' && index > 0) {
+                    [images[index], images[index - 1]] = [images[index - 1], images[index]];
+                } else if (direction === 'right' && index < images.length - 1) {
+                    [images[index], images[index + 1]] = [images[index + 1], images[index]];
+                }
+                renderImages();
+                // updateStats();
+            };
+
+            // Remove image function
+            window.removeImage = function(index) {
+                totalSize -= images[index].size;
+                images.splice(index, 1);
+
+                // Set new primary if removed image was primary
+                if (images.length > 0 && !images.some(img => img.isPrimary)) {
+                    images.isPrimary = true;
+                }
+
+                renderImages();
+                // updateStats();
+            };
+
+            // Update stats
+            // function updateStats() {
+            //     const primaryCount = images.filter(img => img.isPrimary).length;
+            //     const totalSizeInMB = (totalSize / (1024 * 1024)).toFixed(2);
+
+            //     $('#totalImages').text(images.length);
+            //     $('#primaryImages').text(primaryCount);
+            //     $('#totalSize').text(totalSizeInMB + ' MB');
+            // }
+
+            // Upload all images
+            // $('#uploadAllBtn').on('click', function() {
+            //     if (images.length === 0) {
+            //         alert('Please add some images first!');
+            //         return;
+            //     }
+
+            //     // Simulate upload process
+            //     const formData = new FormData();
+            //     images.forEach((image, index) => {
+            //         formData.append(`image_${index}`, image.file);
+            //         formData.append(`image_${index}_primary`, image.isPrimary);
+            //     });
+
+            //     // Replace this with your actual upload logic
+            //     console.log('Uploading images:', images);
+            //     alert('Images uploaded successfully!');
+            // });
+
+            // Clear all images
+            $('#clearAllBtn').on('click', function() {
+                if (images.length === 0) {
+                    alert('No images to clear!');
+                    return;
+                }
+
+                if (confirm('Are you sure you want to clear all images?')) {
+                    images = [];
+                    totalSize = 0;
+                    renderImages();
+                    // updateStats();
+                }
+            });
+
+            // Set image as primary
+            $(document).on('click', '.image-item img', function() {
+                const index = parseInt($(this).closest('.image-item').data('index'));
+
+                // Remove primary from all images
+                images.forEach(img => img.isPrimary = false);
+
+                // Set clicked image as primary
+                images[index].isPrimary = true;
+
+                renderImages();
+                // updateStats();
+            });
 
             // Initialize TinyMCE
             tinymce.init({
@@ -920,154 +1207,6 @@
                     });
                 }
             });
-
-            // Image Upload Handling
-            $('#imageUploadZone, .upload-button').click(function() {
-                $('#imageInput').click();
-            });
-
-            $('#imageInput').change(function(e) {
-                handleFiles(e.target.files);
-            });
-
-            // Drag and Drop
-            let dragCounter = 0;
-
-            $('#imageUploadZone').on({
-                dragenter: function(e) {
-                    e.preventDefault();
-                    dragCounter++;
-                    $(this).addClass('drag-over');
-                },
-                dragleave: function(e) {
-                    e.preventDefault();
-                    dragCounter--;
-                    if (dragCounter <= 0) {
-                        $(this).removeClass('drag-over');
-                    }
-                },
-                dragover: function(e) {
-                    e.preventDefault();
-                },
-                drop: function(e) {
-                    e.preventDefault();
-                    dragCounter = 0;
-                    $(this).removeClass('drag-over');
-                    handleFiles(e.originalEvent.dataTransfer.files);
-                }
-            });
-
-            function handleFiles(files) {
-                for (let i = 0; i < files.length; i++) {
-                    const file = files[i];
-                    if (file.type.startsWith('image/')) {
-                        imageFiles.push(file);
-                        displayImagePreview(file, imageFiles.length - 1);
-                    }
-                }
-                updateProgress();
-            }
-
-            function displayImagePreview(file, index) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const previewHtml = `
-                        <div class="image-preview-item" data-index="${index}">
-                            ${index === primaryImageIndex ? '<div class="primary-badge">Primary</div>' : ''}
-                            <div class="drag-handle">
-                                <i class="fas fa-grip-vertical"></i>
-                            </div>
-                            <img src="${e.target.result}" alt="Product Image ${index + 1}">
-                            <div class="image-overlay">
-                                <button type="button" class="overlay-btn ${index === primaryImageIndex ? 'primary' : ''}" 
-                                        onclick="setPrimaryImage(${index})" title="Set as Primary">
-                                    <i class="fas fa-star"></i>
-                                </button>
-                                <button type="button" class="overlay-btn" onclick="removeImage(${index})" title="Remove">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                    $('#imagePreviewGrid').append(previewHtml);
-
-                    // Initialize or update Sortable
-                    if (sortableInstance) {
-                        sortableInstance.destroy();
-                    }
-                    initializeSortable();
-                };
-                reader.readAsDataURL(file);
-            }
-
-            function initializeSortable() {
-                const el = document.getElementById('imagePreviewGrid');
-                if (el) {
-                    sortableInstance = Sortable.create(el, {
-                        animation: 150,
-                        ghostClass: 'sortable-ghost',
-                        chosenClass: 'sortable-chosen',
-                        handle: '.drag-handle',
-                        onEnd: function(evt) {
-                            // Update the imageFiles array order
-                            const movedItem = imageFiles.splice(evt.oldIndex, 1);
-                            imageFiles.splice(evt.newIndex, 0, movedItem);
-
-                            // Update primary image index
-                            if (evt.oldIndex === primaryImageIndex) {
-                                primaryImageIndex = evt.newIndex;
-                            } else if (evt.oldIndex < primaryImageIndex && evt.newIndex >= primaryImageIndex) {
-                                primaryImageIndex--;
-                            } else if (evt.oldIndex > primaryImageIndex && evt.newIndex <= primaryImageIndex) {
-                                primaryImageIndex++;
-                            }
-
-                            updateImageIndexes();
-                        }
-                    });
-                }
-            }
-
-            function updateImageIndexes() {
-                $('#imagePreviewGrid .image-preview-item').each(function(index) {
-                    $(this).attr('data-index', index);
-
-                    // Update primary badge
-                    if (index === primaryImageIndex) {
-                        if (!$(this).find('.primary-badge').length) {
-                            $(this).prepend('<div class="primary-badge">Primary</div>');
-                        }
-                        $(this).find('.overlay-btn').first().addClass('primary');
-                    } else {
-                        $(this).find('.primary-badge').remove();
-                        $(this).find('.overlay-btn').first().removeClass('primary');
-                    }
-
-                    // Update button onclick attributes
-                    $(this).find('.overlay-btn').first().attr('onclick', `setPrimaryImage(${index})`);
-                    $(this).find('.overlay-btn').last().attr('onclick', `removeImage(${index})`);
-                });
-            }
-
-            window.setPrimaryImage = function(index) {
-                primaryImageIndex = index;
-                updateImageIndexes();
-            };
-
-            window.removeImage = function(index) {
-                imageFiles.splice(index, 1);
-                $(`.image-preview-item[data-index="${index}"]`).remove();
-
-                // Adjust primary image index
-                if (index === primaryImageIndex) {
-                    primaryImageIndex = 0;
-                } else if (index < primaryImageIndex) {
-                    primaryImageIndex--;
-                }
-
-                updateImageIndexes();
-                updateProgress();
-            };
 
             // Tags functionality
             const tagsContainer = $('#tagsContainer');
@@ -1119,7 +1258,7 @@
                 });
 
                 // Check images
-                if (imageFiles.length > 0) {
+                if (images.length > 0) {
                     filledFields++;
                 }
 
@@ -1192,7 +1331,7 @@
                     showNotification('Regular price is required!', 'error');
                     return false;
                 }
-                if (imageFiles.length === 0) {
+                if (images.length === 0) {
                     showNotification('Please upload at least one product image!', 'error');
                     return false;
                 }

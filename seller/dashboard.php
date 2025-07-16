@@ -17,9 +17,6 @@
             --text-light: #6B8E6B;
             --card-shadow: 0 8px 30px rgba(34, 139, 34, 0.15);
             --hover-shadow: 0 15px 40px rgba(34, 139, 34, 0.25);
-            --sidebar-bg: #1a1d29;
-            --sidebar-item: #2a2d3a;
-            --sidebar-hover: #3a3d4a;
         }
 
         * {
@@ -30,192 +27,112 @@
 
         body {
             font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f8fafc;
+            background: linear-gradient(135deg, #f8fffe 0%, #e8f5e8 100%);
             color: var(--text-dark);
-            overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        .dashboard-wrapper {
-            display: flex;
-            min-height: 100vh;
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
-        /* Sidebar Styles */
-        .sidebar {
-            width: 280px;
-            background: var(--sidebar-bg);
-            color: white;
+        /* Navbar */
+        .navbar {
+            background: var(--primary-gradient);
             padding: 20px 0;
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-            z-index: 1000;
-            transition: transform 0.3s ease;
-        }
-
-        .sidebar-header {
-            padding: 0 25px 30px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .sidebar-brand {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: white;
-            text-decoration: none;
-        }
-
-        .sidebar-brand .brand-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--primary-gradient);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .sidebar-nav {
-            margin-top: 30px;
-        }
-
-        .nav-item {
-            margin-bottom: 5px;
-        }
-
-        .nav-link {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 15px 25px;
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border-radius: 0;
-            position: relative;
-        }
-
-        .nav-link:hover,
-        .nav-link.active {
-            color: white;
-            background: var(--sidebar-hover);
-            transform: translateX(5px);
-        }
-
-        .nav-link.active::before {
-            content: '';
-            position: absolute;
-            left: 0;
+            box-shadow: var(--card-shadow);
+            position: sticky;
             top: 0;
-            bottom: 0;
-            width: 4px;
-            background: var(--primary-gradient);
+            z-index: 1000;
         }
 
-        .nav-link i {
-            width: 20px;
-            text-align: center;
-        }
-
-        .nav-badge {
-            background: #ff4444;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 0.75rem;
-            margin-left: auto;
-        }
-
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            margin-left: 280px;
-            padding: 30px;
-            transition: margin-left 0.3s ease;
-        }
-
-        .dashboard-header {
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white !important;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+            gap: 10px;
+        }
+
+        .navbar-nav .nav-link {
+            color: white !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #e0e0e0 !important;
+        }
+
+        .filter-section {
             background: white;
-            padding: 25px 30px;
+            padding: 20px;
             border-radius: 15px;
             box-shadow: var(--card-shadow);
+            margin: 20px 0;
+            transform: translateY(-10px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
         }
 
-        .dashboard-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin: 0;
+        .filter-section.active {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
         }
 
-        .dashboard-subtitle {
-            color: var(--text-light);
-            font-size: 0.9rem;
-            margin-top: 5px;
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .btn-export {
+        .filter-btn {
             background: var(--primary-gradient);
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 12px 25px;
+            border-radius: 25px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .btn-export:hover {
+        .filter-btn:hover {
             transform: translateY(-2px);
             box-shadow: var(--hover-shadow);
         }
 
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--text-dark);
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--secondary-gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .filter-btn.active {
+            background: var(--accent-color);
         }
 
         /* Stats Cards */
+        .stats-section {
+            margin: 30px 0;
+        }
+
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 25px;
-            margin-bottom: 30px;
         }
 
         .stat-card {
             background: white;
-            padding: 25px;
-            border-radius: 15px;
+            padding: 30px;
+            border-radius: 20px;
             box-shadow: var(--card-shadow);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
         }
 
         .stat-card::before {
@@ -228,50 +145,30 @@
             background: var(--primary-gradient);
         }
 
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--hover-shadow);
-        }
-
         .stat-header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 15px;
+            align-items: center;
+            margin-bottom: 20px;
         }
 
         .stat-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             color: white;
-        }
-
-        .stat-icon.pending {
-            background: linear-gradient(135deg, #ff9800, #f57c00);
-        }
-
-        .stat-icon.revenue {
-            background: linear-gradient(135deg, #4caf50, #388e3c);
-        }
-
-        .stat-icon.orders {
-            background: linear-gradient(135deg, #2196f3, #1976d2);
-        }
-
-        .stat-icon.products {
-            background: linear-gradient(135deg, #9c27b0, #7b1fa2);
+            background: var(--primary-gradient);
         }
 
         .stat-trend {
             display: flex;
             align-items: center;
             gap: 5px;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 600;
         }
 
@@ -284,15 +181,15 @@
         }
 
         .stat-value {
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             font-weight: 700;
             color: var(--text-dark);
-            margin-bottom: 5px;
+            margin-bottom: 10px;
         }
 
         .stat-label {
             color: var(--text-light);
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: 500;
         }
 
@@ -301,13 +198,13 @@
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 30px;
-            margin-bottom: 30px;
+            margin: 30px 0;
         }
 
         .chart-card {
             background: white;
-            padding: 25px;
-            border-radius: 15px;
+            padding: 30px;
+            border-radius: 20px;
             box-shadow: var(--card-shadow);
         }
 
@@ -315,307 +212,215 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .chart-title {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             font-weight: 600;
             color: var(--text-dark);
         }
 
-        .chart-filter {
+        .chart-container {
+            position: relative;
+            height: 350px;
+        }
+
+        .pie-chart-container {
+            position: relative;
+            height: 350px;
             display: flex;
-            gap: 10px;
+            justify-content: center;
+            align-items: center;
         }
 
-        .filter-btn {
-            background: none;
-            border: 1px solid #e0e0e0;
-            padding: 5px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .filter-btn.active {
-            background: var(--accent-color);
-            color: white;
-            border-color: var(--accent-color);
-        }
-
-        /* Orders Section */
-        .orders-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-        }
-
-        .orders-card {
+        /* Recent Orders */
+        .recent-orders {
             background: white;
-            border-radius: 15px;
+            padding: 30px;
+            border-radius: 20px;
             box-shadow: var(--card-shadow);
-            overflow: hidden;
+            margin: 30px 0;
         }
 
-        .orders-header {
-            padding: 20px 25px;
-            background: var(--secondary-gradient);
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .orders-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin: 0;
-        }
-
-        .orders-list {
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .order-item {
-            padding: 15px 25px;
-            border-bottom: 1px solid #f0f0f0;
-            transition: background 0.3s ease;
-        }
-
-        .order-item:hover {
-            background: #f8f9fa;
-        }
-
-        .order-item:last-child {
-            border-bottom: none;
-        }
-
-        .order-header {
+        .recent-orders-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
+            margin-bottom: 25px;
+        }
+
+        .order-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            border: 1px solid #f0f0f0;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .order-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--card-shadow);
+        }
+
+        .order-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .order-details {
+            flex: 1;
         }
 
         .order-id {
             font-weight: 600;
             color: var(--text-dark);
+            font-size: 1.1rem;
+        }
+
+        .order-customer {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .order-amount {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-color);
         }
 
         .order-status {
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 0.8rem;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
             font-weight: 600;
             text-transform: uppercase;
         }
 
         .status-pending {
-            background: #fff3cd;
-            color: #856404;
+            background: #ffeaa7;
+            color: #fdcb6e;
         }
 
-        .status-processing {
+        .status-fulfilled {
             background: #d4edda;
-            color: #155724;
+            color: #28a745;
         }
 
-        .status-shipped {
-            background: #d1ecf1;
-            color: #0c5460;
-        }
-
-        .status-delivered {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .order-details {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.9rem;
-            color: var(--text-light);
-        }
-
-        .order-amount {
-            font-weight: 600;
-            color: var(--accent-color);
+        .status-transit {
+            background: #cce5ff;
+            color: #007bff;
         }
 
         /* Responsive Design */
-        @media (max-width: 1200px) {
+        @media (max-width: 768px) {
             .charts-section {
                 grid-template-columns: 1fr;
             }
-        }
-
-        @media (max-width: 992px) {
-            .sidebar {
-                transform: translateX(-100%);
-            }
-
-            .main-content {
-                margin-left: 0;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            }
-
-            .orders-section {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .main-content {
-                padding: 20px;
-            }
-
-            .dashboard-header {
-                flex-direction: column;
-                gap: 20px;
-                text-align: center;
-            }
 
             .stats-grid {
                 grid-template-columns: 1fr;
             }
+
+            .stat-value {
+                font-size: 2rem;
+            }
+
+            .filter-section {
+                margin: 10px 0;
+            }
+        }
+
+        /* Animation */
+        @keyframes slideDown {
+            from {
+                transform: translateY(-10px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .animate-slide-down {
+            animation: slideDown 0.3s ease;
         }
     </style>
 </head>
 
 <body>
-    <div class="dashboard-wrapper">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <div class="sidebar-header">
-                <a href="#" class="sidebar-brand">
-                    <div class="brand-icon">
-                        <i class="fas fa-store"></i>
-                    </div>
-                    GreenShop
-                </a>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid dashboard-container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-leaf"></i>
+                GreenShop Seller
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="#"><i class="fas fa-bell"></i></a>
+                <a class="nav-link" href="#"><i class="fas fa-user"></i></a>
             </div>
-            <nav class="sidebar-nav">
-                <div class="nav-item">
-                    <a href="#" class="nav-link active">
-                        <i class="fas fa-tachometer-alt"></i>
-                        Dashboard
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-shopping-cart"></i>
-                        Orders
-                        <span class="nav-badge">12</span>
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-box"></i>
-                        Products
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-chart-line"></i>
-                        Analytics
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-users"></i>
-                        Customers
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-truck"></i>
-                        Shipping
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-dollar-sign"></i>
-                        Revenue
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-star"></i>
-                        Reviews
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-cog"></i>
-                        Settings
-                    </a>
-                </div>
-            </nav>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <!-- Filter Button -->
+        <div class="d-flex justify-content-between align-items-center" style="margin: 20px 0;">
+            <h2 style="color: var(--text-dark); font-weight: 600;">Dashboard Overview</h2>
+            <button class="filter-btn" id="filterToggle">
+                <i class="fas fa-filter"></i>
+                Filter
+            </button>
         </div>
 
-        <!-- Main Content -->
-        <div class="main-content">
-            <!-- Dashboard Header -->
-            <div class="dashboard-header">
-                <div>
-                    <h1 class="dashboard-title">Seller Dashboard</h1>
-                    <p class="dashboard-subtitle">Welcome back! Here's what's happening with your store today.</p>
+        <!-- Filter Section -->
+        <div class="filter-section" id="filterSection">
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="form-label">Quick Filters</label>
+                    <select class="form-select" id="quickFilter">
+                        <option value="today">Today</option>
+                        <option value="yesterday">Yesterday</option>
+                        <option value="this_week">This Week</option>
+                        <option value="last_week">Last Week</option>
+                        <option value="this_month">This Month</option>
+                        <option value="last_month">Last Month</option>
+                        <option value="custom">Custom Date Range</option>
+                    </select>
                 </div>
-                <div class="header-actions">
-                    <button class="btn-export">
-                        <i class="fas fa-download"></i> Export Data
-                    </button>
-                    <div class="user-profile">
-                        <div class="user-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <span>John Seller</span>
-                    </div>
+                <div class="col-md-3">
+                    <label class="form-label">From Date</label>
+                    <input type="date" class="form-control" id="fromDate">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">To Date</label>
+                    <input type="date" class="form-control" id="toDate">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">&nbsp;</label>
+                    <button class="btn btn-success w-100" id="applyFilter">Apply</button>
                 </div>
             </div>
+        </div>
 
-            <!-- Stats Cards -->
+        <!-- Stats Cards -->
+        <div class="stats-section">
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-header">
-                        <div class="stat-icon pending">
-                            <i class="fas fa-clock"></i>
+                        <div class="stat-icon">
+                            <i class="fas fa-shopping-cart"></i>
                         </div>
                         <div class="stat-trend trend-up">
                             <i class="fas fa-arrow-up"></i>
-                            +12%
-                        </div>
-                    </div>
-                    <div class="stat-value">23</div>
-                    <div class="stat-label">Pending Orders</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <div class="stat-icon revenue">
-                            <i class="fas fa-dollar-sign"></i>
-                        </div>
-                        <div class="stat-trend trend-up">
-                            <i class="fas fa-arrow-up"></i>
-                            +8.5%
-                        </div>
-                    </div>
-                    <div class="stat-value">\$47,832</div>
-                    <div class="stat-label">Monthly Revenue</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <div class="stat-icon orders">
-                            <i class="fas fa-shopping-bag"></i>
-                        </div>
-                        <div class="stat-trend trend-up">
-                            <i class="fas fa-arrow-up"></i>
-                            +15%
+                            12.5%
                         </div>
                     </div>
                     <div class="stat-value">1,247</div>
@@ -624,174 +429,198 @@
 
                 <div class="stat-card">
                     <div class="stat-header">
-                        <div class="stat-icon products">
-                            <i class="fas fa-box"></i>
+                        <div class="stat-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-trend trend-up">
+                            <i class="fas fa-arrow-up"></i>
+                            8.2%
+                        </div>
+                    </div>
+                    <div class="stat-value">\$47,482</div>
+                    <div class="stat-label">Total Sales</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
                         </div>
                         <div class="stat-trend trend-down">
                             <i class="fas fa-arrow-down"></i>
-                            -3%
+                            3.1%
                         </div>
                     </div>
-                    <div class="stat-value">89</div>
-                    <div class="stat-label">Active Products</div>
+                    <div class="stat-value">143</div>
+                    <div class="stat-label">Pending Orders</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                        <div class="stat-trend trend-up">
+                            <i class="fas fa-arrow-up"></i>
+                            15.3%
+                        </div>
+                    </div>
+                    <div class="stat-value">\$2,341</div>
+                    <div class="stat-label">Today's Sales</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <!-- Sales Chart -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3 class="chart-title">Monthly Sales</h3>
+                    <select class="form-select" style="width: auto;">
+                        <option>This Year</option>
+                        <option>Last Year</option>
+                    </select>
+                </div>
+                <div class="chart-container">
+                    <canvas id="salesChart"></canvas>
                 </div>
             </div>
 
-            <!-- Charts Section -->
-            <div class="charts-section">
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h3 class="chart-title">Revenue Overview</h3>
-                        <div class="chart-filter">
-                            <button class="filter-btn active">7D</button>
-                            <button class="filter-btn">1M</button>
-                            <button class="filter-btn">3M</button>
-                            <button class="filter-btn">1Y</button>
-                        </div>
-                    </div>
-                    <canvas id="revenueChart" width="400" height="200"></canvas>
+            <!-- Order Status Pie Chart -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3 class="chart-title">Order Status</h3>
                 </div>
-
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h3 class="chart-title">Order Status</h3>
-                    </div>
-                    <canvas id="orderStatusChart" width="300" height="200"></canvas>
+                <div class="pie-chart-container">
+                    <canvas id="orderStatusChart"></canvas>
                 </div>
             </div>
+        </div>
 
-            <!-- Orders Section -->
-            <div class="orders-section">
-                <div class="orders-card">
-                    <div class="orders-header">
-                        <h3 class="orders-title">Recent Orders</h3>
-                    </div>
-                    <div class="orders-list">
-                        <div class="order-item">
-                            <div class="order-header">
-                                <span class="order-id">#ORD-2024-001</span>
-                                <span class="order-status status-pending">Pending</span>
-                            </div>
-                            <div class="order-details">
-                                <span>Premium Headphones</span>
-                                <span class="order-amount">\$129.99</span>
-                            </div>
-                        </div>
-                        <div class="order-item">
-                            <div class="order-header">
-                                <span class="order-id">#ORD-2024-002</span>
-                                <span class="order-status status-processing">Processing</span>
-                            </div>
-                            <div class="order-details">
-                                <span>Smart Fitness Watch</span>
-                                <span class="order-amount">\$249.99</span>
-                            </div>
-                        </div>
-                        <div class="order-item">
-                            <div class="order-header">
-                                <span class="order-id">#ORD-2024-003</span>
-                                <span class="order-status status-shipped">Shipped</span>
-                            </div>
-                            <div class="order-details">
-                                <span>Organic Skincare Set</span>
-                                <span class="order-amount">\$89.99</span>
-                            </div>
-                        </div>
-                        <div class="order-item">
-                            <div class="order-header">
-                                <span class="order-id">#ORD-2024-004</span>
-                                <span class="order-status status-delivered">Delivered</span>
-                            </div>
-                            <div class="order-details">
-                                <span>Kitchen Blender</span>
-                                <span class="order-amount">\$99.99</span>
-                            </div>
-                        </div>
-                        <div class="order-item">
-                            <div class="order-header">
-                                <span class="order-id">#ORD-2024-005</span>
-                                <span class="order-status status-pending">Pending</span>
-                            </div>
-                            <div class="order-details">
-                                <span>Wireless Speaker</span>
-                                <span class="order-amount">\$159.99</span>
-                            </div>
-                        </div>
-                    </div>
+        <!-- Recent Orders -->
+        <div class="recent-orders">
+            <div class="recent-orders-header">
+                <h3 class="chart-title">Recent Orders</h3>
+                <a href="#" class="btn btn-outline-success">View All</a>
+            </div>
+            <div class="order-item">
+                <img src="https://via.placeholder.com/60x60/228B22/FFFFFF?text=P1" alt="Product">
+                <div class="order-details">
+                    <div class="order-id">#ORD-2024-001</div>
+                    <div class="order-customer">John Doe • 2 hours ago</div>
                 </div>
-
-                <div class="orders-card">
-                    <div class="orders-header">
-                        <h3 class="orders-title">Quick Actions</h3>
-                    </div>
-                    <div class="orders-list">
-                        <div class="order-item">
-                            <div class="order-header">
-                                <span class="order-id">Low Stock Alert</span>
-                                <span class="order-status status-pending">Action Required</span>
-                            </div>
-                            <div class="order-details">
-                                <span>5 products need restocking</span>
-                                <span class="order-amount">
-                                    <i class="fas fa-exclamation-triangle" style="color: #ff9800;"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="order-item">
-                            <div class="order-header">
-                                <span class="order-id">Customer Reviews</span>
-                                <span class="order-status status-processing">3 New</span>
-                            </div>
-                            <div class="order-details">
-                                <span>New reviews to respond to</span>
-                                <span class="order-amount">
-                                    <i class="fas fa-star" style="color: #ffc107;"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="order-item">
-                            <div class="order-header">
-                                <span class="order-id">Payment Issues</span>
-                                <span class="order-status status-pending">2 Orders</span>
-                            </div>
-                            <div class="order-details">
-                                <span>Payment verification needed</span>
-                                <span class="order-amount">
-                                    <i class="fas fa-credit-card" style="color: #dc3545;"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="order-item">
-                            <div class="order-header">
-                                <span class="order-id">Shipping Updates</span>
-                                <span class="order-status status-shipped">8 Orders</span>
-                            </div>
-                            <div class="order-details">
-                                <span>Tracking numbers updated</span>
-                                <span class="order-amount">
-                                    <i class="fas fa-truck" style="color: #28a745;"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="order-amount">\$129.99</div>
+                <div class="order-status status-pending">Pending</div>
+            </div>
+            <div class="order-item">
+                <img src="https://via.placeholder.com/60x60/2E8B57/FFFFFF?text=P2" alt="Product">
+                <div class="order-details">
+                    <div class="order-id">#ORD-2024-002</div>
+                    <div class="order-customer">Jane Smith • 4 hours ago</div>
                 </div>
+                <div class="order-amount">\$89.50</div>
+                <div class="order-status status-fulfilled">Fulfilled</div>
+            </div>
+            <div class="order-item">
+                <img src="https://via.placeholder.com/60x60/32CD32/FFFFFF?text=P3" alt="Product">
+                <div class="order-details">
+                    <div class="order-id">#ORD-2024-003</div>
+                    <div class="order-customer">Mike Johnson • 6 hours ago</div>
+                </div>
+                <div class="order-amount">\$199.99</div>
+                <div class="order-status status-transit">In Transit</div>
+            </div>
+            <div class="order-item">
+                <img src="https://via.placeholder.com/60x60/90EE90/FFFFFF?text=P4" alt="Product">
+                <div class="order-details">
+                    <div class="order-id">#ORD-2024-004</div>
+                    <div class="order-customer">Sarah Wilson • 8 hours ago</div>
+                </div>
+                <div class="order-amount">\$75.25</div>
+                <div class="order-status status-pending">Pending</div>
             </div>
         </div>
     </div>
 
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Revenue Chart
-        // const revenueCtx = document.getElementById('revenueChart').getContext('2d');
-        // const revenueChart = new Chart(revenueCtx, {
+        // Filter Toggle
+        document.getElementById('filterToggle').addEventListener('click', function() {
+            const filterSection = document.getElementById('filterSection');
+            const isActive = filterSection.classList.contains('active');
+
+            if (isActive) {
+                filterSection.classList.remove('active');
+                this.classList.remove('active');
+            } else {
+                filterSection.classList.add('active');
+                this.classList.add('active');
+            }
+        });
+
+        // Quick Filter Change
+        document.getElementById('quickFilter').addEventListener('change', function() {
+            const fromDate = document.getElementById('fromDate');
+            const toDate = document.getElementById('toDate');
+            const today = new Date();
+
+            if (this.value === 'custom') {
+                fromDate.disabled = false;
+                toDate.disabled = false;
+            } else {
+                fromDate.disabled = true;
+                toDate.disabled = true;
+
+                // Set dates based on selection
+                const formatDate = (date) => date.toISOString().split('T');
+
+                switch (this.value) {
+                    case 'today':
+                        fromDate.value = formatDate(today);
+                        toDate.value = formatDate(today);
+                        break;
+                    case 'yesterday':
+                        const yesterday = new Date(today);
+                        yesterday.setDate(yesterday.getDate() - 1);
+                        fromDate.value = formatDate(yesterday);
+                        toDate.value = formatDate(yesterday);
+                        break;
+                    case 'this_week':
+                        const startOfWeek = new Date(today);
+                        startOfWeek.setDate(today.getDate() - today.getDay());
+                        fromDate.value = formatDate(startOfWeek);
+                        toDate.value = formatDate(today);
+                        break;
+                    case 'this_month':
+                        const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+                        fromDate.value = formatDate(startOfMonth);
+                        toDate.value = formatDate(today);
+                        break;
+                }
+            }
+        });
+
+        // Apply Filter
+        document.getElementById('applyFilter').addEventListener('click', function() {
+            // Implement filter logic here
+            console.log('Filter applied');
+            updateCharts();
+        });
+
+        // Sales Chart
+        // const salesCtx = document.getElementById('salesChart').getContext('2d');
+        // const salesChart = new Chart(salesCtx, {
         //     type: 'line',
         //     data: {
-        //         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+        //         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
         //         datasets: [{
-        //             label: 'Revenue',
-        //             data: [12000, 19000, 15000, 25000, 32000, 28000, 47832],
+        //             label: 'Sales',
+        //             data: [12000, 19000, 15000, 25000, 22000, 30000, 28000, 35000, 32000, 40000, 38000, 45000],
         //             borderColor: '#228B22',
         //             backgroundColor: 'rgba(34, 139, 34, 0.1)',
+        //             borderWidth: 3,
         //             fill: true,
         //             tension: 0.4
         //         }]
@@ -817,19 +646,18 @@
         //     }
         // });
 
-        // // Order Status Chart
+        // // Order Status Pie Chart
         // const orderStatusCtx = document.getElementById('orderStatusChart').getContext('2d');
         // const orderStatusChart = new Chart(orderStatusCtx, {
         //     type: 'doughnut',
         //     data: {
-        //         labels: ['Pending', 'Processing', 'Shipped', 'Delivered'],
+        //         labels: ['Fulfilled', 'Pending', 'In Transit'],
         //         datasets: [{
-        //             data: [23, 45, 67, 89],
+        //             data: [65, 20, 15],
         //             backgroundColor: [
-        //                 '#ff9800',
-        //                 '#2196f3',
-        //                 '#ff5722',
-        //                 '#4caf50'
+        //                 '#28a745',
+        //                 '#ffc107',
+        //                 '#007bff'
         //             ],
         //             borderWidth: 0
         //         }]
@@ -841,31 +669,34 @@
         //             legend: {
         //                 position: 'bottom',
         //                 labels: {
-        //                     usePointStyle: true,
-        //                     padding: 20
+        //                     padding: 20,
+        //                     usePointStyle: true
         //                 }
         //             }
         //         }
         //     }
         // });
 
-        // Filter buttons functionality
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
+        // Update charts function
+        function updateCharts() {
+            // Simulate data update
+            const newData = Array.from({
+                length: 12
+            }, () => Math.floor(Math.random() * 50000));
+            salesChart.data.datasets.data = newData;
+            salesChart.update();
 
-                // Update chart data based on filter
-                // This would typically involve an API call
-                console.log('Filter changed to:', this.textContent);
-            });
-        });
-
-        // Mobile sidebar toggle (if needed)
-        function toggleSidebar() {
-            const sidebar = document.querySelector('.sidebar');
-            sidebar.style.transform = sidebar.style.transform === 'translateX(0px)' ? 'translateX(-100%)' : 'translateX(0px)';
+            const newPieData = [
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 30),
+                Math.floor(Math.random() * 20)
+            ];
+            orderStatusChart.data.datasets.data = newPieData;
+            orderStatusChart.update();
         }
+
+        // Initialize with today's date
+        document.getElementById('quickFilter').dispatchEvent(new Event('change'));
     </script>
 </body>
 
