@@ -1,0 +1,9 @@
+# Ignore test.php in root
+test.php
+test.html
+
+# Ignore seller's test file
+seller/test.php
+
+# Ignore user's test file
+user/test.php
