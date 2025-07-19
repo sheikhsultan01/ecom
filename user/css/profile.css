@@ -22,13 +22,8 @@
     transform: translateY(-2px);
 }
 
-.profile-container {
-    max-width: 1200px;
-    margin: 30px auto;
-}
-
 .profile-header {
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    background: var(--primary-gradient);
     border-radius: var(--border-radius);
     padding: 30px;
     color: white;

@@ -1,12 +1,19 @@
+.container-fluid {
+    margin-top: 5rem;
+}
+
 .sidebar {
     background: white;
     border-radius: 15px;
     box-shadow: var(--card-shadow);
-    padding: 1.5rem;
+    padding: 1rem 0.5rem;
     height: calc(100vh - 6rem);
     position: sticky;
-    top: 1.5rem;
+    top: 5rem;
     transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .sidebar-link {
