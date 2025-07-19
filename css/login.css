@@ -6,6 +6,37 @@ body {
     padding: 20px;
 }
 
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn:active,
+.btn:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.label-group .error-message {
+    font-size: 12px;
+}
+
+.label-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 .auth-container {
     background: white;
     border-radius: 20px;

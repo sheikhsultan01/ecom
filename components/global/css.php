@@ -4,7 +4,7 @@ $files = [
     'hugeicons-font/hugeicons-font.css',
     'sweetalert.min.css',
     'custom.css',
-    'style.css',
+    DIR . 'css/style.css',
 ];
 assets_file($files, 'css', _DIR_ . "css");
 ?>

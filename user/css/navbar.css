@@ -1,0 +1,14 @@
+.navbar {
+    background: var(--primary-gradient);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: 600;
+    color: white;
+}
+
+.navbar .nav-item .nav-link i {
+    font-size: 15px;
+    font-weight: 100;
+}

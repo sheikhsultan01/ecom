@@ -1,6 +1,7 @@
 $(document).on('click', '.password-toggle', function () {
     const input = $(this).prev();
-    const icon = $(this);
+    const icon = $(this).is('button') ? $(this).find('i.password-toggle') : $(this);
+
 
     if (input.attr('type') === 'password') {
         input.attr('type', 'text');
