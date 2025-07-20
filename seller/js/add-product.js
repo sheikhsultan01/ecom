@@ -100,13 +100,13 @@ $(document).ready(function () {
             <div class="image-position">${index + 1}</div>
             <div class="image-controls">
                 <button class="control-btn move-btn" onclick="moveImage(${index}, 'left')" title="Move Left">
-                    <i class="fas fa-chevron-left"></i>
+                    <i class="hgi hgi-stroke hgi-arrow-left-01"></i>
                 </button>
                 <button class="control-btn move-btn" onclick="moveImage(${index}, 'right')" title="Move Right">
-                    <i class="fas fa-chevron-right"></i>
+                    <i class="hgi hgi-stroke hgi-arrow-right-01"></i>
                 </button>
                 <button class="control-btn remove-btn" onclick="removeImage(${index})" title="Remove">
-                    <i class="fas fa-times"></i>
+                    <i class="hgi hgi-stroke hgi-cancel-01"></i>
                 </button>
             </div>
     </div>
