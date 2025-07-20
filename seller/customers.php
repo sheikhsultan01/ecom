@@ -9,7 +9,7 @@ $CSS_FILES = [
 require_once 'includes/head.php';
 ?>
 
-<div class="container-fluid px-4">
+<div class="container-fluid">
     <div class="row">
         <!-- Main Content -->
         <div class="col-lg-12">

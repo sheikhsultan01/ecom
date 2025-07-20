@@ -261,12 +261,6 @@
 }
 
 /* Admin Container */
-.admin-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 30px 20px;
-}
-
 .page-header {
     background: white;
     padding: 30px 40px;
@@ -631,9 +625,6 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .admin-container {
-        padding: 20px 15px;
-    }
 
     .page-header,
     .form-section {
