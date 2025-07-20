@@ -14,16 +14,11 @@ $JS_FILES = [
 
 require_once 'includes/head.php';
 ?>
-<!-- Main Content -->
-<div class="col-lg-10">
-    <div class="profile-container">
-        <!-- Profile Header -->
-        <?php require_once 'components/profile/header.php'; ?>
-        <!-- Profile Tabs -->
-        <?php require_once 'components/profile/profile-tabs.php'; ?>
-    </div>
-</div>
-</div>
+<div class="profile-container">
+    <!-- Profile Header -->
+    <?php require_once 'components/profile/header.php'; ?>
+    <!-- Profile Tabs -->
+    <?php require_once 'components/profile/profile-tabs.php'; ?>
 </div>
 
 <!-- Add/Edit Address Modal -->

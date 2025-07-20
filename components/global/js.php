@@ -2,6 +2,7 @@
     "jquery.min.js",
     "bootstrap.min.js",
     "sweetalert.min.js",
+    "moment.min.js",
     "functions.js",
     "notify.js",
     "SS/js-form.js",

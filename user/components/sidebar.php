@@ -21,3 +21,5 @@
                 </div>
             </div>
         </div>
+        <!-- Main Content -->
+        <div class="col-lg-10">

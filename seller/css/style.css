@@ -1,0 +1,18 @@
+:root {
+    --primary-gradient: linear-gradient(135deg, #2E8B57 0%, #228B22 50%, #32CD32 100%);
+    --secondary-gradient: linear-gradient(135deg, #90EE90 0%, #98FB98 100%);
+    --accent-color: #228B22;
+    --text-dark: #2F4F4F;
+    --text-light: #6B8E6B;
+    --card-shadow: 0 8px 30px rgba(34, 139, 34, 0.15);
+    --hover-shadow: 0 15px 40px rgba(34, 139, 34, 0.25);
+}
+
+body {
+    background: linear-gradient(135deg, #f8fffe 0%, #e8f5e8 100%);
+    color: var(--text-dark);
+}
+
+.main-container {
+    margin-top: 1rem;
+}

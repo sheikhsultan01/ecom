@@ -1,5 +1,4 @@
 <?php
-define('INCLUDE_CUSTOM_CSS', false);
 $page_name .= " - User";
 array_unshift($CSS_FILES, [
     DIR . 'css/navbar.css',
