@@ -1,0 +1,583 @@
+.cart-container {
+    padding: 0 2rem;
+}
+
+/* --- Main Content & Card Styling --- */
+.gs-page-title {
+    color: var(--primary-color-dark);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    position: relative;
+}
+
+.gs-page-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background-color: var(--primary-color);
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+.gs-card {
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    border: none;
+    box-shadow: 0 0.25rem 0.5rem var(--card-shadow);
+    /* More pronounced shadow */
+    transition: transform 0.2s ease-in-out;
+}
+
+.gs-card:hover {
+    transform: translateY(-3px);
+    /* Subtle lift on hover for cards */
+}
+
+/* --- Cart Items Table (Desktop) --- */
+.gs-cart-table th {
+    color: var(--text-muted);
+    font-weight: 500;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+}
+
+.gs-cart-table td {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-top: 1px solid #f0f0f0;
+    /* Lighter divider */
+}
+
+.gs-cart-item-row {
+    transition: all 0.3s ease-in-out;
+    /* For removal animation */
+}
+
+.gs-cart-item-row.removing {
+    opacity: 0;
+    transform: translateX(-20px);
+}
+
+.gs-item-img {
+    width: 90px;
+    /* Slightly larger image */
+    height: 90px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.gs-item-name {
+    font-weight: 500;
+}
+
+.gs-quantity-control .gs-qty-input {
+    width: 60px;
+    /* Wider input for better touch */
+    border-color: var(--border-color);
+    background-color: #f9f9f9;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.gs-quantity-control .gs-qty-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.25);
+}
+
+.gs-quantity-control .btn {
+    border-color: var(--border-color);
+    color: var(--text-dark);
+    background-color: #f0f0f0;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.gs-quantity-control .btn:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+}
+
+.gs-quantity-control .btn-outline-secondary:active {
+    background-color: var(--primary-color-dark) !important;
+    border-color: var(--primary-color-dark) !important;
+    color: #fff !important;
+}
+
+.gs-item-subtotal {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.gs-btn-remove-item {
+    color: var(--text-muted);
+    transition: color 0.2s ease, transform 0.2s ease;
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    /* Make clickable area larger */
+    border-radius: 0.5rem;
+}
+
+.gs-btn-remove-item:hover {
+    color: #dc3545;
+    /* Red for delete */
+    transform: scale(1.1);
+    /* Subtle grow on hover */
+}
+
+/* --- Cart Items Cards (Mobile) --- */
+.gs-cart-item-card {
+    border: 1px solid #f0f0f0 !important;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    /* For rounded image corners */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.gs-cart-item-card img {
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+}
+
+.gs-cart-item-card .card-body {
+    padding: 0.75rem;
+}
+
+.gs-cart-item-card .mobile-remove-btn {
+    font-size: 0.85rem;
+    padding: 0.25rem 0.5rem;
+}
+
+/* --- Empty Cart State --- */
+#empty-cart-message {
+    border: 1px dashed var(--border-color);
+    /* Dashed border for empty state */
+    color: var(--text-muted);
+    font-style: italic;
+    background-color: #fff;
+}
+
+#empty-cart-message i {
+    color: var(--primary-color) !important;
+}
+
+
+/* --- Order Summary Card --- */
+.gs-summary-card {
+    background-color: #fff;
+    /* Lighter green background */
+    border: 1px solid rgba(40, 167, 69, 0.1);
+}
+
+.gs-section-title {
+    color: var(--primary-color-dark);
+    font-weight: 600;
+}
+
+.gs-summary-card .list-group-item {
+    font-size: 1.05rem;
+    padding: 0.75rem 0;
+    color: var(--text-dark);
+}
+
+.gs-summary-card .list-group-item:last-child {
+    border-bottom: none;
+}
+
+.gs-price-value {
+    font-weight: 500;
+}
+
+.gs-total-price {
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 2.2rem;
+    /* Larger total price */
+}
+
+.gs-total-price.animate-flash {
+    animation: flashPrice 0.5s ease-out;
+    /* Animation for price update */
+}
+
+@keyframes flashPrice {
+    0% {
+        transform: scale(1);
+        color: var(--primary-color);
+    }
+
+    50% {
+        transform: scale(1.05);
+        color: var(--primary-color-dark);
+    }
+
+    100% {
+        transform: scale(1);
+        color: var(--primary-color);
+    }
+}
+
+
+/* --- Buttons (Consistent with homepage) --- */
+.gs-btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #fff;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(40, 167, 69, 0.2);
+    /* Soft shadow for primary buttons */
+}
+
+.gs-btn-primary:hover {
+    background-color: var(--primary-color-dark);
+    border-color: var(--primary-color-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(40, 167, 69, 0.3);
+}
+
+.gs-btn-primary:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.gs-btn-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    background-color: transparent;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.gs-btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.gs-btn-outline-primary:active {
+    transform: translateY(0);
+}
+
+.checkout-btn {
+    background-color: #28a745;
+    border: none;
+    border-radius: 25px;
+    padding: 12px;
+    font-weight: 500;
+    transition: all 0.3s;
+    margin-top: 10px;
+}
+
+.checkout-btn:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+}
+
+.checkout-btn:active {
+    transform: translateY(0);
+}
+
+.coupon-input {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.coupon-input input {
+    flex-grow: 1;
+    border-radius: 25px 0 0 25px;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    font-size: 14px;
+}
+
+.coupon-input input:focus-visible,
+.coupon-input input:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.25);
+}
+
+.coupon-input button {
+    border-radius: 0 25px 25px 0;
+    border: none;
+    background-color: #28a745;
+    color: white;
+    padding: 0 15px;
+    font-weight: 500;
+}
+
+/* --- Store Policies Accordion --- */
+.gs-policy-card {
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.gs-accordion .accordion-item {
+    border: none;
+    margin-bottom: 0.5rem;
+    background-color: transparent;
+}
+
+.gs-accordion .accordion-header {
+    border-radius: 0.5rem;
+}
+
+.gs-accordion-button {
+    background-color: #f7f7f7;
+    /* Light background for unexpanded */
+    color: var(--text-dark);
+    border-radius: 0.5rem !important;
+    /* Ensure rounded corners */
+    font-weight: 500;
+    padding: 1rem 1.25rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.gs-accordion-button:not(.collapsed) {
+    background-color: var(--primary-color);
+    /* Green when expanded */
+    color: #fff;
+    box-shadow: none;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+.gs-accordion-button:not(.collapsed)::after {
+    filter: brightness(0) invert(1);
+    /* Invert arrow color when expanded */
+}
+
+.gs-accordion-button:focus {
+    box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.25);
+}
+
+.gs-accordion-button .gs-icon-policy {
+    color: var(--primary-color);
+    /* Icon color normally */
+    transition: color 0.3s ease;
+}
+
+.gs-accordion-button:not(.collapsed) .gs-icon-policy {
+    color: #fff;
+    /* Icon color when expanded */
+}
+
+.gs-accordion-body {
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-top: none;
+    border-radius: 0 0 0.5rem 0.5rem;
+    padding: 1.25rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.gs-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.gs-link:hover {
+    color: var(--primary-color-dark);
+    text-decoration: underline;
+}
+
+/* --- Footer Styling (Consistent with your homepage) --- */
+.gs-footer {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+.gs-footer-heading {
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    color: #fff;
+}
+
+.gs-footer-text,
+.gs-copyright {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.gs-footer-links li {
+    margin-bottom: 0.5rem;
+}
+
+.gs-footer-link {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.gs-footer-link:hover {
+    color: #fff;
+}
+
+.gs-social-icons .gs-social-icon {
+    color: #fff;
+    font-size: 1.2rem;
+    transition: transform 0.2s ease;
+}
+
+.gs-social-icons .gs-social-icon:hover {
+    transform: translateY(-2px);
+}
+
+.gs-newsletter-input .form-control {
+    border-radius: 0.5rem 0 0 0.5rem;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.gs-btn-newsletter {
+    background-color: #ffc107;
+    /* Your homepage yellow */
+    color: var(--text-dark);
+    border-radius: 0 0.5rem 0.5rem 0;
+    transition: background-color 0.2s ease;
+}
+
+.gs-btn-newsletter:hover {
+    background-color: #e0a800;
+}
+
+.gs-payment-icons img {
+    filter: brightness(0.9) saturate(1.2);
+    /* Slightly alter color for footer integration */
+}
+
+.gs-footer-divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.related-title {
+    font-weight: 600;
+    color: #28a745;
+    margin: 40px 0 20px;
+    text-align: center;
+}
+
+.related-product {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 0 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.related-product:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.related-img {
+    height: 120px;
+    width: 120px;
+    margin: 0 auto 15px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.related-name {
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.related-price {
+    color: #28a745;
+    font-weight: 500;
+}
+
+.related-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 5px 15px;
+    margin-top: 10px;
+    font-size: 13px;
+    transition: all 0.2s;
+}
+
+.related-btn:hover {
+    background-color: #218838;
+}
+
+.footer {
+    background-color: #28a745;
+    color: white;
+    padding: 30px 0;
+    margin-top: 50px;
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 767.98px) {
+    .gs-page-title {
+        font-size: 1.8rem;
+    }
+
+    .gs-cart-items-card {
+        padding: 1rem !important;
+    }
+
+    .gs-cart-item-card .card-body {
+        padding: 0.5rem;
+        /* Tighter spacing on mobile cards */
+    }
+
+    .gs-cart-item-card .gs-item-name {
+        font-size: 0.95rem;
+    }
+
+    .gs-btn-remove-item.mobile-remove-btn {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.8rem;
+        white-space: nowrap;
+        /* Prevent "Remove" from wrapping */
+    }
+
+    .gs-total-price {
+        font-size: 1.8rem;
+        /* Smaller total price on mobile */
+    }
+
+    .gs-summary-card,
+    .gs-policy-card {
+        padding: 1.5rem !important;
+    }
+}

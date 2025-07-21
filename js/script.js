@@ -13,3 +13,21 @@ $(document).on('click', '.password-toggle', function () {
         icon.addClass('hgi-stroke hgi-view');
     }
 });
+
+// Back to top functionality
+$(window).on('scroll', function () {
+    const $backToTop = $('.back-to-top');
+    if ($(window).scrollTop() > 300) {
+        $backToTop.addClass('show');
+    } else {
+        $backToTop.removeClass('show');
+    }
+});
+
+// Back to top button
+$(document).on('click', '.back-to-top', function () {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});

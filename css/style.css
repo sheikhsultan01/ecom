@@ -1,0 +1,17 @@
+:root {
+    --primary-gradient: linear-gradient(135deg, #2E8B57 0%, #228B22 50%, #32CD32 100%);
+    --secondary-gradient: linear-gradient(135deg, #90EE90 0%, #98FB98 100%);
+    --accent-color: #228B22;
+    --text-dark: #2F4F4F;
+    --text-light: #6B8E6B;
+    --card-shadow: 0 8px 30px rgba(34, 139, 34, 0.15);
+    --hover-shadow: 0 15px 40px rgba(34, 139, 34, 0.25);
+    --primary-color: #28a745;
+    --secondary-color: #218838;
+    --light-green: #e8f5e9;
+    --dark-green: #1e7e34;
+    --super-light-green: #f5fbf6;
+    --border-color: #dee2e6;
+    --border-radius: 0.75rem;
+    --text-muted: #6c757d;
+}
