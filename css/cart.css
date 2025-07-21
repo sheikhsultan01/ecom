@@ -24,8 +24,7 @@
     background-color: #fff;
     border-radius: var(--border-radius);
     border: none;
-    box-shadow: 0 0.25rem 0.5rem var(--card-shadow);
-    /* More pronounced shadow */
+    box-shadow: var(--card-shadow);
     transition: transform 0.2s ease-in-out;
 }
 
