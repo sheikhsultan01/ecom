@@ -20,7 +20,6 @@ $(document).on('submit', '.js-form, .ajax-form', function (e) {
 
     if (action.indexOf('.php') === -1) action = action + '.php';
     if (action.indexOf('controllers') === -1) action = 'controllers/' + action;
-    if (action.indexOf('http') === -1) action = SITE_URL + action;
 
     // Ajax Request
     const ajaxRequest = {

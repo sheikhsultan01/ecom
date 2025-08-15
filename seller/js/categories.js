@@ -75,67 +75,6 @@ $(document).ready(function () {
     setupImageUpload('subcategoryImageUpload', 'subcategoryImageInput', 'subcategoryImagePreview');
     setupImageUpload('editSubcategoryImageUpload', 'editSubcategoryImageInput', null);
 
-    // Delete button functionality
-    $('.btn-delete').on('click', function () {
-        const deleteModal = new bootstrap.Modal($('#deleteConfirmModal')[0]);
-        deleteModal.show();
-    });
-
-    // Form submission handlers
-    $('#saveCategoryBtn').on('click', function () {
-        // Validate form
-        const form = $('#addCategoryForm')[0];
-        if (form.checkValidity()) {
-            // Here you would typically submit the form data via AJAX
-            alert('Category saved successfully!');
-            bootstrap.Modal.getInstance($('#addCategoryModal')[0]).hide();
-        } else {
-            form.reportValidity();
-        }
-    });
-
-    $('#updateCategoryBtn').on('click', function () {
-        // Validate form
-        const form = $('#editCategoryForm')[0];
-        if (form.checkValidity()) {
-            // Here you would typically submit the form data via AJAX
-            alert('Category updated successfully!');
-            bootstrap.Modal.getInstance($('#editCategoryModal')[0]).hide();
-        } else {
-            form.reportValidity();
-        }
-    });
-
-    $('#saveSubcategoryBtn').on('click', function () {
-        // Validate form
-        const form = $('#addSubcategoryForm')[0];
-        if (form.checkValidity()) {
-            // Here you would typically submit the form data via AJAX
-            alert('Subcategory saved successfully!');
-            bootstrap.Modal.getInstance($('#addSubcategoryModal')[0]).hide();
-        } else {
-            form.reportValidity();
-        }
-    });
-
-    $('#updateSubcategoryBtn').on('click', function () {
-        // Validate form
-        const form = $('#editSubcategoryForm')[0];
-        if (form.checkValidity()) {
-            // Here you would typically submit the form data via AJAX
-            alert('Subcategory updated successfully!');
-            bootstrap.Modal.getInstance($('#editSubcategoryModal')[0]).hide();
-        } else {
-            form.reportValidity();
-        }
-    });
-
-    $('#confirmDeleteBtn').on('click', function () {
-        // Here you would typically send a delete request via AJAX
-        alert('Category deleted successfully!');
-        bootstrap.Modal.getInstance($('#deleteConfirmModal')[0]).hide();
-    });
-
     // Auto-generate slug from name
     const slugify = (text) => {
         return text.toString().toLowerCase()

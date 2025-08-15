@@ -1,4 +1,5 @@
 <?php
+define('_DIR_', '../');
 require_once 'includes/db.php';
 $page_name = 'Orders';
 
