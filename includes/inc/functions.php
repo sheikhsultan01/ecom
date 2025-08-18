@@ -92,15 +92,13 @@ function getRandom($limit = 15)
 }
 
 
-function upload_image($targetDir)
+function upload_image($targetDir, $file)
 {
     if (!is_dir($targetDir)) {
         mkdir($targetDir, 0755, true);
     }
 
-    $file = $_FILES['image'];
     $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
-
 
     if (!in_array(strtolower($extension), ALLOWED_IMAGE_EXTENSIONS)) {
         returnError("Invalid file type. Only images are allowed.");
@@ -116,14 +114,18 @@ function upload_image($targetDir)
     return $randomName;
 }
 
-function merge_url(...$paths)
+function merge_url(...$parts)
 {
-    $trimmedPaths = array_map(function ($part) {
-        return trim($part, '/\\');
-    }, $paths);
+    $first = rtrim(array_shift($parts), "/\\");
+    $middle = array_map(fn ($p) => trim($p, "/\\"), $parts);
 
-    return implode('/', $trimmedPaths);
+    $url = $first . '/' . implode('/', $middle);
+    if (!empty($parts) && preg_match('/[\/\\\\]$/', end($parts))) {
+        $url .= '/';
+    }
+    return $url;
 }
+
 
 function arr_val($array, $key, $default = false)
 {
@@ -214,4 +216,21 @@ function _is($type)
         'meta_value' => $type
     ]);
     return true;
+}
+
+function skeleton($type, $config)
+{
+    $html = '';
+    if ($type === 'table') {
+        $columns = arr_val($config, 'columns', 1);
+        $rows = arr_val($config, 'rows', 3);
+        for ($i = 0; $i < $rows; $i++) {
+            $html .= '<tr>
+                    <td colspan="' . $columns . '">
+                        <p jd-data></p>
+                    </td>
+                </tr>';
+        }
+    }
+    return $html;
 }

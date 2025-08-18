@@ -1,6 +1,8 @@
 # Ignore test.php in root
 test.php
 test.html
+# Ignore all images in the assets directory
+images/assets/*
 
 # Ignore seller's test file
 seller/test.php

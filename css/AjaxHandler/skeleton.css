@@ -101,3 +101,67 @@ table tr [jd-data="loading"] {
     font-size: 13px;
     color: #888;
 }
+
+.jd-pagination {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 2rem;
+    padding-top: 1rem;
+}
+
+/* Container */
+.pagination {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.4rem 0.6rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    user-select: none;
+}
+
+/* Page buttons */
+.jd-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 34px;
+    height: 34px;
+    padding: 0 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-dark);
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+/* Hover effect */
+.jd-page:not(.active):not([disabled]):hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--primary-color, #007bff);
+}
+
+/* Active state */
+.jd-page.active {
+    background: var(--primary-gradient, linear-gradient(45deg, #007bff, #0056d2));
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 123, 255, 0.25);
+}
+
+/* Disabled state */
+.jd-page[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: transparent;
+    box-shadow: none;
+}
+
+/* Prev/Next icons */
+.jd-prev,
+.jd-next {
+    font-size: 16px;
+    padding: 0 12px;
+}

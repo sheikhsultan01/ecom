@@ -2,35 +2,29 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addSubcategoryModalLabel">Add New Subcategory</h5>
+                <h5 class="modal-title" id="addSubcategoryModalLabel"><span name="modalHeading">Add</span> Subcategory</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="addSubcategoryForm" class="js-form" action="categories">
+                <form id="addSubcategoryForm" class="js-form" action="categories" on-success="jdRefreshAndHideModal('subCategories','mdlSaveSubCategory');" enctype="multipart/form-data">
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="subcategoryName" class="form-label">Subcategory Name*</label>
                             <input type="text" class="form-control" name="name" id="subcategoryName" placeholder="Enter subcategory name" required>
                         </div>
                         <div class="col-md-6">
-                            <label for="parentCategory" class="form-label">Parent Category*</label>
-                            <select class="form-control" id="parentCategory" name="parent_id" required>
-                                <option value="">Select parent category</option>
-                                <option value="1">Organic Vegetables</option>
-                                <option value="2">Fresh Fruits</option>
-                                <option value="3">Bakery</option>
-                                <option value="4">Dairy & Eggs</option>
-                                <option value="5">Meat & Seafood</option>
-                                <option value="6">Beverages</option>
-                            </select>
+                            <label for="subcategorySlug" class="form-label">Slug</label>
+                            <input type="text" class="form-control" name="slug" id="subcategorySlug" placeholder="subcategory-slug">
+                            <small class="text-muted">Leave empty to generate automatically</small>
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label for="subcategorySlug" class="form-label">Slug</label>
-                            <input type="text" class="form-control" name="slug" id="subcategorySlug" placeholder="subcategory-slug">
-                            <small class="text-muted">Leave empty to generate automatically</small>
+                            <label for="parentCategory" class="form-label">Parent Category*</label>
+                            <select jd-ref="categories" jd-for="categories" class="form-control" id="parentCategory" name="parent_id" required>
+                                <option value="${id}">${name}</option>
+                            </select>
                         </div>
                         <div class="col-md-6">
                             <label for="subcategoryStatus" class="form-label">Status</label>
@@ -53,10 +47,12 @@
                             <p class="upload-text">Drag & drop an image or click to browse</p>
                             <p class="upload-hint">Recommended size: 512x512px (Max: 2MB)</p>
                         </div>
-                        <input type="file" id="subcategoryImageInput" name="image" class="d-none" accept="image/*">
+                        <input type="file" id="subcategoryImageInput" name="upload_image" class="d-none" accept="image/*">
+                        <input class="d-none" type="text" name="image">
                         <img src="" id="subcategoryImagePreview" class="image-preview">
                     </div>
                     <div class="modal-footer">
+                        <input class="d-none" type="text" name="id">
                         <input type="hidden" name="saveSubCategory" value="true">
                         <button type="button" class="btn btn-outline-filter" data-bs-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-filter" id="saveSubcategoryBtn">Save Subcategory</button>

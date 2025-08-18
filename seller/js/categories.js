@@ -57,23 +57,10 @@ $(document).ready(function () {
         $('#subcategoryImageInput').trigger('click');
     });
 
-    $(document).on('click', '#editCategoryImageUpload', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        $('#editCategoryImageInput').trigger('click');
-    });
-
-    $(document).on('click', '#editSubcategoryImageUpload', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        $('#editSubcategoryImageInput').trigger('click');
-    });
 
     // Setup image uploads for all modals
     setupImageUpload('categoryImageUpload', 'categoryImageInput', 'categoryImagePreview');
-    setupImageUpload('editCategoryImageUpload', 'editCategoryImageInput', null);
     setupImageUpload('subcategoryImageUpload', 'subcategoryImageInput', 'subcategoryImagePreview');
-    setupImageUpload('editSubcategoryImageUpload', 'editSubcategoryImageInput', null);
 
     // Auto-generate slug from name
     const slugify = (text) => {
@@ -92,4 +79,13 @@ $(document).ready(function () {
     $('#subcategoryName').on('input', function () {
         $('#subcategorySlug').val(slugify($(this).val()));
     });
+});
+
+$(document).on('click', '.reset-img-btn', (e) => {
+    e.preventDefault();
+    let $catImgPreview = $('#mdlSaveCategory').find('.image-preview'),
+        $subCatImgPreview = $('#mdlSaveSubCategory').find('.image-preview');
+
+    $catImgPreview.attr('src', '').removeAttr('style');
+    $subCatImgPreview.attr('src', '').removeAttr('style');
 });

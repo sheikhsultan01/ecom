@@ -61,3 +61,47 @@ function appendErrorMessage($el, message) {
         });
     }, 5000);
 }
+// Function To Capitalize
+function toCapitalize(status) {
+    const words = status ? status.split('_') : [];
+    const formattedStatus = words
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ');
+
+    return formattedStatus;
+}
+// is json
+function isJson(str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}
+
+jQuery.fn.hasAttr = function (name) {
+    return this.attr(name) !== undefined;
+};
+
+// Function to refresh a specific source
+function refreshSource(source) {
+    AS.refreshSource(source)
+}
+
+// Refresh the request and hide modal
+function jdRefreshAndHideModal(source, modalId) {
+    AS.refreshSource(source)
+    // Hide modal
+    console.log(modalId)
+    $(`#${modalId}`).modal('hide');
+}
+
+// Get data attribute value
+$.fn.dataVal = function (dataName, defaultValue = false) {
+    let attrVal = defaultValue;
+    if ($(this).hasAttr("data-" + dataName)) {
+        attrVal = $(this).attr("data-" + dataName);
+    }
+    return attrVal;
+}

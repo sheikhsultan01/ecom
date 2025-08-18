@@ -117,7 +117,7 @@ class AjaxBulkRequestSystem {
     }
 
     // Function to load source (for individual refresh)
-    loadSource(source = false, options = false) {
+    loadSource(source = false) {
         let $element;
 
         if (typeof source === 'string') {
@@ -128,12 +128,6 @@ class AjaxBulkRequestSystem {
             }
         } else {
             $element = source;
-        }
-
-        let isResetPage = options.resetPage;
-        if (isResetPage) {
-            console.log("Refresh Sourceeeeeeeeeeeee");
-            $element.attr('jd-page', options.page);
         }
 
         const sourceName = $element.attr('jd-source');
@@ -354,7 +348,6 @@ class AjaxBulkRequestSystem {
                 const context = {
                     ...item,
                     item,
-                    improveName: window.improveName || ((name) => name),
                     console,
                     Object,
                     Math,
@@ -362,7 +355,8 @@ class AjaxBulkRequestSystem {
                     String,
                     Number,
                     Array,
-                    Boolean
+                    Boolean,
+                    JSON
                 };
 
                 htmlOutput += this.processTemplate(template, context);
@@ -470,7 +464,6 @@ class AjaxBulkRequestSystem {
                     ...response,
                     item,
                     index,
-                    improveName: window.improveName || ((name) => name),
                     console,
                     Object,
                     Math,
@@ -478,7 +471,8 @@ class AjaxBulkRequestSystem {
                     String,
                     Number,
                     Array,
-                    Boolean
+                    Boolean,
+                    JSON
                 };
 
                 outputHtml += this.processTemplate(originalHtml, context);
@@ -501,7 +495,6 @@ class AjaxBulkRequestSystem {
         // Create context with all response data
         const context = {
             ...response,
-            improveName: window.improveName || ((name) => name),
             console,
             Object,
             Math,
@@ -509,7 +502,8 @@ class AjaxBulkRequestSystem {
             String,
             Number,
             Array,
-            Boolean
+            Boolean,
+            JSON
         };
 
         const processedTemplate = this.processTemplate(template, context);
@@ -522,8 +516,11 @@ class AjaxBulkRequestSystem {
         const sandbox = new Proxy(context, {
             has: () => true,
             get: (target, key) => {
-                if (target.hasOwnProperty(key)) {
+                if (key in target) {
                     return target[key];
+                }
+                if (key in globalThis) {
+                    return globalThis[key];
                 }
                 return undefined;
             },
@@ -579,16 +576,34 @@ class AjaxBulkRequestSystem {
         // Process template expressions ${...}
         template = template.replace(/\${(.*?)}/g, (match, expr) => {
             try {
-                // Decode HTML entities in the expression
                 const decodedExpr = this.decodeHtmlEntities(expr.trim());
 
-                const evalFunc = new Function('with(this) { return ' + decodedExpr + '; }');
-                const result = evalFunc.call(sandbox);
+                // Pass both sandbox and globalThis (window in browser)
+                const evalFunc = new Function('sandbox', 'globalScope', `
+                            with (globalScope) {
+                                with (sandbox) {
+                                    return ${decodedExpr};
+                                }
+                            }
+                        `);
 
-                return result !== undefined && result !== null ? result : '';
+                let result = evalFunc(sandbox, globalThis); // Inject global functions too
+
+                if (result === undefined || result === null) return '';
+
+                // Auto-stringify objects/arrays
+                if (typeof result === 'object') {
+                    try {
+                        return JSON.stringify(result);
+                    } catch (err) {
+                        console.error('Error stringifying result:', err);
+                        return '';
+                    }
+                }
+
+                return result;
             } catch (e) {
                 console.error(`Error evaluating expression: ${expr}`, e);
-                console.error('Sandbox context:', sandbox);
                 return '';
             }
         });
@@ -816,11 +831,11 @@ class AjaxBulkRequestSystem {
         start = Math.max(1, Math.min(start, end - windowSize + 1));
 
         let html = '';
-        html += `<button class="jd-page jd-prev" data-source="${sourceName}" data-page="${Math.max(1, current - 1)}" ${current <= 1 ? 'disabled' : ''}>&laquo;</button>`;
+        html += `<li class="jd-page page-item jd-prev" data-source="${sourceName}" data-page="${Math.max(1, current - 1)}" ${current <= 1 ? 'disabled' : ''}>&laquo;</li>`;
         for (let i = start; i <= end; i++) {
-            html += `<button class="jd-page ${i === current ? 'active' : ''}" data-source="${sourceName}" data-page="${i}">${i}</button>`;
+            html += `<li class="jd-page page-item ${i === current ? 'active' : ''}" data-source="${sourceName}" data-page="${i}">${i}</li>`;
         }
-        html += `<button class="jd-page jd-next" data-source="${sourceName}" data-page="${Math.min(totalPages, current + 1)}" ${current >= totalPages ? 'disabled' : ''}>&raquo;</button>`;
+        html += `<li class="jd-page page-item jd-next" data-source="${sourceName}" data-page="${Math.min(totalPages, current + 1)}" ${current >= totalPages ? 'disabled' : ''}>&raquo;</li>`;
 
         $container.html(html);
     }
@@ -947,21 +962,6 @@ class AjaxBulkRequestSystem {
 
 // Initialize the system
 const AS = new AjaxBulkRequestSystem();
-
-// Function to refresh a specific source
-function refreshSource(source) {
-    const options = { resetPage: true, page: 1 };
-    AS.loadSource(source, options);
-}
-
-// Refresh the request and hide modal
-function jdRefreshAndHideModal(source, modalId) {
-    const options = { resetPage: true, page: 1 };
-    AS.loadSource(source, options);
-
-    // Hide modal
-    $(`#${modalId}`).modal('hide');
-}
 
 // Load all sources when document is ready
 $(document).ready(function () {

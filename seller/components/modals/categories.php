@@ -2,11 +2,11 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addCategoryModalLabel">Add New Category</h5>
+                <h5 class="modal-title" id="addCategoryModalLabel"><span name="modalHeading">Add</span> Category</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="addCategoryForm" class="js-form" action="categories">
+                <form id="addCategoryForm" class="js-form" action="categories" on-success="jdRefreshAndHideModal('categories','mdlSaveCategory')" enctype="multipart/form-data">
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="categoryName" class="form-label">Category Name*</label>
@@ -31,7 +31,8 @@
                             <p class="upload-text">Drag & drop an image or click to browse</p>
                             <p class="upload-hint">Recommended size: 512x512px (Max: 2MB)</p>
                         </div>
-                        <input type="file" id="categoryImageInput" name="image" class="d-none" accept="image/*">
+                        <input type="file" id="categoryImageInput" name="upload_image" class="d-none" accept="image/*">
+                        <input class="d-none" type="text" name="image">
                         <img src="" id="categoryImagePreview" class="image-preview">
                     </div>
 
@@ -45,6 +46,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
+                        <input class="d-none" type="text" name="id">
                         <input type="hidden" name="saveCategoryData" vlaue='true'>
                         <button type="button" class="btn btn-outline-filter" data-bs-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-filter">Save Category</button>
