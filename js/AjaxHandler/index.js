@@ -11,6 +11,7 @@ class AjaxBulkRequestSystem {
         this.batchDelay = 50; // Delay in milliseconds to batch requests
         this.paginationState = {}; // Format: { sourceName: { page, limit, total, pages, offset } }
         this.loadedPages = {}; // For scroll pagination: { sourceName: Set(pageNumbers) }
+        this.loadingStates = new Map();
     }
 
     main() {
@@ -42,16 +43,92 @@ class AjaxBulkRequestSystem {
             this.queueRequestOnly($element);
         });
 
-        // Show skeleton loading for all sources
+        // Set loading states properly
+        this.setGlobalLoadingState();
         this.showSkeleton();
 
-        // Set loading state for all elements with jd-data
-        this.setLoadingState();
-
-        // Send single batch request after small delay
         this.batchTimeout = setTimeout(() => {
             this.sendBulkRequest();
         }, this.batchDelay);
+    }
+
+    // IMPROVED: Better loading state management
+    setGlobalLoadingState() {
+
+        $('[jd-data]').each((index, element) => {
+            const $el = $(element);
+            const currentValue = $el.attr('jd-data');
+
+            // Force set the loading attribute
+            $el.attr('jd-data', 'loading');
+
+            // Verify it was set
+            const newValue = $el.attr('jd-data');
+        });
+    }
+
+    // IMPROVED: Source-specific loading state
+    setLoadingStateForSource(sourceName) {
+
+        // Find all related elements
+        const $sourceElements = $(`[jd-source="${sourceName}"]`);
+        const $refElements = $(`[jd-ref="${sourceName}"], [jd-ref-context="${sourceName}"]`);
+
+        // Combine all elements
+        const $allElements = $sourceElements.add($refElements);
+
+        $allElements.each((index, element) => {
+            const $el = $(element);
+
+            // Find jd-data elements within this source
+            const $dataElements = $el.find('[jd-data]').addBack('[jd-data]');
+
+            $dataElements.each((i, dataEl) => {
+                const $dataEl = $(dataEl);
+
+                $dataEl.attr('jd-data', 'loading');
+
+                // Verify
+                const newValue = $dataEl.attr('jd-data');
+            });
+        });
+    }
+
+    // IMPROVED: Remove loading state properly
+    removeLoadingStateForSource(sourceName) {
+        if (!this.loadingStates.has(sourceName)) {
+            return;
+        }
+
+        const elements = this.loadingStates.get(sourceName);
+
+        elements.forEach(element => {
+            const $el = $(element);
+            const currentValue = $el.attr('jd-data');
+
+            if (currentValue === 'loading') {
+                $el.attr('jd-data', 'loaded');
+            }
+        });
+
+        // Clear the tracking
+        elements.clear();
+    }
+
+    // IMPROVED: Global loading state removal
+    removeAllLoadingStates() {
+
+        $('[jd-data]').each((index, element) => {
+            const $el = $(element);
+            const currentValue = $el.attr('jd-data');
+
+            if (currentValue === 'loading' || currentValue === '' || !currentValue) {
+                $el.attr('jd-data', 'loaded');
+            }
+        });
+
+        // Clear all tracking
+        this.loadingStates.clear();
     }
 
     // Initialize template cache for all elements
@@ -136,19 +213,16 @@ class AjaxBulkRequestSystem {
             return;
         }
 
-        // Show skeleton loading for this specific source (skip for scroll loads beyond first page)
         const isScroll = $element.is('[jd-scroll-paginate]');
         const currentPage = parseInt($element.attr('jd-page')) || (this.paginationState[sourceName]?.page || 1);
 
         if (!(isScroll && currentPage > 1)) {
+            this.setLoadingStateForSource(sourceName);
             this.showSkeletonForSource(sourceName);
-            this.setLoadingState(sourceName);
         } else {
-            // For scroll pagination beyond first page, show loading indicator
             this.showScrollLoadingIndicator(sourceName);
         }
 
-        // Queue request and send immediately for individual refresh
         this.queueRequestOnly($element);
         this.sendBulkRequest();
     }
@@ -275,6 +349,7 @@ class AjaxBulkRequestSystem {
                             this.processResponse(response.data[source], $element);
                         } else {
                             console.error(`No response data for source: ${source}`);
+                            this.removeLoadingStateForSource(source);
                         }
                     }
                 } else {
@@ -284,17 +359,16 @@ class AjaxBulkRequestSystem {
             error: (xhr, status, error) => {
                 console.error('Error sending bulk request:', error);
 
-                // Show error for each pending request
+                // Remove loading states for all failed requests
                 for (const source in this.allRequests) {
-                    const $element = this.allRequests[source].element;
-                    console.error($element, 'Failed to load data. Please try again.');
+                    this.removeLoadingStateForSource(source);
                 }
             },
             complete: () => {
                 // Clear all requests and reset processing flag
                 this.allRequests = {};
                 this.isProcessing = false;
-                this.removeLoadingState();
+                this.removeAllLoadingStates();
                 this.hideScrollLoadingIndicators();
             }
         });
@@ -305,13 +379,14 @@ class AjaxBulkRequestSystem {
         const pickSelector = $element.attr('jd-pick');
         const dropSelector = $element.attr('jd-drop');
         const sourceName = $element.attr('jd-source');
+
         if (!sourceName) return;
 
         const $pick = $(pickSelector);
         const $drop = (dropSelector === 'this') ? $element : $(dropSelector);
         const isScrollPaginate = $element.is('[jd-scroll-paginate]');
 
-        // IMPORTANT: Update pagination state FIRST from server response
+        // Update pagination state FIRST
         if (response && response.pagination) {
             const respPage = parseInt(response.pagination.page) || 1;
             const respLimit = parseInt(response.pagination.limit) || 10;
@@ -328,11 +403,10 @@ class AjaxBulkRequestSystem {
             };
         }
 
-        // Check if we have data
+        // Process data...
         if (response && (response.data || Array.isArray(response))) {
             const data = response.data || response;
 
-            // Check if template is cached
             if (!this.templateCache[sourceName] || !this.templateCache[sourceName]['data']) {
                 console.error(`Template not cached for source: ${sourceName}`);
                 return;
@@ -343,8 +417,6 @@ class AjaxBulkRequestSystem {
 
             data.forEach((item) => {
                 let template = rawHtml;
-
-                // Create context with all available functions and variables
                 const context = {
                     ...item,
                     item,
@@ -358,11 +430,10 @@ class AjaxBulkRequestSystem {
                     Boolean,
                     JSON
                 };
-
                 htmlOutput += this.processTemplate(template, context);
             });
 
-            // Handle scroll pagination vs regular pagination
+            // Handle scroll vs regular pagination
             if (isScrollPaginate && response.pagination && typeof response.pagination.page !== 'undefined') {
                 const pageNum = parseInt(response.pagination.page) || 1;
                 if (!this.loadedPages[sourceName]) this.loadedPages[sourceName] = new Set();
@@ -384,7 +455,7 @@ class AjaxBulkRequestSystem {
                 $drop.html(htmlOutput);
             }
 
-            // Execute success callback if defined
+            // Execute success callback
             const successCallback = $element.attr('jd-success');
             if (successCallback && typeof window[successCallback] === 'function') {
                 try {
@@ -408,13 +479,16 @@ class AjaxBulkRequestSystem {
             }
         }
 
-        // Update and render pagination controls for non-scroll sources
+        // Render pagination for non-scroll sources
         if (!isScrollPaginate && response && response.pagination) {
             this.renderPaginationControls($element, this.paginationState[sourceName]);
         }
 
-        // Handle jd-ref and jd-ref-context elements
+        // Handle ref elements
         this.processRefElements(response, $element);
+
+        // IMPROVED: Remove loading state for this specific source
+        this.removeLoadingStateForSource(sourceName);
     }
 
     // New function to handle jd-ref and jd-ref-context elements
@@ -685,29 +759,6 @@ class AjaxBulkRequestSystem {
             .replace(/&amp;/g, '&')
             .replace(/&quot;/g, '"')
             .replace(/&#39;/g, "'");
-    }
-
-    // Function to display loading where is jd-data attribute
-    setLoadingState(source = false) {
-        if (source) {
-            $(`[jd-source="${source}"], [jd-ref="${source}"], [jd-ref-context="${source}"]`).find('[jd-data]').each(function () {
-                $(this).attr('jd-data', 'loading');
-            });
-        } else {
-            $('[jd-data]').each(function () {
-                $(this).attr('jd-data', 'loading');
-            });
-        }
-    }
-
-    // Function to remove loading state
-    removeLoadingState() {
-        $('[jd-data]').each(function () {
-            // Remove only if current value is 'loading'
-            if ($(this).attr('jd-data') === 'loading') {
-                $(this).attr('jd-data', 'loaded');
-            }
-        });
     }
 
     // Function to show skeleton loading for all sources
