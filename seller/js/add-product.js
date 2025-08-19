@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    let images = [];
 
     // Initialize Sortable
     Sortable.create(document.getElementById('imagesGrid'), {
@@ -230,41 +229,6 @@ $(document).ready(function () {
         }
     });
 
-    // Tags functionality
-    const tagsContainer = $('#tagsContainer');
-    const tagInput = tagsContainer.find('.tag-input');
-    let tags = [];
-
-    tagInput.on('keydown', function (e) {
-        if (e.key === 'Enter' || e.key === ',') {
-            e.preventDefault();
-            const tag = $(this).val().trim();
-            if (tag && !tags.includes(tag)) {
-                tags.push(tag);
-                addTagToUI(tag);
-                $(this).val('');
-                updateProgress();
-            }
-        }
-    });
-
-    function addTagToUI(tag) {
-        const tagHtml = `
-    <div class="tag-item">
-        ${tag}
-        <button type="button" class="tag-remove" onclick="removeTag('${tag}')">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
-    `;
-        tagInput.before(tagHtml);
-    }
-
-    window.removeTag = function (tag) {
-        tags = tags.filter(t => t !== tag);
-        $(`.tag-item:contains("${tag}")`).remove();
-        updateProgress();
-    };
 
     // Form validation and progress tracking
     function updateProgress() {

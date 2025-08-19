@@ -64,9 +64,6 @@ require_once 'includes/head.php';
     <div class="inventory-filters">
         <div class="filters-header">
             <h2 class="filters-title">Filter Products</h2>
-            <button class="btn-primary-custom" id="applyFilters">
-                <i class="fas fa-filter"></i> Apply Filters
-            </button>
         </div>
         <div class="filters-body">
             <div class="filter-group">

@@ -81,50 +81,50 @@ require_once 'includes/head.php';
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Subcategories Tab -->
-            <div class="tab-pane fade" id="subcategories" role="tabpanel" aria-labelledby="subcategories-tab">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title">Subcategories</h5>
-                        <div class="d-flex justify-content-end w-50">
-                            <div class="search-container me-3 w-50" jd-filters="subCategories">
-                                <i class="fas fa-search search-icon"></i>
-                                <input type="text" name="query" class="form-control" placeholder="Search subcategories..." jd-filter="query">
+                <!-- Subcategories Tab -->
+                <div class="tab-pane fade" id="subcategories" role="tabpanel" aria-labelledby="subcategories-tab">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Subcategories</h5>
+                            <div class="d-flex justify-content-end w-50">
+                                <div class="search-container me-3 w-50" jd-filters="subCategories">
+                                    <i class="fas fa-search search-icon"></i>
+                                    <input type="text" name="query" class="form-control" placeholder="Search subcategories..." jd-filter="query">
+                                </div>
+                                <button class="btn btn-filter reset-img-btn editTableInfo" data-bs-toggle="modal" data-bs-target="#mdlSaveSubCategory" onclick="$('#addSubcategoryForm').trigger('reset');">
+                                    <code class="d-none">{"modalHeading": "Add"}</code>
+                                    <i class="fas fa-plus me-2"></i> Add Subcategory
+                                </button>
                             </div>
-                            <button class="btn btn-filter reset-img-btn editTableInfo" data-bs-toggle="modal" data-bs-target="#mdlSaveSubCategory" onclick="$('#addSubcategoryForm').trigger('reset');">
-                                <code class="d-none">{"modalHeading": "Add"}</code>
-                                <i class="fas fa-plus me-2"></i> Add Subcategory
-                            </button>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table categories-table">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 80px;">ID</th>
-                                        <th style="width: 80px;">Image</th>
-                                        <th>Name</th>
-                                        <th>Parent Category</th>
-                                        <th>Status</th>
-                                        <th style="width: 150px;">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody jd-source="subCategories" jd-pick="#singleSubCategory" jd-drop="this" jd-pagination="#subCategoryPagination">
-                                    <?= skeleton("table", [
-                                        'columns' => 6,
-                                    ]) ?>
-                                </tbody>
-                            </table>
-                            <div class="jd-pagination">
-                                <ul id="subCategoryPagination" class="mt-2 pagination"></ul>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table categories-table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 80px;">ID</th>
+                                            <th style="width: 80px;">Image</th>
+                                            <th>Name</th>
+                                            <th>Parent Category</th>
+                                            <th>Status</th>
+                                            <th style="width: 150px;">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody jd-source="subCategories" jd-pick="#singleSubCategory" jd-drop="this" jd-pagination="#subCategoryPagination">
+                                        <?= skeleton("table", [
+                                            'columns' => 6,
+                                        ]) ?>
+                                    </tbody>
+                                </table>
+                                <div class="jd-pagination">
+                                    <ul id="subCategoryPagination" class="mt-2 pagination"></ul>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>

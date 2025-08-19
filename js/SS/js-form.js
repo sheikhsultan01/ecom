@@ -1,5 +1,6 @@
 const callbackFns = {},
     callbeforeFns = {};
+let images = [];
 
 // Edit form inof
 function fillValuesToFormWithJSON($form, json) {
@@ -151,7 +152,7 @@ $(document).on('submit', '.js-form, .ajax-form', function (e) {
                 }
             }
 
-            // 🔹 Handle on-success attribute (single or multiple functions)
+            // Handle on-success attribute (single or multiple functions)
             if (res.status === 'success' && onSuccessAttr) {
                 try {
                     eval(onSuccessAttr);
@@ -165,9 +166,28 @@ $(document).on('submit', '.js-form, .ajax-form', function (e) {
         }
     };
 
-    // Use FormData if file inputs exist
+    //  File handling
     if ($fileInputs.length > 0) {
-        ajaxRequest.data = new FormData($form[0]);
+        let formData = new FormData($form[0]);
+
+        // Check for custom file handling
+        if ($form.data('custom-files')) {
+            formData.delete('images'); // remove original input
+
+            // "images" array maintained in your JS
+            if (typeof images !== 'undefined') {
+                images.forEach((img, idx) => {
+                    console.log(img, " single imageeeeeeee");
+                    formData.append(`files[${idx}]`, img.file);
+                    formData.append(`positions[${idx}]`, img.position || idx);
+                    if (img.isPrimary) {
+                        formData.append(`primary`, idx);
+                    }
+                });
+            }
+        }
+
+        ajaxRequest.data = formData;
         ajaxRequest.processData = false;
         ajaxRequest.contentType = false;
     } else {
@@ -221,4 +241,12 @@ $(document).on('click', '.delete-data-btn', function (e) {
             })
         }
     })
+});
+
+// stop the form submit
+$(document).on('keydown', '.js-form input', function (e) {
+    if (e.key === 'Enter' || e.key === 13) {
+        e.preventDefault();
+        return false;
+    }
 });

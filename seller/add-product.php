@@ -5,12 +5,14 @@ $page_name = 'Add Product';
 
 $CSS_FILES = [
     _DIR_ . 'css/sortable.min.css',
+    _DIR_ . 'css/tags.css',
     'add-product.css'
 ];
 
 $JS_FILES = [
     _DIR_ . 'js/sortable.min.js',
     _DIR_ . 'js/tinymce/tinymce.min.js',
+    _DIR_ . 'js/SS/tags.js',
     'add-product.js'
 ];
 
@@ -32,7 +34,7 @@ require_once 'includes/head.php';
         </nav>
     </div>
 
-    <form id="addProductForm" class="form-container">
+    <form id="addProductForm" action="products" class="form-container js-form" data-custom-files="true">
         <!-- Product Images Section -->
         <div class="form-section">
             <h2 class="section-title">
@@ -63,7 +65,7 @@ require_once 'includes/head.php';
                 </div>
 
                 <!-- Hidden File Input -->
-                <input type="file" class="file-input" id="fileInput" accept="image/*" multiple>
+                <input type="file" name="images" class="file-input" id="fileInput" accept="image/*" multiple>
             </div>
         </div>
 
@@ -77,13 +79,13 @@ require_once 'includes/head.php';
                 <div class="col-lg-8">
                     <div class="form-group">
                         <label class="form-label required">Product Title</label>
-                        <input type="text" class="form-control" id="productTitle" placeholder="Enter a compelling product title" maxlength="100">
+                        <input type="text" name="title" class="form-control" id="productTitle" placeholder="Enter a compelling product title" maxlength="100">
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label class="form-label required">SKU</label>
-                        <input type="text" class="form-control" id="productSku" placeholder="Enter unique SKU" maxlength="50">
+                        <input type="text" name="sku" class="form-control" id="productSku" placeholder="Enter unique SKU" maxlength="50">
                     </div>
                 </div>
             </div>
@@ -92,31 +94,29 @@ require_once 'includes/head.php';
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="form-label required">Category</label>
-                        <select class="form-select" id="productCategory">
-                            <option value="">Select Category</option>
-                            <option value="electronics">Electronics</option>
-                            <option value="fashion">Fashion</option>
-                            <option value="home">Home & Garden</option>
-                            <option value="health">Health & Beauty</option>
-                            <option value="sports">Sports & Fitness</option>
-                            <option value="books">Books & Media</option>
-                            <option value="toys">Toys & Games</option>
-                            <option value="automotive">Automotive</option>
+                        <select class="form-select" id="productCategory" name="category_id">
+                            <option value="0" disabled>-- Select Category --</option>
+                            <?php $categories = $db->squery("SELECT id,name FROM categories WHERE parent_id != 0");
+                            foreach ($categories as $category) {   ?>
+                                <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
+                            <?php } ?>
+
                         </select>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="form-label">Brand</label>
-                        <input type="text" class="form-control" id="productBrand" placeholder="Enter brand name" maxlength="50">
+                        <input type="text" name="brand" class="form-control" id="productBrand" placeholder="Enter brand name" maxlength="50">
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="form-label">Tags</label>
-                <div class="tags-container" id="tagsContainer">
-                    <input type="text" class="tag-input" placeholder="Add tags and press Enter">
+                <div class="tags tc-tags form-control">
+                    <input type="text" class="tag-text">
+                    <input type="text" data-tc-tag="true" name="tags" class="iTags  d-none">
                 </div>
             </div>
         </div>
@@ -130,7 +130,7 @@ require_once 'includes/head.php';
             <div class="form-group">
                 <label class="form-label required">Description</label>
                 <div class="tinymce-wrapper" id="tinymceWrapper">
-                    <textarea id="productDescription" name="productDescription">
+                    <textarea id="productDescription" name="description">
                             <p>Write a compelling product description here...</p>
                         </textarea>
                 </div>
@@ -148,21 +148,21 @@ require_once 'includes/head.php';
                     <label class="form-label required">Regular Price</label>
                     <div class="input-group">
                         <span class="input-group-text">$</span>
-                        <input type="number" class="form-control" id="regularPrice" placeholder="0.00" step="0.01" min="0">
+                        <input type="number" name="price" class="form-control" id="regularPrice" placeholder="0.00" step="0.01" min="0">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Sale Price</label>
                     <div class="input-group">
                         <span class="input-group-text">$</span>
-                        <input type="number" class="form-control" id="salePrice" placeholder="0.00" step="0.01" min="0">
+                        <input type="number" name="sale_price" class="form-control" id="salePrice" placeholder="0.00" step="0.01" min="0">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Cost Price</label>
                     <div class="input-group">
                         <span class="input-group-text">$</span>
-                        <input type="number" class="form-control" id="costPrice" placeholder="0.00" step="0.01" min="0">
+                        <input type="number" name="cost_price" class="form-control" id="costPrice" placeholder="0.00" step="0.01" min="0">
                     </div>
                 </div>
             </div>
@@ -177,15 +177,15 @@ require_once 'includes/head.php';
             <div class="inventory-grid">
                 <div class="form-group">
                     <label class="form-label">Stock Quantity</label>
-                    <input type="number" class="form-control" id="stockQuantity" placeholder="0" min="0">
+                    <input type="number" name="quantity" class="form-control" id="stockQuantity" placeholder="0" min="0">
                 </div>
                 <div class="form-group">
                     <label class="form-label">Low Stock Alert</label>
-                    <input type="number" class="form-control" id="lowStockAlert" placeholder="5" min="0">
+                    <input type="number" name="alert_qty" class="form-control" id="lowStockAlert" placeholder="5" min="0">
                 </div>
                 <div class="form-group">
                     <label class="form-label">Weight (kg)</label>
-                    <input type="number" class="form-control" id="productWeight" placeholder="0.00" step="0.01" min="0">
+                    <input type="number" name="weight" class="form-control" id="productWeight" placeholder="0.00" step="0.01" min="0">
                 </div>
             </div>
         </div>
@@ -200,7 +200,7 @@ require_once 'includes/head.php';
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="form-label">Status</label>
-                        <select class="form-select" id="productStatus">
+                        <select class="form-select" id="productStatus" name="status">
                             <option value="active">Active</option>
                             <option value="inactive">Inactive</option>
                             <option value="draft">Draft</option>
@@ -210,41 +210,36 @@ require_once 'includes/head.php';
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="form-label">Visibility</label>
-                        <select class="form-select" id="productVisibility">
+                        <select class="form-select" id="productVisibility" name="visibility">
                             <option value="public">Public</option>
                             <option value="private">Private</option>
-                            <option value="hidden">Hidden</option>
                         </select>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
-
-    <!-- Action Section -->
-    <div class="action-section">
-        <div class="progress-indicator">
-            <span>Form Completion:</span>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+        <!-- Action Section -->
+        <div class="action-section">
+            <div class="progress-indicator">
+                <span>Form Completion:</span>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+                <span id="progressText">0%</span>
             </div>
-            <span id="progressText">0%</span>
+            <div class="btn-group">
+                <input type="hidden" name="saveProductData" value="true">
+                <button type="button" class="btn-custom btn-outline-custom" id="saveDraftBtn">
+                    <i class="hgi hgi-stroke hgi-floppy-disk"></i>
+                    Save as Draft
+                </button>
+                <button type="submit" class="btn-custom btn-primary-custom" id="publishBtn">
+                    <i class="hgi hgi-stroke hgi-rocket"></i>
+                    Publish Product
+                </button>
+            </div>
         </div>
-        <div class="btn-group">
-            <button type="button" class="btn-custom btn-outline-custom" id="saveDraftBtn">
-                <i class="hgi hgi-stroke hgi-floppy-disk"></i>
-                Save as Draft
-            </button>
-            <button type="button" class="btn-custom btn-secondary-custom" id="previewBtn">
-                <i class="hgi hgi-stroke hgi-view"></i>
-                Preview
-            </button>
-            <button type="button" class="btn-custom btn-primary-custom" id="publishBtn">
-                <i class="hgi hgi-stroke hgi-rocket"></i>
-                Publish Product
-            </button>
-        </div>
-    </div>
+    </form>
 </div>
 
 <?php require_once 'includes/foot.php'; ?>

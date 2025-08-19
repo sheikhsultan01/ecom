@@ -36,12 +36,6 @@ if (isset($_POST['saveCategoryData'])) {
         'status' => $status
     ];
 
-    // if ($id) {
-    //     $save = $db->update("categories", $dbData, ['id' => $id]);
-    // } else {
-    //     $save = $db->insert("categories", $dbData);
-    // }
-
     $save = $db->save("categories", $dbData, ['id' => $id]);
 
     if ($save) returnSuccess("Saved Category Successfully!");

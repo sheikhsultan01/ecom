@@ -5,6 +5,7 @@
     "moment.min.js",
     "functions.js",
     "notify.js",
+    "SS/functions.js",
     "SS/js-form.js",
     "script.js",
 ], 'js', _DIR_ . "js");

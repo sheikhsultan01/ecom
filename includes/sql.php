@@ -3,6 +3,7 @@ define('_DIR_', '../');
 require_once "db.php";
 
 @mkdir(_DIR_ . 'images/assets');
+@mkdir(_DIR_ . 'images/products');
 
 // Meta Data Table
 $db->squery("CREATE TABLE IF NOT EXISTS `meta_data` (
@@ -47,6 +48,31 @@ if (_is('create_categories_table')) {
   `status` ENUM('active', 'inactive') NOT NULL DEFAULT 'active',
   `parent_id` INT NOT NULL DEFAULT '0',
   `uid` varchar(36) NOT NULL DEFAULT (uuid()),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+)");
+}
+// Create products table
+if (_is('create_products_table')) {
+  $db->squery("CREATE TABLE `products` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(250) NOT NULL,
+  `description` TEXT NOT NULL,
+  `images` JSON NOT NULL DEFAULT (JSON_OBJECT()),
+  `sku` VARCHAR(100) NOT NULL,
+  `category_id` INT NOT NULL,
+  `brand` VARCHAR(250) NOT NULL,
+  `tags` JSON NOT NULL DEFAULT (JSON_ARRAY()),
+  `price` VARCHAR(50) NOT NULL,
+  `sale_price` VARCHAR(50) NOT NULL,
+  `cost_price` VARCHAR(50) NOT NULL,
+  `quantity` INT NOT NULL,
+  `alert_qty` INT NOT NULL,
+  `weight` VARCHAR(50) NOT NULL,
+  `status` ENUM('active', 'inactive','draft') NOT NULL DEFAULT 'active',
+  `visibility` ENUM('private', 'public') NOT NULL DEFAULT 'public',
+  `uid` VARCHAR(36) NOT NULL DEFAULT (uuid()),
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)

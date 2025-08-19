@@ -22,9 +22,9 @@
                         Inventory
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="inventoryDropdown">
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-plus"></i>Add Product</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-list"></i>Manage Products</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-tags"></i>Categories</a></li>
+                        <li><a class="dropdown-item" href="add-product"><i class="fas fa-plus"></i>Add Product</a></li>
+                        <li><a class="dropdown-item" href="inventory"><i class="fas fa-list"></i>Manage Products</a></li>
+                        <li><a class="dropdown-item" href="categories"><i class="fas fa-tags"></i>Categories</a></li>
                     </ul>
                 </li>
 
@@ -97,4 +97,4 @@
     </div>
 </nav>
 <!-- Main Container -->
-<div class="main-container">
+<div class="main-container p-3">

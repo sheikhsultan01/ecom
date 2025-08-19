@@ -3,6 +3,7 @@ test.php
 test.html
 # Ignore all images in the assets directory
 images/assets/*
+images/products/*
 
 # Ignore seller's test file
 seller/test.php
