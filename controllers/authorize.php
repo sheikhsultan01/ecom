@@ -1,5 +1,4 @@
 <?php
-@session_start();
 define('DIR', '../');
 require_once DIR . 'includes/db.php';
 

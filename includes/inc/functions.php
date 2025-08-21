@@ -240,3 +240,33 @@ function redirectTo($url)
     echo '<script>location.assign("' . $url . '");</script>';
     die();
 }
+
+// Check if user login
+function login_user($data)
+{
+    global $db;
+    $key = $data['session_key'];
+    $user_table = $data['user_table'];
+    $user_id = arr_val($_SESSION, $key);
+    if (!$user_id)
+        return null;
+    $user = $db->select_one($user_table, 'id,uid,name,fname,lname,phone,email,is_admin,is_seller', ['id' => $user_id]);
+    if (!$user) {
+        unset($_SESSION[$key]);
+        return null;
+    }
+    return $user;
+}
+// Check if is admin
+function is_admin()
+{
+    if (!LOGGED_IN_USER) return false;
+    $admin = LOGGED_IN_USER['is_admin'] == 1 ? true : false;
+    return $admin;
+}
+function is_seller()
+{
+    if (!LOGGED_IN_USER) return false;
+    $seller = LOGGED_IN_USER['is_seller'] == 1 ? true : false;
+    return $seller;
+}

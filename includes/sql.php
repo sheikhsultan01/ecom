@@ -78,3 +78,7 @@ if (_is('create_products_table')) {
   PRIMARY KEY (`id`)
 )");
 }
+// Alter Table User add column is_seller
+if (_is('add_is_seller_column_in_users_table')) {
+  $db->squery("ALTER TABLE users ADD `is_seller` TINYINT(1) NOT NULL DEFAULT '0'");
+}

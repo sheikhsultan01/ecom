@@ -54,7 +54,7 @@ require_once 'includes/head.php';
                             <span class="current-price">$75</span>
                             <span class="original-price">$100</span>
                         </div>
-                        <button class="add-to-cart" onclick="addToCart(1)">
+                        <button class="add-to-cart">
                             <i class="fas fa-cart-plus"></i> Add to Cart
                         </button>
                     </div>
@@ -74,7 +74,7 @@ require_once 'includes/head.php';
                             <span class="current-price">$140</span>
                             <span class="original-price">$200</span>
                         </div>
-                        <button class="add-to-cart" onclick="addToCart(2)">
+                        <button class="add-to-cart">
                             <i class="fas fa-cart-plus"></i> Add to Cart
                         </button>
                     </div>
@@ -94,7 +94,7 @@ require_once 'includes/head.php';
                             <span class="current-price">$85</span>
                             <span class="original-price">$100</span>
                         </div>
-                        <button class="add-to-cart" onclick="addToCart(3)">
+                        <button class="add-to-cart">
                             <i class="fas fa-cart-plus"></i> Add to Cart
                         </button>
                     </div>
@@ -114,7 +114,7 @@ require_once 'includes/head.php';
                             <span class="current-price">$90</span>
                             <span class="original-price">$150</span>
                         </div>
-                        <button class="add-to-cart" onclick="addToCart(4)">
+                        <button class="add-to-cart">
                             <i class="fas fa-cart-plus"></i> Add to Cart
                         </button>
                     </div>
@@ -134,7 +134,7 @@ require_once 'includes/head.php';
                             <span class="current-price">$120</span>
                             <span class="original-price">$150</span>
                         </div>
-                        <button class="add-to-cart" onclick="addToCart(5)">
+                        <button class="add-to-cart">
                             <i class="fas fa-cart-plus"></i> Add to Cart
                         </button>
                     </div>
@@ -154,7 +154,7 @@ require_once 'includes/head.php';
                             <span class="current-price">$650</span>
                             <span class="original-price">$1000</span>
                         </div>
-                        <button class="add-to-cart" onclick="addToCart(6)">
+                        <button class="add-to-cart">
                             <i class="fas fa-cart-plus"></i> Add to Cart
                         </button>
                     </div>

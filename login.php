@@ -1,4 +1,5 @@
 <?php
+$VERIFY_LOGIN = true;
 require_once 'includes/db.php';
 $page_name = 'Login';
 

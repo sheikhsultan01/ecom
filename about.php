@@ -11,6 +11,7 @@ $JS_FILES = [
     'aos.min.js',
     'about.js'
 ];
+define('INCLUDE_NAVBAR', false);
 
 require_once 'includes/head.php';
 ?>

@@ -11,6 +11,7 @@ $JS_FILES = [
     'contact.js'
 ];
 
+define('INCLUDE_NAVBAR', false);
 require_once 'includes/head.php';
 ?>
 

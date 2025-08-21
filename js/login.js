@@ -1,5 +1,5 @@
 // SignUp Before Callback
-callbeforeFns.signUpBC = function ($form) {
+ss.fn.bc.signUpBC = function ($form) {
     let password = $form.find('.password').val(),
         cPassword = $form.find('.c-password').val();
     if (password !== cPassword) {

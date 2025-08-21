@@ -118,7 +118,12 @@ $(document).on('submit', '.js-form, .ajax-form', function (e) {
     });
 
     const callback = $form.data('callback'),
+        callbefore = $form.data('callbefore'),
         onSuccessAttr = $form.attr('on-success');
+
+    if (callbefore) {
+        return ss.fn._handle($form, res);
+    }
 
     // Normalize action URL
     if (!action.endsWith('.php')) action += '.php';

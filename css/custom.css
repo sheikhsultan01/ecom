@@ -72,3 +72,8 @@ body {
 }
 
 /* #endregion Style for sweetalert */
+
+.align-center {
+    display: flex;
+    align-items: center;
+}

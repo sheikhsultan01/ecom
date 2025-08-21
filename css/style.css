@@ -16,3 +16,50 @@
     --text-muted: #6c757d;
     --card-bg: #fff;
 }
+
+.main-navbar .profile-btn {
+    color: #fff;
+}
+
+/* Dropdown styling */
+.dropdown-menu {
+    border: none;
+    border-radius: 10px;
+    box-shadow: var(--card-shadow);
+    padding: 0.5rem 0;
+    min-width: 280px;
+    margin-top: 0;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.dropdown-item {
+    padding: 0.75rem 1.5rem;
+    color: var(--text-dark);
+    font-size: 0.9rem;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.dropdown-item:hover {
+    background: var(--secondary-gradient);
+    color: var(--accent-color);
+    transform: translateX(5px);
+    border-radius: 10px;
+    width: 95%;
+}
+
+.dropdown-item i {
+    margin-right: 10px;
+    width: 16px;
+    text-align: center;
+}
+
+.dropdown-menu.dropdown-menu-end {
+    right: 0;
+    left: auto;
+}
+
+.dropdown-menu.dropdown-menu-start {
+    left: 0;
+    right: auto;
+}
