@@ -9,7 +9,8 @@ $CSS_FILES = [
 $JS_FILES = [
     'login.js'
 ];
-
+define('INCLUDE_NAVBAR', false);
+define('INCLUDE_FOOTER', false);
 require_once 'includes/head.php';
 ?>
 

@@ -241,7 +241,12 @@ class DB
         if ($this->exists($table, $conditions)) {
             return $this->update($table, $data, $conditions, $return_query);
         } else {
-            $insertData = array_merge($conditions, $data);
+            // Remove the empty or false key values
+            $filteredConditions = array_filter($conditions, function ($value) {
+                return !is_null($value) && $value !== '' && $value !== false;
+            });
+
+            $insertData = array_merge($filteredConditions, $data);
             return $this->insert($table, $insertData, $return_query);
         }
     }

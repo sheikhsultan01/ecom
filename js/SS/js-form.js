@@ -177,7 +177,6 @@ $(document).on('submit', '.js-form, .ajax-form', function (e) {
             // "images" array maintained in your JS
             if (typeof images !== 'undefined') {
                 images.forEach((img, idx) => {
-                    console.log(img, " single imageeeeeeee");
                     formData.append(`files[${idx}]`, img.file);
                     formData.append(`positions[${idx}]`, img.position || idx);
                     if (img.isPrimary) {

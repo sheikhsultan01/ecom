@@ -233,7 +233,7 @@
     color: #ffa000;
 }
 
-.badge-out-of-stock {
+.badge-out-stock {
     background: #ffebee;
     color: #d32f2f;
 }
@@ -249,6 +249,7 @@
     transition: all 0.3s ease;
     color: white;
     border: none;
+    text-decoration: none;
 }
 
 .edit-btn {
@@ -262,40 +263,6 @@
 .action-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.pagination-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
-}
-
-.pagination {
-    display: flex;
-    gap: 10px;
-}
-
-.page-item .page-link {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-    font-weight: 600;
-    border: none;
-    transition: all 0.3s ease;
-    color: var(--text-dark);
-}
-
-.page-item:hover .page-link {
-    background: var(--secondary-gradient);
-}
-
-.page-item.active .page-link {
-    background: var(--primary-gradient);
-    color: white;
-    box-shadow: var(--card-shadow);
 }
 
 /* Responsive Adjustments */

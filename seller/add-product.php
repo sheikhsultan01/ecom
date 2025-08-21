@@ -1,7 +1,30 @@
 <?php
 define('_DIR_', '../');
 require_once 'includes/db.php';
-$page_name = 'Add Product';
+$uid = _get_param('uid', false);
+
+// Get Location
+$_product = null;
+if ($uid) {
+    $_product = $db->select_one('products', '*', ['uid' => $uid]);
+
+    if (!$_product) redirectTo("inventory");
+    $images = json_decode($_product['images'], true);
+    if (!empty($images)) {
+        $names = array_column($images, "name");
+        $img_names = implode(',', $names);
+        $_product['product_images'] = $img_names;
+    } else {
+        $_product['product_images'] = '';
+    }
+    $_product['images'] = $images;
+
+    // Encode the tags
+    $tags = implode(',', json_decode($_product['tags'], true));
+    $_product['tags'] = $tags;
+}
+$title = $uid ?  'Update Product' : 'Add Product';
+$page_name = $title;
 
 $CSS_FILES = [
     _DIR_ . 'css/sortable.min.css',
@@ -23,18 +46,18 @@ require_once 'includes/head.php';
     <div class="page-header">
         <h1 class="page-title">
             <i class="fas fa-plus-circle"></i>
-            Add New Product
+            <?= $title ?>
         </h1>
         <nav class="breadcrumb-nav">
             <a href="#" class="breadcrumb-item">Dashboard</a>
             <span class="breadcrumb-separator"> / </span>
             <a href="#" class="breadcrumb-item">Products</a>
             <span class="breadcrumb-separator"> / </span>
-            <span class="breadcrumb-item active">Add Product</span>
+            <span class="breadcrumb-item active"><?= $title ?></span>
         </nav>
     </div>
 
-    <form id="addProductForm" action="products" class="form-container js-form" data-custom-files="true">
+    <form id="addProductForm" action="add-product" class="form-container js-form" data-custom-files="true">
         <!-- Product Images Section -->
         <div class="form-section">
             <h2 class="section-title">
@@ -65,7 +88,8 @@ require_once 'includes/head.php';
                 </div>
 
                 <!-- Hidden File Input -->
-                <input type="file" name="images" class="file-input" id="fileInput" accept="image/*" multiple>
+                <input type="file" name="files" class="file-input" id="fileInput" accept="image/*" multiple>
+                <input class="d-none" type="text" name="product_images">
             </div>
         </div>
 
@@ -221,7 +245,7 @@ require_once 'includes/head.php';
         <!-- Action Section -->
         <div class="action-section">
             <div class="progress-indicator">
-                <span>Form Completion:</span>
+                <span>Progress:</span>
                 <div class="progress-bar">
                     <div class="progress-fill" id="progressFill" style="width: 0%"></div>
                 </div>
@@ -229,6 +253,7 @@ require_once 'includes/head.php';
             </div>
             <div class="btn-group">
                 <input type="hidden" name="saveProductData" value="true">
+                <input class="d-none" type="text" name="uid">
                 <button type="button" class="btn-custom btn-outline-custom" id="saveDraftBtn">
                     <i class="hgi hgi-stroke hgi-floppy-disk"></i>
                     Save as Draft
@@ -241,5 +266,9 @@ require_once 'includes/head.php';
         </div>
     </form>
 </div>
+
+<script>
+    const PRODUCT_DATA = <?= json_encode($_product) ?>;
+</script>
 
 <?php require_once 'includes/foot.php'; ?>

@@ -4,5 +4,7 @@ array_unshift($CSS_FILES, [
     DIR . 'css/footer.css',
 ]);
 require_once global_file("header");
+@define('INCLUDE_NAVBAR', true);
 // Navbar
-require_once 'components/navbar.php';
+if (INCLUDE_NAVBAR)
+    require_once 'components/navbar.php';

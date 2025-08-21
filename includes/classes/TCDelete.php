@@ -38,8 +38,6 @@ class DeleteData
     // on action
     public function on($action, $callback)
     {
-        echo $action;
-        exit;
         $this->callbacks[$action] = $callback;
     }
     // set data

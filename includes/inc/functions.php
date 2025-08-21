@@ -234,3 +234,9 @@ function skeleton($type, $config)
     }
     return $html;
 }
+
+function redirectTo($url)
+{
+    echo '<script>location.assign("' . $url . '");</script>';
+    die();
+}

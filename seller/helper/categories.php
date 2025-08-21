@@ -75,10 +75,12 @@ $jdManager->defineData('subCategories', [
                     ORDER BY c.id DESC LIMIT $limit OFFSET $offset";
         $subCategories = $db->squery($cat_query);
 
+        $total_sub_cat = $db->squery("SELECT COUNT(*) AS total FROM categories WHERE parent_id != 0");
+
         return [
             'data' => $subCategories,
             'pagination' => [
-                'total' => count($subCategories),
+                'total' => $total_sub_cat[0]['total'],
                 'page' => $page,
                 'limit' => $limit,
             ]

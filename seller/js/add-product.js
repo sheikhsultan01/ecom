@@ -1,5 +1,23 @@
 $(document).ready(function () {
 
+    if (PRODUCT_DATA) {
+        fillValuesToForm($('#addProductForm'), PRODUCT_DATA);
+        loadExistingImages(PRODUCT_DATA.images); // Display existing images
+        setTimeout(updateProgress, 1000);  // Update the Progress status
+    }
+
+    function syncImagesToInput() {
+        const productImagesInput = $('[name="product_images"]');
+        const imageNames = images.map(img => img.name);
+        productImagesInput.val(imageNames.join(','));
+    }
+
+    // Form submit hone se pehle call karna
+    $('#addProductForm').on('submit', function () {
+        syncImagesToInput();
+    });
+
+
     // Initialize Sortable
     Sortable.create(document.getElementById('imagesGrid'), {
         animation: 150,
@@ -88,6 +106,7 @@ $(document).ready(function () {
         });
 
         updateImagePositions();
+        syncImagesToInput();  // Update Images
     }
 
     // Create image item HTML
@@ -142,50 +161,6 @@ $(document).ready(function () {
         renderImages();
     };
 
-    // Update stats
-    // function updateStats() {
-    //     const primaryCount = images.filter(img => img.isPrimary).length;
-    //     const totalSizeInMB = (totalSize / (1024 * 1024)).toFixed(2);
-
-    //     $('#totalImages').text(images.length);
-    //     $('#primaryImages').text(primaryCount);
-    //     $('#totalSize').text(totalSizeInMB + ' MB');
-    // }
-
-    // Upload all images
-    // $('#uploadAllBtn').on('click', function() {
-    //     if (images.length === 0) {
-    //         alert('Please add some images first!');
-    //         return;
-    //     }
-
-    //     // Simulate upload process
-    //     const formData = new FormData();
-    //     images.forEach((image, index) => {
-    //         formData.append(`image_${index}`, image.file);
-    //         formData.append(`image_${index}_primary`, image.isPrimary);
-    //     });
-
-    //     // Replace this with your actual upload logic
-    //     console.log('Uploading images:', images);
-    //     alert('Images uploaded successfully!');
-    // });
-
-    // Clear all images
-    $('#clearAllBtn').on('click', function () {
-        if (images.length === 0) {
-            alert('No images to clear!');
-            return;
-        }
-
-        if (confirm('Are you sure you want to clear all images?')) {
-            images = [];
-            totalSize = 0;
-            renderImages();
-            // updateStats();
-        }
-    });
-
     // Set image as primary
     $(document).on('click', '.image-item img', function () {
         const index = parseInt($(this).closest('.image-item').data('index'));
@@ -199,6 +174,16 @@ $(document).ready(function () {
         renderImages();
         // updateStats();
     });
+
+    function loadExistingImages(existing) {
+        images = existing.map((img, i) => ({
+            src: `${SITE_URL}images/products/${img.name}`,
+            name: img.name,
+            file: null,
+            isPrimary: img.isPrimary
+        }));
+        renderImages();
+    }
 
     // Initialize TinyMCE
     tinymce.init({
