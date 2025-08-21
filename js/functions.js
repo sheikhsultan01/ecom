@@ -270,5 +270,3 @@ function positionDropdown($dropdown) {
         $menu.addClass('dropdown-menu-start');
     }
 }
-
-initializeHoverableDropdowns();
