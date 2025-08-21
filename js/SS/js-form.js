@@ -1,5 +1,3 @@
-const callbackFns = {},
-    callbeforeFns = {};
 let images = [];
 
 // Edit form inof
@@ -119,15 +117,8 @@ $(document).on('submit', '.js-form, .ajax-form', function (e) {
         }
     });
 
-    const callbackName = $form.data('callback'),
-        callbeforeName = $form.data('callbefore'),
+    const callback = $form.data('callback'),
         onSuccessAttr = $form.attr('on-success');
-
-    // Run callbefore function (if defined)
-    if (callbeforeName && typeof callbeforeFns?.[callbeforeName] === 'function') {
-        const proceed = callbeforeFns[callbeforeName]($form);
-        if (proceed === false) return; // stop submission
-    }
 
     // Normalize action URL
     if (!action.endsWith('.php')) action += '.php';
@@ -139,8 +130,9 @@ $(document).on('submit', '.js-form, .ajax-form', function (e) {
         type: 'POST',
         dataType: 'json',
         success: function (res) {
-            if (callbackName && typeof callbackFns?.[callbackName] === 'function') {
-                callbackFns[callbackName]($form, res);
+            if (callback) {
+                return ss.fn._handle($form, res);
+
             } else {
                 if (res.status === 'success') {
                     sAlert(res.data, 'success');
@@ -230,8 +222,8 @@ $(document).on('click', '.delete-data-btn', function (e) {
                     else
                         sAlert(data.data, data.status);
 
-                    if (callback && typeof callbackFns?.[callback] === 'function') {
-                        callbackFns[callback]($form, res);
+                    if (typeof ss.fn.cb[callback] == 'function') {
+                        ss.fn.cb[callback]($(this), data);
                     }
                 },
                 error: function () {

@@ -118,3 +118,12 @@ if (isset($_POST['saveProductData'])) {
     $save = $db->save("products", $dbData, ['uid' => $uid]);
     if ($save) returnSuccess("Product Saved Successfully!", ['redirect' => 'inventory']);
 }
+
+// Update Product Quantity
+if (isset($_POST['updateProductQuantity'])) {
+    $id = _POST('id');
+    $quantity = _POST('quantity');
+
+    $update = $db->update('products', ['quantity' => $quantity], ['id' => $id]);
+    if ($update) returnSuccess("Quantity Updated Successfully!");
+}

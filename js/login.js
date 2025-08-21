@@ -11,7 +11,7 @@ callbeforeFns.signUpBC = function ($form) {
 }
 
 // SignUp Callback
-callbackFns.signUpCB = function ($form, res) {
+ss.fn.cb.signUpCB = function ($form, res) {
     if (res.status === "success") {
         $form.trigger('reset');
         sAlert(res.data, 'success');

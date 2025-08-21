@@ -114,12 +114,12 @@ require_once 'includes/head.php';
                     <th>SKU</th>
                     <th>Category</th>
                     <th>Price</th>
-                    <th>Stock</th>
+                    <th>Quantity</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody id="productsContainer" jd-source="products" jd-pick="#singleProduct" jd-drop="this" jd-pagination="#productPagination">
+            <tbody id="productsContainer" jd-source="products" jd-pick="#singleProduct" jd-drop="this" jd-pagination="#productPagination" jd-success="SuccessCB">
                 <?= skeleton("table", [
                     'columns' => 7,
                 ]) ?>
@@ -128,6 +128,20 @@ require_once 'includes/head.php';
         <div id="productPagination" class="mt-2 jd-pagination"></div>
     </div>
 </div>
+
+<script>
+    function SuccessCB(res, $ele) {
+        initSsJxElements('.ss-jx-element'); // Jx Elements
+        // Update Product Quantity Callback
+        ss.fn.cb.QuantityUpdateCB = function($form, res) {
+            if (res.status === "success") {
+                notify(res.data, res.status)
+            } else {
+                notify(res.data, res.status)
+            }
+        }
+    }
+</script>
 
 <script type="text/html" id="singleProduct">
     <tr>
@@ -143,7 +157,11 @@ require_once 'includes/head.php';
         <td>${sku}</td>
         <td>${category_name}</td>
         <td>${price}</td>
-        <td>${quantity}</td>
+        <td>
+            <div class="d-flex justify-content-center">
+                <input type="number" name="quantity" class="form-control w-50 ss-jx-element" value="${quantity}" data-target="add-product" data-submit='{"updateProductQuantity" : true, "id" : ${id}}' data-listener="change" data-callback="QuantityUpdateCB">
+            </div>
+        </td>
         <td><span class="badge-custom badge-${checkStockStatus(quantity,alert_qty,'class')}">${checkStockStatus(quantity,alert_qty)}</span></td>
         <td>
             <div class="d-flex gap-2">

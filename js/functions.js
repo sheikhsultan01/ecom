@@ -97,11 +97,42 @@ function jdRefreshAndHideModal(source, modalId) {
     $(`#${modalId}`).modal('hide');
 }
 
-// Get data attribute value
-$.fn.dataVal = function (dataName, defaultValue = false) {
-    let attrVal = defaultValue;
-    if ($(this).hasAttr("data-" + dataName)) {
-        attrVal = $(this).attr("data-" + dataName);
+// To boolean
+function toBoolean(data) {
+    if (typeof data === "boolean") return data;
+    if (isJson(data)) {
+        data = JSON.parse(data);
     }
-    return attrVal;
+
+    return data ? true : false;
+}
+// Error
+function makeError(error = 'Something went wrong! Please try again') {
+    if (typeof error !== "string")
+        error = 'Something went wrong! Please try again';
+    Swal.fire({
+        type: 'error',
+        title: 'Oops...',
+        text: error,
+    });
+}
+// Disaled button
+function disableBtn(btn) {
+    btn = $(btn);
+    btn.html(spinner);
+    btn.addClass('disabled');
+    btn.prop('disabled', true);
+}
+// Enable button
+function enableBtn(btn, text) {
+    btn = $(btn);
+    btn.html(text);
+    btn.removeClass('disabled');
+    btn.prop('disabled', false);
+}
+function isObject(obj) {
+    if (obj.__proto__.toString) {
+        return (obj.toString() == "[object Object]")
+    }
+    return false;
 }

@@ -28,8 +28,14 @@ function trim(str, char = " ") {
     return str;
 }
 
+// Wait Promise
+function wait(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 function refreshFns() {
     initTcTags(".tc-tags") // Tc Tags Input
+    initSsJxElements('.ss-jx-element'); // Jx Elements
 }
 
 $(document).ready(refreshFns);
