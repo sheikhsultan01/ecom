@@ -63,11 +63,12 @@
 }
 
 .product-title {
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     font-weight: 600;
     color: var(--text-dark);
     margin-bottom: 0.5rem;
     line-height: 1.4;
+    text-decoration: none;
 }
 
 .product-price {

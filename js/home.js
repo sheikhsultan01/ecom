@@ -12,3 +12,11 @@ const observer = new IntersectionObserver(function (entries) {
         }
     });
 }, observerOptions);
+
+function getDiscountPercentage(originalPrice, salePrice) {
+    if (!originalPrice || originalPrice <= 0) {
+        return 0;
+    }
+    let discount = ((originalPrice - salePrice) / originalPrice) * 100;
+    return "-" + Math.round(discount) + "%"; // round to nearest integer
+}

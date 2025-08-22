@@ -28,10 +28,5 @@ require_once 'includes/head.php';
 <!-- Profile Picture Upload/Crop Modal -->
 <?php require_once 'components/profile/crop-modal.php'; ?>
 
-<!-- Success Notification -->
-<div class="notification d-none" id="successNotification">
-    <i class="bi bi-check-circle"></i>
-    <span id="notificationText">Changes saved successfully!</span>
-</div>
-<script src="<?= GOOGLE_MAP_URL ?>"></script>
+<!-- <script src="<?= GOOGLE_MAP_URL ?>"></script> -->
 <?php require_once 'includes/foot.php'; ?>

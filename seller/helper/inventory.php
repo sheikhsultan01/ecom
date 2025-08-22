@@ -1,5 +1,5 @@
 <?php
-// Sub Categories
+// Products
 $jdManager->defineData('products', [
     'data' => function ($params) use ($db) {
 

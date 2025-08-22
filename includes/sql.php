@@ -82,3 +82,7 @@ if (_is('create_products_table')) {
 if (_is('add_is_seller_column_in_users_table')) {
   $db->squery("ALTER TABLE users ADD `is_seller` TINYINT(1) NOT NULL DEFAULT '0'");
 }
+// Add profile related columns in users table
+if (_is('add_profile_related_columns_in_users_table')) {
+  $db->squery("ALTER TABLE users ADD `address` JSON NOT NULL DEFAULT (JSON_OBJECT()), ADD `date_of_birth` DATE DEFAULT NULL, ADD `bio` TEXT DEFAULT NULL, ADD `gender` ENUM('male', 'female','other') NOT NULL DEFAULT 'male'");
+}

@@ -10,3 +10,4 @@ $CSS_FILES = [];
 $JS_FILES = [];
 define('ASSETS_V', "?v=" . (ENV === 'prod' ? '1.0.0' : time()));
 define('ALLOWED_IMAGE_EXTENSIONS', ['jpg', 'jpeg', 'png', 'gif', 'webp']);
+define('CURRENCY', '$');

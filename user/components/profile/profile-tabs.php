@@ -16,22 +16,21 @@
             </button>
         </li>
     </ul>
-
     <div class="tab-content" id="profileTabsContent">
         <!-- Personal Details Tab -->
         <div class="tab-pane fade show active" id="personal" role="tabpanel" aria-labelledby="personal-tab">
-            <form id="personalDetailsForm">
+            <form action="profile" class="js-form" id="personalDetailsForm" data-callback="updateProfileCB">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="firstName" class="form-label">First Name</label>
-                            <input type="text" class="form-control" id="firstName" value="John">
+                            <input type="text" name="fname" class="form-control" id="firstName" placeholder="First Name..." value="<?= LOGGED_IN_USER['fname'] ?>">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="lastName" class="form-label">Last Name</label>
-                            <input type="text" class="form-control" id="lastName" value="Doe">
+                            <input type="text" name="lname" class="form-control" id="lastName" placeholder="Last Name..." value="<?= LOGGED_IN_USER['lname'] ?>">
                         </div>
                     </div>
                 </div>
@@ -40,14 +39,14 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="email" class="form-label">Email Address</label>
-                            <input type="email" class="form-control" id="email" value="john.doe@example.com" readonly>
+                            <input type="email" class="form-control" id="email" value="<?= LOGGED_IN_USER['email'] ?>" readonly>
                             <div class="form-text">Email address cannot be changed</div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="phone" class="form-label">Phone Number</label>
-                            <input type="tel" class="form-control" id="phone" value="+1 (123) 456-7890">
+                            <input type="tel" name="phone" class="form-control" id="phone" placeholder="+1 (123) 456-7890" value="<?= LOGGED_IN_USER['phone'] ?>">
                         </div>
                     </div>
                 </div>
@@ -56,25 +55,35 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="birthDate" class="form-label">Date of Birth</label>
-                            <input type="date" class="form-control" id="birthDate" value="1990-01-15">
+                            <input type="date" name="date_of_birth" class="form-control" id="birthDate" value="<?= LOGGED_IN_USER['date_of_birth'] != null ? LOGGED_IN_USER['date_of_birth'] : '2000-01-01' ?>">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="form-label">Gender</label>
                             <div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="gender" id="genderMale" value="male" checked>
-                                    <label class="form-check-label" for="genderMale">Male</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="female">
-                                    <label class="form-check-label" for="genderFemale">Female</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="gender" id="genderOther" value="other">
-                                    <label class="form-check-label" for="genderOther">Other</label>
-                                </div>
+                                <?php $gender = [
+                                    'genderMale' => [
+                                        'name' => 'Male',
+                                        'value' => 'male'
+                                    ],
+                                    'genderFemale' => [
+                                        'name' => 'Female',
+                                        'value' => 'female'
+                                    ],
+                                    'genderOther' => [
+                                        'name' => 'Other',
+                                        'value' => 'other'
+                                    ]
+                                ];
+                                foreach ($gender as $key => $value) {
+                                    $is_checked = LOGGED_IN_USER['gender'] == $value['value'] ? 'checked' : '';
+                                ?>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender" id="<?= $key ?>" value="<?= $value['value'] ?>" <?= $is_checked ?>>
+                                        <label class="form-check-label" for="<?= $key ?>"><?= $value['name'] ?></label>
+                                    </div>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>
@@ -82,10 +91,12 @@
 
                 <div class="form-group">
                     <label for="bio" class="form-label">Bio (Optional)</label>
-                    <textarea class="form-control" id="bio" rows="3" placeholder="Tell us about yourself...">I'm passionate about eco-friendly products and sustainable living.</textarea>
+                    <textarea class="form-control" name="bio" id="bio" rows="3" placeholder="Tell us about yourself..."><?= LOGGED_IN_USER['bio'] ?></textarea>
                 </div>
 
                 <div class="text-end mt-4">
+                    <input type="hidden" name="updateUserProfile" value="true">
+                    <input type="hidden" name="uid" value="<?= LOGGED_IN_USER['uid'] ?>">
                     <button type="submit" class="btn btn-primary">
                         <i class="hgi hgi-stroke hgi-checkmark-circle-01 me-2"></i>
                         Save Changes

@@ -1,4 +1,12 @@
 $(document).ready(function () {
+    // Profile Update Callback
+    ss.fn.cb.updateProfileCB = function ($form, res) {
+        if (res.status == 'success') {
+            notify(res.data, res.status);
+            return true;
+        }
+        notify(res.data, res.status);
+    }
     // Initialize variables
     let cropper;
     let map;
@@ -197,22 +205,9 @@ $(document).ready(function () {
             // In a real application, you would upload this to your server
             // using AJAX or form submission
 
-            // Show success notification
-            showNotification('Profile picture updated successfully!');
-
             // Close modal
             $('#avatarModal').modal('hide');
         }
-    });
-
-    // Handle form submissions
-    $('#personalDetailsForm').submit(function (e) {
-        e.preventDefault();
-        // In a real application, you would submit this to your server
-        // using AJAX or form submission
-
-        // Show success notification
-        showNotification('Personal details updated successfully!');
     });
 
     $('#passwordChangeForm').submit(function (e) {
@@ -229,12 +224,6 @@ $(document).ready(function () {
             return;
         }
 
-        // In a real application, you would submit this to your server
-        // using AJAX or form submission
-
-        // Show success notification
-        showNotification('Password updated successfully!');
-
         // Reset form
         this.reset();
         $('#passwordStrength').css('width', '0');
@@ -246,9 +235,6 @@ $(document).ready(function () {
     $('#saveAddressBtn').click(function () {
         // In a real application, you would submit this to your server
         // using AJAX or form submission
-
-        // Show success notification
-        showNotification('Address saved successfully!');
 
         // Close modal
         $('#addAddressModal').modal('hide');
@@ -309,14 +295,4 @@ $(document).ready(function () {
             $('#confirmPasswordFeedback').text('Passwords match').removeClass('text-danger').addClass('text-success');
         }
     });
-
-    // Show notification
-    function showNotification(message) {
-        $('#notificationText').text(message);
-        $('#successNotification').addClass('show');
-
-        setTimeout(function () {
-            $('#successNotification').removeClass('show');
-        }, 3000);
-    }
 });

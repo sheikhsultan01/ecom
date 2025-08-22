@@ -1,7 +1,7 @@
   <!-- Navigation Bar -->
   <nav class="navbar navbar-expand-lg navbar-dark mb-4">
       <div class="container">
-          <a class="navbar-brand" href="index.html">
+          <a class="navbar-brand" href="../">
               <i class="bi bi-leaf me-2"></i>GreenShop
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">

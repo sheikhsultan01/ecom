@@ -250,7 +250,7 @@ function login_user($data)
     $user_id = arr_val($_SESSION, $key);
     if (!$user_id)
         return null;
-    $user = $db->select_one($user_table, 'id,uid,name,fname,lname,phone,email,is_admin,is_seller', ['id' => $user_id]);
+    $user = $db->select_one($user_table, '*', ['id' => $user_id]);
     if (!$user) {
         unset($_SESSION[$key]);
         return null;
