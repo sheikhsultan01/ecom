@@ -2,7 +2,7 @@
     <div class="row align-items-center">
         <div class="col-md-4 text-center text-md-start">
             <div class="profile-avatar-container">
-                <img src="<?= SITE_URL ?>images/users/avatar.png" alt="User Avatar" class="profile-avatar" id="profileAvatar">
+                <img src="<?= merge_url(SITE_URL, 'images/users/', LOGGED_IN_USER['image']);  ?>" alt="User Avatar" class="profile-avatar" id="profileAvatar" data-old-image="<?= LOGGED_IN_USER['image'] ?>">
                 <div class="avatar-upload-btn" id="uploadAvatarBtn">
                     <i class="hgi hgi-stroke hgi-camera-02"></i>
                 </div>

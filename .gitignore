@@ -4,6 +4,10 @@ test.html
 # Ignore all images in the assets directory
 images/assets/*
 images/products/*
+images/users/*
+
+# But keep avatar.png
+!images/users/avatar.png
 
 # Ignore seller's test file
 seller/test.php

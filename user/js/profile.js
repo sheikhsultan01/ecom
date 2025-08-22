@@ -79,7 +79,7 @@ $(document).ready(function () {
     });
 
     // Handle image cropping
-    $('#cropImageBtn').click(function () {
+    $(document).on('click', '#cropImageBtn', function () {
         if (cropper) {
             // Get cropped canvas
             const canvas = cropper.getCroppedCanvas({
@@ -87,17 +87,39 @@ $(document).ready(function () {
                 height: 300
             });
 
-            // Convert to data URL
+            // Update profile image (preview ke liye)
             const croppedImageUrl = canvas.toDataURL('image/jpeg');
+            const profileImage = $('#profileAvatar');
+            // Convert to Blob & send via FormData
+            canvas.toBlob(function (blob) {
+                const formData = new FormData();
+                formData.append('upload_image', blob, 'profile.jpg');
+                formData.append('image', profileImage.attr('data-old-image') || '')
+                formData.append('updateUserProfilePicture', true);
 
-            // Update profile image
-            $('#profileAvatar').attr('src', croppedImageUrl);
-
-            // In a real application, you would upload this to your server
-            // using AJAX or form submission
-
-            // Close modal
-            $('#avatarModal').modal('hide');
+                $.ajax({
+                    url: "controllers/profile",
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: "json",
+                    success: function (res) {
+                        let { data, status } = res;
+                        if (res.status == 'success') {
+                            $('#avatarModal').modal('hide'); // close modal
+                            $('#profileAvatar').attr('src', croppedImageUrl); // Set Image
+                            profileImage.attr('data-old-image', data.image); // Set Profile Image in attribute
+                            notify(data.msg, status);
+                            return true;
+                        }
+                        notify(data, status);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Upload failed:", error);
+                    }
+                });
+            }, 'image/jpeg'); // output format
         }
     });
 

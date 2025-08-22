@@ -94,7 +94,6 @@ if (isset($_POST['saveUserAddressData'])) {
 if (isset($_POST['deleteData'])) {
     $action = _POST('action');
     $target = _POST('target');
-    $extra_data = _POST('extra_data');
 
     // Select user from db
     $user = $db->select_one($action, 'address', ['id' => $extra_data]);
@@ -105,11 +104,45 @@ if (isset($_POST['deleteData'])) {
 
         $addresses = json_encode($addresses, JSON_UNESCAPED_UNICODE);
 
-        $update = $db->update('users', ['address' => $addresses], ['id' => $extra_data]);
+        $update = $db->update('users', ['address' => $addresses], ['id' => LOGGED_IN_USER_ID]);
         if ($update) {
             returnSuccess("Address Deleted Successfully!");
         } else {
             returnError("Failed To Delete Address!");
         }
+    }
+}
+
+// Update User Profile Image
+if (isset($_POST['updateUserProfilePicture'])) {
+    $already_exist_image = _post_param('image');
+
+    // save employee image
+    $image = isset($_FILES['upload_image']) ? $_FILES['upload_image'] : null;
+    if ($image) {
+        // Unlink employee image
+        if ($already_exist_image != 'avatar.png') {
+            if (file_exists(_DIR_ . "images/users/" . $already_exist_image)) {
+                @unlink(_DIR_ . "images/users/" . $already_exist_image);
+            }
+        }
+        // Upload avatar
+        $image_name = upload_image(_DIR_ . 'images/users/', $_FILES['upload_image']);
+    } else {
+        if ($already_exist_image !== '') {
+            $image_name = $already_exist_image;
+        } else {
+            $image_name = 'avatar.png';  // Default image name
+        }
+    }
+
+    $update = $db->update('users', ['image' => $image_name], ['id' => LOGGED_IN_USER_ID]);
+    if ($update) {
+        returnSuccess([
+            'msg' => 'Profile Image Updated Successfully!',
+            'image' => $image_name
+        ]);
+    } else {
+        returnError("Failed to Update Picture!");
     }
 }

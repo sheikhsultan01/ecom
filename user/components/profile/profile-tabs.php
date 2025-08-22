@@ -272,7 +272,7 @@
                 <code class="d-none">${editJson}</code>
                 <i class="hgi hgi-stroke hgi-pen-01"></i>
             </button>
-            <button class="btn btn-sm btn-outline-danger delete-data-btn" data-target="${address_uid}" data-action="users" data-controller="profile" data-include="<?= $l_user ?>" data-parent=".address-card" data-callback="deleteAddressCB">
+            <button class="btn btn-sm btn-outline-danger delete-data-btn" data-target="${address_uid}" data-action="users" data-controller="profile" data-parent=".address-card" data-callback="deleteAddressCB">
                 <i class="hgi hgi-stroke hgi-delete-02"></i>
             </button>
         </div>
