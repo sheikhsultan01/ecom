@@ -1,8 +1,9 @@
 <?php
 $page_name .= " - User";
 array_unshift($CSS_FILES, [
-    DIR . 'css/navbar.css',
-    DIR . 'css/sidebar.css',
+    'navbar.css',
+    'sidebar.css',
+    _DIR_ . 'css/AjaxHandler/skeleton.css',
 ]);
 require_once global_file("header");
 // Navbar

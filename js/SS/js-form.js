@@ -198,6 +198,7 @@ $(document).on('click', '.delete-data-btn', function (e) {
     e.preventDefault();
     let dataTarget = $(this).attr('data-target'),
         dataAction = $(this).attr('data-action'),
+        dataInclude = $(this).attr('data-include'),
         callback = $(this).attr("data-callback"),
         controllerURL = 'controllers/',
         row = $(this).parents('tr').first();
@@ -206,6 +207,10 @@ $(document).on('click', '.delete-data-btn', function (e) {
     if (!dataTarget || !dataAction) return false;
     if (this.hasAttribute('data-controller')) controllerURL += $(this).attr("data-controller");
     else controllerURL += "delete";
+
+    let data = { action: dataAction, target: dataTarget, deleteData: true };
+    if (dataInclude) data.extra_data = dataInclude;
+
     Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -219,7 +224,7 @@ $(document).on('click', '.delete-data-btn', function (e) {
             $.ajax({
                 url: controllerURL,
                 type: 'POST',
-                data: { action: dataAction, target: dataTarget, deleteData: true },
+                data: data,
                 dataType: 'json',
                 success: function (data) {
                     if (data.status === "success")

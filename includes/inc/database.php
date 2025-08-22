@@ -1,6 +1,7 @@
 <?php
 require_once 'env.php';
 require_once 'config.php';
+require_once 'files.php';
 require_once 'functions.php';
 
 class DB
@@ -95,6 +96,7 @@ class DB
 
         // First check if record exists with same data
         $existing = $this->select_one($table, "*", $conditions);
+
         if (empty($existing)) {
             return false; // Record doesn't exist
         }
@@ -102,6 +104,20 @@ class DB
         // Check if data is actually different
         $needsUpdate = false;
         foreach ($data as $key => $value) {
+
+            // Skip check if column is JSON-safe
+            if ($this->isJsonColumn($table, $key)) {
+                // Normalize both before comparing
+                $existingVal = $this->normalizeJson($existing[$key] ?? null);
+                $newVal      = $this->normalizeJson($value);
+
+                if ($existingVal !== $newVal) {
+                    $needsUpdate = true;
+                    break;
+                }
+                continue;
+            }
+
             if (!isset($existing[$key]) || $existing[$key] != $value) {
                 $needsUpdate = true;
                 break;
@@ -248,6 +264,42 @@ class DB
 
             $insertData = array_merge($filteredConditions, $data);
             return $this->insert($table, $insertData, $return_query);
+        }
+    }
+
+    // Check if column is marked as JSON-safe in DONT_ENCODE_HTML
+    private function isJsonColumn($table, $column)
+    {
+        if (!defined('DONT_ENCODE_HTML')) {
+            return false;
+        }
+
+        return isset(DONT_ENCODE_HTML[$table]) && in_array($column, DONT_ENCODE_HTML[$table]);
+    }
+
+    // Normalize JSON string for consistent comparison
+    private function normalizeJson($value)
+    {
+        if (is_string($value)) {
+            $decoded = json_decode($value, true);
+            if (json_last_error() === JSON_ERROR_NONE) {
+                // Recursively sort array by keys to avoid order issues
+                $this->recursiveKsort($decoded);
+                return json_encode($decoded, JSON_UNESCAPED_UNICODE);
+            }
+        }
+        return $value;
+    }
+
+    // Helper: recursively sort array keys
+    private function recursiveKsort(&$array)
+    {
+        if (!is_array($array)) return;
+        ksort($array);
+        foreach ($array as &$value) {
+            if (is_array($value)) {
+                $this->recursiveKsort($value);
+            }
         }
     }
 }

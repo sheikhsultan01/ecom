@@ -9,6 +9,11 @@ function _get_param($key, $default = false)
     return isset($_GET[$key]) ? $_GET[$key] : $default;
 }
 
+function _post_check($param_name)
+{
+    return _post_param($param_name, false) ? 1 : 0;
+}
+
 function error($data = "Something went wrong!", $opt = [])
 {
     $return = [
@@ -269,4 +274,31 @@ function is_seller()
     if (!LOGGED_IN_USER) return false;
     $seller = LOGGED_IN_USER['is_seller'] == 1 ? true : false;
     return $seller;
+}
+
+// Assets template load function that will add css and js files to the variables $CSS_FILES and $JS_FILES
+function add_assets_template($template_names, $position = 'first')
+{
+    global $ASSETS_TEPLATES, $CSS_FILES, $JS_FILES;
+
+    $template_names = explode(',', $template_names);
+
+    foreach ($template_names as $template_name) {
+        $template_name = trim($template_name);
+        $template = arr_val($ASSETS_TEPLATES, $template_name);
+
+        if (!$template) return false;
+        $css = arr_val($template, 'css', []);
+        $js = arr_val($template, 'js', []);
+        foreach ($css as $file) {
+            if ($position == 'first') array_unshift($CSS_FILES, $file);
+            else $CSS_FILES[] = $file;
+        }
+        foreach ($js as $file) {
+            if ($position == 'first') array_unshift($JS_FILES, $file);
+            else $JS_FILES[] = $file;
+        }
+    }
+
+    return true;
 }

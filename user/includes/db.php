@@ -1,7 +1,7 @@
 <?php
 @session_start();
-if (!defined('DIR')) define('DIR', './');
-if (!defined('_DIR_')) define('_DIR_', DIR);
+if (!defined('DIR')) define('DIR', '../');
+if (!defined('_DIR_')) define('_DIR_', DIR . '../');
 @define('CLASSES', [
     'jd'
 ]);

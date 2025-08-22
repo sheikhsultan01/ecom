@@ -112,49 +112,35 @@
                     <h5>Your Saved Addresses</h5>
                 </div>
                 <div class="col-md-4 text-md-end">
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addAddressModal">
+                    <button class="btn btn-primary editTableInfo" data-bs-toggle="modal" data-bs-target="#saveAddressMdl" onclick="$('#addressForm').trigger('reset');">
+                        <code class="d-none">{"modalHeading": "Add"}</code>
                         <i class="hgi hgi-stroke hgi-add-01 me-2"></i>
                         Add New Address
                     </button>
                 </div>
             </div>
 
-            <div class="address-list">
-                <!-- Address 1 -->
-                <div class="address-card">
-                    <span class="address-type home">Home</span>
-                    <div class="address-actions">
-                        <button class="btn btn-sm btn-outline-primary me-1" data-bs-toggle="modal" data-bs-target="#editAddressModal">
-                            <i class="hgi hgi-stroke hgi-pen-01"></i>
-                        </button>
-                        <button class="btn btn-sm btn-outline-danger">
-                            <i class="hgi hgi-stroke hgi-delete-02"></i>
-                        </button>
+            <div class="address-list" jd-source="userAddress" jd-pick="#addressTemplate" jd-drop="this" jd-scroll-paginate>
+                <?php for ($i = 0; $i < 2; $i++) { ?>
+                    <div class="address-card">
+                        <div class="pull-away">
+                            <span class="address-type mt-2" jd-data>Work</span>
+                            <div class="address-actions" jd-data>
+                                <button class="btn btn-sm btn-outline-primary me-1" data-bs-toggle="modal" data-bs-target="#editAddressModal">
+                                    <i class="hgi hgi-stroke hgi-pen-01"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger">
+                                    <i class="hgi hgi-stroke hgi-delete-02"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <h6 class="w-50" jd-data>John Doe</h6>
+                        <p class="mb-1 w-50" jd-data>456 Business Ave, Floor 8</p>
+                        <p class="mb-1 w-50" jd-data>New York, NY 10022</p>
+                        <p class="mb-1 w-50" jd-data>Country: United States</p>
+                        <p class="mb-0 w-50" jd-data>Phone: +1 (123) 456-7890</p>
                     </div>
-                    <h6>John Doe</h6>
-                    <p class="mb-1">123 Main Street, Apt 4B</p>
-                    <p class="mb-1">New York, NY 10001</p>
-                    <p class="mb-0">United States</p>
-                    <p class="mb-0">Phone: +1 (123) 456-7890</p>
-                </div>
-
-                <!-- Address 2 -->
-                <div class="address-card">
-                    <span class="address-type work">Work</span>
-                    <div class="address-actions">
-                        <button class="btn btn-sm btn-outline-primary me-1" data-bs-toggle="modal" data-bs-target="#editAddressModal">
-                            <i class="hgi hgi-stroke hgi-pen-01"></i>
-                        </button>
-                        <button class="btn btn-sm btn-outline-danger">
-                            <i class="hgi hgi-stroke hgi-delete-02"></i>
-                        </button>
-                    </div>
-                    <h6>John Doe</h6>
-                    <p class="mb-1">456 Business Ave, Floor 8</p>
-                    <p class="mb-1">New York, NY 10022</p>
-                    <p class="mb-0">United States</p>
-                    <p class="mb-0">Phone: +1 (123) 456-7890</p>
-                </div>
+                <?php } ?>
             </div>
         </div>
 
@@ -272,3 +258,28 @@
         </div>
     </div>
 </div>
+<script type="text/html" id="addressTemplate">
+    <js-script>
+        let editJson = {
+        ...item,
+        modalHeading : "Edit"
+        };
+    </js-script>
+    <div class="address-card">
+        <span class="address-type ${address_type}">${toCapitalize(address_type)}</span>
+        <div class="address-actions">
+            <button class="btn btn-sm btn-outline-primary me-1 editTableInfo" data-bs-toggle="modal" data-bs-target="#saveAddressMdl">
+                <code class="d-none">${editJson}</code>
+                <i class="hgi hgi-stroke hgi-pen-01"></i>
+            </button>
+            <button class="btn btn-sm btn-outline-danger delete-data-btn" data-target="${address_uid}" data-action="users" data-controller="profile" data-include="<?= $l_user ?>" data-parent=".address-card" data-callback="deleteAddressCB">
+                <i class="hgi hgi-stroke hgi-delete-02"></i>
+            </button>
+        </div>
+        <h6>${name}</h6>
+        <p class="mb-1">${street_address + ", " + street_number}</p>
+        <p class="mb-1">${state + ", " + town_city + " " + postal_code}</p>
+        <p class=" mb-0">${country}</p>
+        <p class="mb-0">Phone: ${phone}</p>
+    </div>
+</script>

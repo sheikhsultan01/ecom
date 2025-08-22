@@ -1,4 +1,7 @@
 $(document).ready(function () {
+    // Initialize variables
+    let cropper;
+
     // Profile Update Callback
     ss.fn.cb.updateProfileCB = function ($form, res) {
         if (res.status == 'success') {
@@ -7,137 +10,25 @@ $(document).ready(function () {
         }
         notify(res.data, res.status);
     }
-    // Initialize variables
-    let cropper;
-    let map;
-    let marker;
 
-    // Initialize Google Map
-    function initMap() {
-        // Default coordinates (New York City)
-        const defaultLocation = {
-            lat: 40.7128,
-            lng: -74.0060
-        };
-
-        // Create map centered at default location
-        map = new google.maps.Map(document.getElementById("map"), {
-            center: defaultLocation,
-            zoom: 12,
-            mapTypeControl: false,
-            streetViewControl: false,
-            fullscreenControl: false
-        });
-
-        // Create draggable marker
-        marker = new google.maps.Marker({
-            position: defaultLocation,
-            map: map,
-            draggable: true,
-            animation: google.maps.Animation.DROP
-        });
-
-        // Update hidden inputs when marker is dragged
-        google.maps.event.addListener(marker, 'dragend', function () {
-            const position = marker.getPosition();
-            $('#addressLatitude').val(position.lat());
-            $('#addressLongitude').val(position.lng());
-
-            // Reverse geocode to get address
-            const geocoder = new google.maps.Geocoder();
-            geocoder.geocode({
-                'location': position
-            }, function (results, status) {
-                if (status === 'OK' && results[0]) {
-                    updateAddressFields(results[0]);
-                }
-            });
-        });
-
-        // Search box for location
-        const input = document.getElementById('addressLine1');
-        const searchBox = new google.maps.places.Autocomplete(input);
-
-        // Update map when a place is selected
-        searchBox.addListener('place_changed', function () {
-            const place = searchBox.getPlace();
-
-            if (!place.geometry) {
-                return;
-            }
-
-            // Update map and marker
-            map.setCenter(place.geometry.location);
-            marker.setPosition(place.geometry.location);
-
-            // Update hidden inputs
-            $('#addressLatitude').val(place.geometry.location.lat());
-            $('#addressLongitude').val(place.geometry.location.lng());
-
-            // Fill address fields
-            updateAddressFields(place);
-        });
+    // Delete Address Callback
+    ss.fn.cb.deleteAddressCB = function ($form, res) {
+        if (res.status == 'success') {
+            notify(res.data, res.status);
+            return true;
+        }
+        notify(res.data, res.status);
     }
 
-    // Update address fields from Google Maps result
-    function updateAddressFields(place) {
-        for (const component of place.address_components) {
-            const componentType = component.types[0];
-
-            switch (componentType) {
-                case "street_number":
-                    // We combine street number and route later
-                    break;
-                case "route":
-                    $('#addressLine1').val(component.long_name);
-                    break;
-                case "locality":
-                    $('#addressCity').val(component.long_name);
-                    break;
-                case "administrative_area_level_1":
-                    $('#addressState').val(component.short_name);
-                    break;
-                case "postal_code":
-                    $('#addressZip').val(component.short_name);
-                    break;
-                case "country":
-                    $('#addressCountry').val(component.short_name);
-                    break;
-            }
-        }
-    }
-
-    // Initialize map when the modal opens
-    $('#addAddressModal').on('shown.bs.modal', function () {
-        initMap();
-
-        // Use geolocation if available
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                const pos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                };
-
-                map.setCenter(pos);
-                marker.setPosition(pos);
-
-                // Update hidden inputs
-                $('#addressLatitude').val(pos.lat);
-                $('#addressLongitude').val(pos.lng);
-
-                // Reverse geocode to get address
-                const geocoder = new google.maps.Geocoder();
-                geocoder.geocode({
-                    'location': pos
-                }, function (results, status) {
-                    if (status === 'OK' && results[0]) {
-                        updateAddressFields(results[0]);
-                    }
-                });
-            });
-        }
-    });
+    // Initialize google map
+    new LocationMap('map-canvas', 'map-lat', 'map-lng', {
+        'street_number': 'street_number',
+        'route': 'street_address',
+        'locality': 'town_city',
+        'administrative_area_level_1': 'state',
+        'country': 'country',
+        'postal_code': 'postal_code'
+    }, "#addressForm");
 
     // Open avatar upload modal
     $('#uploadAvatarBtn').click(function () {
@@ -229,15 +120,6 @@ $(document).ready(function () {
         $('#passwordStrength').css('width', '0');
         $('#passwordFeedback').text('Password must be at least 8 characters long');
         $('#confirmPasswordFeedback').text('');
-    });
-
-    // Handle address form submission
-    $('#saveAddressBtn').click(function () {
-        // In a real application, you would submit this to your server
-        // using AJAX or form submission
-
-        // Close modal
-        $('#addAddressModal').modal('hide');
     });
 
     // Password strength meter

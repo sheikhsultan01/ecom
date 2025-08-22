@@ -3,6 +3,8 @@
 if (!defined('DIR')) define('DIR', './');
 if (!defined('_DIR_')) define('_DIR_', DIR);
 require_once _DIR_ . 'includes/inc/database.php';
+require_once "inc/asset-templates.php";
+
 @define('CLASSES', []);
 $classes = [
     'jd' => _DIR_ . "includes/Classes/AjaxDataManager.php"
@@ -21,6 +23,7 @@ define('LOGGED_IN_USER', login_user([
 ]));
 
 define('LOGGED_IN_USER_ID', LOGGED_IN_USER ? LOGGED_IN_USER['id'] : null);
+$l_user = LOGGED_IN_USER_ID;
 
 define('IS_ADMIN', is_admin());
 define('IS_SELLER', is_seller());
