@@ -94,7 +94,6 @@ function refreshSource(source) {
 function jdRefreshAndHideModal(source, modalId) {
     AS.refreshSource(source)
     // Hide modal
-    console.log(modalId)
     $(`#${modalId}`).modal('hide');
 }
 
@@ -309,5 +308,15 @@ function toNumber(str) {
         return false;
     } else {
         return str;
+    }
+}
+
+function updateQuantityButtons($parent, value) {
+    let $decBtn = $parent.find('.quantity-btn[data-type="decrease"]');
+
+    if (value <= 1) {
+        $decBtn.prop('disabled', true);
+    } else {
+        $decBtn.prop('disabled', false);
     }
 }

@@ -71,40 +71,6 @@
     font-weight: 500;
 }
 
-.gs-quantity-control .gs-qty-input {
-    width: 60px;
-    /* Wider input for better touch */
-    border-color: var(--border-color);
-    background-color: #f9f9f9;
-    font-weight: 500;
-    transition: all 0.2s ease;
-}
-
-.gs-quantity-control .gs-qty-input:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.25);
-}
-
-.gs-quantity-control .btn {
-    border-color: var(--border-color);
-    color: var(--text-dark);
-    background-color: #f0f0f0;
-    font-weight: 600;
-    transition: all 0.2s ease;
-}
-
-.gs-quantity-control .btn:hover {
-    background-color: var(--primary-color);
-    color: #fff;
-    border-color: var(--primary-color);
-}
-
-.gs-quantity-control .btn-outline-secondary:active {
-    background-color: var(--primary-color-dark) !important;
-    border-color: var(--primary-color-dark) !important;
-    color: #fff !important;
-}
-
 .gs-item-subtotal {
     font-weight: 600;
     color: var(--primary-color);
@@ -125,28 +91,6 @@
     /* Red for delete */
     transform: scale(1.1);
     /* Subtle grow on hover */
-}
-
-/* --- Cart Items Cards (Mobile) --- */
-.gs-cart-item-card {
-    border: 1px solid #f0f0f0 !important;
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    /* For rounded image corners */
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-
-.gs-cart-item-card img {
-    border-radius: var(--border-radius) 0 0 var(--border-radius);
-}
-
-.gs-cart-item-card .card-body {
-    padding: 0.75rem;
-}
-
-.gs-cart-item-card .mobile-remove-btn {
-    font-size: 0.85rem;
-    padding: 0.25rem 0.5rem;
 }
 
 /* --- Empty Cart State --- */
@@ -579,4 +523,10 @@
     .gs-policy-card {
         padding: 1.5rem !important;
     }
+}
+
+.order-summary-container .prcing-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

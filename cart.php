@@ -1,5 +1,7 @@
 <?php
+define('CLASSES', ['jd']);
 require_once 'includes/db.php';
+require_once "./helper/cart.php";
 $page_name = 'Cart';
 
 $CSS_FILES = [
@@ -33,100 +35,14 @@ require_once 'includes/head.php';
                                 <th scope="col"></th>
                             </tr>
                         </thead>
-                        <tbody id="cart-items-table-body">
-                            <!-- Example Item 1 -->
-                            <tr class="gs-cart-item-row" data-item-id="1">
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=300&h=200&fit=crop" class="gs-item-img me-3" alt="Premium Wireless Headphones">
-                                        <span class="gs-item-name">Premium Wireless Headphones</span>
-                                    </div>
-                                </td>
-                                <td class="item-price" data-price="75">\$75.00</td>
-                                <td>
-                                    <div class="input-group input-group-sm gs-quantity-control">
-                                        <button class="btn btn-outline-secondary gs-btn-qty-minus" type="button">-</button>
-                                        <input type="number" class="form-control text-center gs-qty-input" value="1" min="1">
-                                        <button class="btn btn-outline-secondary gs-btn-qty-plus" type="button">+</button>
-                                    </div>
-                                </td>
-                                <td class="gs-item-subtotal">\$75.00</td>
-                                <td>
-                                    <button class="btn gs-btn-remove-item"><i class="hgi hgi-stroke hgi-delete-02"></i></button>
-                                </td>
-                            </tr>
-                            <!-- Example Item 2 -->
-                            <tr class="gs-cart-item-row" data-item-id="2">
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=300&h=200&fit=crop" class="gs-item-img me-3" alt="Professional Running Shoes">
-                                        <span class="gs-item-name">Professional Running Shoes</span>
-                                    </div>
-                                </td>
-                                <td class="item-price" data-price="120">\$120.00</td>
-                                <td>
-                                    <div class="input-group input-group-sm gs-quantity-control">
-                                        <button class="btn btn-outline-secondary gs-btn-qty-minus" type="button">-</button>
-                                        <input type="number" class="form-control text-center gs-qty-input" value="1" min="1">
-                                        <button class="btn btn-outline-secondary gs-btn-qty-plus" type="button">+</button>
-                                    </div>
-                                </td>
-                                <td class="gs-item-subtotal">\$120.00</td>
-                                <td>
-                                    <button class="btn gs-btn-remove-item"><i class="hgi hgi-stroke hgi-delete-02"></i></button>
-                                </td>
-                            </tr>
+                        <tbody id="cart-items-table-body" jd-source="cartItems" jd-pick="#singleCartItem" jd-drop="this" jd-pagination="#cartPagination" jd-success="cartSuccessCB">
+                            <?= skeleton("table", [
+                                'columns' => 4,
+                            ]) ?>
                         </tbody>
                     </table>
-                </div>
-
-                <!-- Cart Items Cards (Mobile View) -->
-                <div class="d-md-none" id="cart-items-cards-mobile">
-                    <!-- Example Item 1 Card -->
-                    <div class="card mb-3 gs-cart-item-card" data-item-id="1">
-                        <div class="row g-0">
-                            <div class="col-4">
-                                <img src="https://via.placeholder.com/150x150?text=Headphones" class="img-fluid rounded-start h-100 object-fit-cover" alt="Premium Wireless Headphones">
-                            </div>
-                            <div class="col-8">
-                                <div class="card-body py-2">
-                                    <h6 class="card-title mb-1 gs-item-name">Premium Wireless Headphones</h6>
-                                    <p class="card-text small mb-1">Price: <span class="item-price" data-price="75">\$75.00</span></p>
-                                    <div class="d-flex align-items-center justify-content-between mb-2">
-                                        <div class="input-group input-group-sm w-50 gs-quantity-control">
-                                            <button class="btn btn-outline-secondary gs-btn-qty-minus" type="button">-</button>
-                                            <input type="number" class="form-control text-center gs-qty-input" value="1" min="1">
-                                            <button class="btn btn-outline-secondary gs-btn-qty-plus" type="button">+</button>
-                                        </div>
-                                        <button class="btn gs-btn-remove-item mobile-remove-btn"><i class="hgi hgi-stroke hgi-delete-02"></i> Remove</button>
-                                    </div>
-                                    <p class="card-text fw-bold mb-0">Subtotal: <span class="gs-item-subtotal">\$75.00</span></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Example Item 2 Card -->
-                    <div class="card mb-3 gs-cart-item-card" data-item-id="2">
-                        <div class="row g-0">
-                            <div class="col-4">
-                                <img src="https://via.placeholder.com/150x150?text=Shoes" class="img-fluid rounded-start h-100 object-fit-cover" alt="Professional Running Shoes">
-                            </div>
-                            <div class="col-8">
-                                <div class="card-body py-2">
-                                    <h6 class="card-title mb-1 gs-item-name">Professional Running Shoes</h6>
-                                    <p class="card-text small mb-1">Price: <span class="item-price" data-price="120">\$120.00</span></p>
-                                    <div class="d-flex align-items-center justify-content-between mb-2">
-                                        <div class="input-group input-group-sm w-50 gs-quantity-control">
-                                            <button class="btn btn-outline-secondary gs-btn-qty-minus" type="button">-</button>
-                                            <input type="number" class="form-control text-center gs-qty-input" value="1" min="1">
-                                            <button class="btn btn-outline-secondary gs-btn-qty-plus" type="button">+</button>
-                                        </div>
-                                        <button class="btn gs-btn-remove-item mobile-remove-btn"><i class="hgi hgi-stroke hgi-delete-02"></i> Remove</button>
-                                    </div>
-                                    <p class="card-text fw-bold mb-0">Subtotal: <span class="gs-item-subtotal">\$120.00</span></p>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="jd-pagination">
+                        <ul id="cartPagination" class="mt-2 pagination"></ul>
                     </div>
                 </div>
             </div>
@@ -149,24 +65,33 @@ require_once 'includes/head.php';
         <!-- Order Summary & Policies -->
         <div class="col-lg-4 mt-4 mt-lg-0">
             <!-- Order Summary -->
-            <div class="gs-card gs-summary-card p-4 shadow-sm mb-4">
+            <div class="gs-card gs-summary-card p-4 shadow-sm mb-4" jd-ref="cartItems">
                 <h5 class="mb-4 gs-section-title">Order Summary</h5>
-                <ul class="list-group list-group-flush border-bottom mb-3">
-                    <li class="list-group-item d-flex justify-content-between align-items-center px-0 bg-transparent">
-                        Cart Subtotal: <span id="cart-subtotal" class="gs-price-value animate__animated">\$195.00</span>
+                <ul class="list-group list-group-flush border-bottom mb-3 order-summary-container">
+                    <li class="list-group-item px-0 bg-transparent">
+                        <div class="prcing-row" jd-data>
+                            <span>Cart Subtotal:</span>
+                            <span id="cart-subtotal" class="gs-price-value animate__animated">${summary.sub_total}</span>
+                        </div>
                     </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center px-0 bg-transparent">
-                        Discount: <span class="text-danger gs-price-value animate__animated" id="cart-discount">-\$0.00</span>
+                    <li class="list-group-item px-0 bg-transparent">
+                        <div class="prcing-row" jd-data>
+                            <span>Discount: </span>
+                            <span class="text-danger gs-price-value animate__animated" id="cart-discount">${summary.discount}</span>
+                        </div>
                     </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center px-0 bg-transparent">
-                        Shipping: <span id="cart-shipping" class="gs-price-value animate__animated">\$10.00</span>
+                    <li class="list-group-item px-0 bg-transparent">
+                        <div class="prcing-row" jd-data>
+                            <span>Shipping: </span>
+                            <span id="cart-shipping" class="gs-price-value animate__animated">Free</span>
+                        </div>
                     </li>
                 </ul>
-                <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="d-flex justify-content-between align-items-center mb-3" jd-data>
                     <h4 class="mb-0 gs-section-title">Total:</h4>
-                    <h4 class="mb-0 gs-total-price" id="cart-grand-total">\$205.00</h4>
+                    <h4 class="mb-0 gs-total-price" id="cart-grand-total">${summary.total_amount}</h4>
                 </div>
-                <div class="coupon-input">
+                <div class="coupon-input d-none">
                     <input type="text" placeholder="Enter coupon code" class="form-control">
                     <button>Apply</button>
                 </div>
@@ -259,5 +184,41 @@ require_once 'includes/head.php';
         </div>
     </div>
 </main>
+
+<script>
+    function cartSuccessCB(res, $ele) {
+        initSsJxElements('.ss-jx-element'); // Jx Elements
+    }
+</script>
+
+<script type="text/html" id="singleCartItem">
+    <js-script>
+    let subTotal = '$' + sale_price * qty;
+    </js-script>
+    <tr class="gs-cart-item-row" data-item-id="1">
+        <td>
+            <div class="d-flex align-items-center">
+                <img src="<?= merge_url(SITE_URL, './images/products/') ?>${primary_image}" class="gs-item-img me-3" alt="Img">
+                <span class="gs-item-name">${title}</span>
+            </div>
+        </td>
+        <td class="item-price" data-price="75">${'$' + sale_price}</td>
+        <td>
+            <div class="d-flex justify-content-between">
+                <div class="quantity-controls">
+                    <button class="quantity-btn" data-type="decrease"><i class="hgi hgi-stroke hgi-minus-sign"></i></button>
+                    <input type="number" name="qty" class="quantity-input ss-jx-element" value="${qty}" min="1" readonly data-submit='{"updateProductQty" : true, "id" : ${id}}' data-target="cart" data-listener="change" data-callback="quantityUpdateCB">
+                    <button class="quantity-btn" data-type="increase"><i class="hgi hgi-stroke hgi-plus-sign"></i></button>
+                </div>
+            </div>
+        </td>
+        <td class="gs-item-subtotal">${subTotal}</td>
+        <td>
+            <button class="btn gs-btn-remove-item delete-data-btn" data-target="${id}" data-action="cart" data-callback="deleteCartItemCB">
+                <i class="hgi hgi-stroke hgi-delete-02"></i>
+            </button>
+        </td>
+    </tr>
+</script>
 
 <?php require_once 'includes/foot.php'; ?>

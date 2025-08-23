@@ -314,3 +314,20 @@ function countCartItems()
     if ($cart) return $cart[0]['total'];
     return 0;
 }
+// Function to get primary image
+function getPrimaryImage($images)
+{
+    $images = json_decode($images, true);
+    $primaryImage = null;
+    foreach ($images as $img) {
+        if (!empty($img['isPrimary'])) {
+            $primaryImage = $img['name'];
+            break;
+        }
+    }
+    // If not primary then select first image
+    if ($primaryImage === null && !empty($images)) {
+        $primaryImage = $images[0]['name'];
+    }
+    return $primaryImage;
+}
