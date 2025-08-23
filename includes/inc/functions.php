@@ -302,3 +302,15 @@ function add_assets_template($template_names, $position = 'first')
 
     return true;
 }
+
+// Function Count total cart product of user
+function countCartItems()
+{
+    global $db;
+    $cart = $db->select('carts', 'COUNT(id) AS total', [
+        'user_id' => LOGGED_IN_USER_ID,
+        'status' => 'pending'
+    ]);
+    if ($cart) return $cart[0]['total'];
+    return 0;
+}

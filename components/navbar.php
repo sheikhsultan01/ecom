@@ -27,7 +27,7 @@
                     <a href="cart" class="cart-btn">
                         <i class="hgi hgi-stroke hgi-shopping-cart-01"></i>
                         Cart
-                        <span class="cart-count">3</span>
+                        <span class="cart-count <?= countCartItems() == 0 ? 'd-none' : '' ?>" data-count="<?= countCartItems(); ?>"><?= countCartItems() !== 0 ? countCartItems() : '' ?></span>
                     </a>
                     <div class="nav-item dropdown" data-hoverable="true">
                         <a class="profile-btn" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

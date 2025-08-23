@@ -8,7 +8,12 @@ $(document).ready(function () {
         if (status == 'success') {
 
             let $btn = $form.find('#addToCartBtn'),
-                $cartContainer = $form.find('.add-to-cart-btn');
+                $cartContainer = $form.find('.add-to-cart-btn'),
+                $cartButton = $('.cart-btn'),
+                oldCartVal = toNumber($cartButton.find('.cart-count').attr('data-count'));
+
+            // Set cart count
+            $cartButton.find('.cart-count').text(oldCartVal + 1).removeClass('d-none');
 
             let dataSubmit = JSON.stringify({
                 'updateProductQty': true,

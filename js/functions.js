@@ -295,3 +295,19 @@ function handleQuantity(current = 0, type = "increase") {
     }
     return current;
 }
+
+function toNumber(str) {
+    if (typeof (str) == "number" || typeof (str) == "float") return str;
+    if (str) {
+        str = str.replace(/[^\d.]/g, "");
+        if (str.length > 0) {
+            str = parseFloat(str);
+        }
+    }
+    str = parseFloat(str);
+    if (isNaN(str)) {
+        return false;
+    } else {
+        return str;
+    }
+}
