@@ -22,7 +22,7 @@ $(document).ready(function () {
 
             let qtyBtnHtml = `<div class="quantity-controls">
                             <button class="quantity-btn" data-type="decrease"><i class="hgi hgi-stroke hgi-minus-sign"></i></button>
-                            <input type="number" name="qty" class="quantity-input ss-jx-element" id="quantityInput" value="1" min="1" readonly data-submit="${dataSubmit}" data-target="carts" data-listener="change" data-callback="quantityUpdateCB">
+                            <input type="number" name="qty" class="quantity-input ss-jx-element" id="quantityInput" value="1" min="1" readonly data-submit="${dataSubmit}" data-target="cart" data-listener="change" data-callback="quantityUpdateCB">
                             <button class="quantity-btn" data-type="increase"><i class="hgi hgi-stroke hgi-plus-sign"></i></button>
                           </div>`;
 

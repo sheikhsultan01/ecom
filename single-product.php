@@ -57,7 +57,7 @@ require_once 'includes/head.php';
 
                 <!-- Product Information -->
                 <div class="col-lg-6 col-md-6 col-12">
-                    <form action="carts" class="js-form h-100" data-callback="addProductToCartCB">
+                    <form action="cart" class="js-form h-100" data-callback="addProductToCartCB">
                         <div class="product-info h-100">
                             <div class="product-details">
                                 <h1 class="product-title"><?= $product['title'] ?></h1>
@@ -93,7 +93,7 @@ require_once 'includes/head.php';
                                 if ($cart_id) { ?>
                                     <div class="quantity-controls">
                                         <button class="quantity-btn" data-type="decrease"><i class="hgi hgi-stroke hgi-minus-sign"></i></button>
-                                        <input type="number" name="qty" class="quantity-input ss-jx-element" id="quantityInput" value="<?= is_product_added($product['id'], 'qty') ?>" min="1" readonly data-submit='<?= json_encode(['updateProductQty' => true, 'id' => $cart_id]) ?>' data-target="carts" data-listener="change" data-callback="quantityUpdateCB">
+                                        <input type="number" name="qty" class="quantity-input ss-jx-element" id="quantityInput" value="<?= is_product_added($product['id'], 'qty') ?>" min="1" readonly data-submit='<?= json_encode(['updateProductQty' => true, 'id' => $cart_id]) ?>' data-target="cart" data-listener="change" data-callback="quantityUpdateCB">
                                         <button class="quantity-btn" data-type="increase"><i class="hgi hgi-stroke hgi-plus-sign"></i></button>
                                     </div>
                                 <?php } else { ?>
