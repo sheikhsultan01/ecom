@@ -331,3 +331,15 @@ function getPrimaryImage($images)
     }
     return $primaryImage;
 }
+// Function to check if product is in cart of current user
+function check_cart_product($id)
+{
+    global $db;
+    $cart = $db->select('carts', 'id AS cart_id,qty AS product_qty', [
+        'product_id' => $id,
+        'user_id' => LOGGED_IN_USER_ID,
+        'status' => 'pending'
+    ]);
+    if ($cart) return $cart[0];
+    return false;
+}

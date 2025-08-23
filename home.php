@@ -42,7 +42,7 @@ require_once 'includes/head.php';
             </a>
         </div>
 
-        <div class="row" id="productsGrid" jd-source="featureProducts" jd-pick="#singleProduct" jd-drop="this" jd-scroll-paginate>
+        <div class="row" id="productsGrid" jd-source="featureProducts" jd-pick="#singleProduct" jd-drop="this" jd-success="SuccessCB" jd-scroll-paginate>
             <?php for ($i = 0; $i < 3; $i++) {  ?>
                 <div class="col-lg-3 col-md-4 col-sm-6 mb-3" jd-skeleton>
                     <div class="product-card">
@@ -124,6 +124,12 @@ require_once 'includes/head.php';
     </div>
 </section>
 
+<script>
+    function SuccessCB(res, $ele) {
+        initSsJxElements('.ss-jx-element'); // Jx Elements
+    }
+</script>
+
 <!-- Single Product Template -->
 <script type="text/html" id="singleProduct">
     <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
@@ -140,9 +146,9 @@ require_once 'includes/head.php';
                     <span class="current-price">${"$" + sale_price}</span>
                     <span class="original-price">${"$" + price}</span>
                 </div>
-                <button class="add-to-cart">
-                    <i class="fas fa-cart-plus"></i> Add to Cart
-                </button>
+                <div class="action-btn">
+                    ${checkProductAddedToCart(id,sale_price,cart_id, product_qty)}
+                </div>
             </div>
         </div>
     </div>

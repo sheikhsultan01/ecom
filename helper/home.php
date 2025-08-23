@@ -25,22 +25,11 @@ $jdManager->defineData('featureProducts', [
         ";
         $products = $db->squery($p_query);
         foreach ($products as &$product) {
-            $images = json_decode($product['images'], true);
-            $primaryImage = null;
-            if (is_array($images)) {
-                foreach ($images as $img) {
-                    if (!empty($img['isPrimary'])) {
-                        $primaryImage = $img['name'];
-                        break;
-                    }
-                }
-                // If not primary then select first image
-                if ($primaryImage === null && !empty($images)) {
-                    $primaryImage = $images[0]['name'];
-                }
-            }
+            $cart = check_cart_product($product['id']);
+            $product['cart_id'] = arr_val($cart, 'cart_id', false);
+            $product['product_qty'] = arr_val($cart, 'product_qty', false);
 
-            $product['image'] = $primaryImage;
+            $product['image'] = getPrimaryImage($product['images']);
             unset($product['images']);
         }
 

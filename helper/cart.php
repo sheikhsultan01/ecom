@@ -1,5 +1,5 @@
 <?php
-// Featured Products
+// Cart Items
 $jdManager->defineData('cartItems', [
     'data' => function ($params) use ($db) {
 

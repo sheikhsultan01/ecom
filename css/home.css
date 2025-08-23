@@ -101,6 +101,12 @@
     transition: all 0.3s ease;
 }
 
+.product-info .action-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .add-to-cart:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(34, 139, 34, 0.3);

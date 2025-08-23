@@ -1,4 +1,5 @@
-const l = console.log.bind(this),
+const spinner = '<span class="spinner"></span>',
+    l = console.log.bind(this),
     logError = console.error.bind(this);
 
 function htmlspecialchars_decode(text) {
@@ -319,4 +320,36 @@ function updateQuantityButtons($parent, value) {
     } else {
         $decBtn.prop('disabled', false);
     }
+}
+// Function to return add to cart button or quantity input
+function checkProductAddedToCart(product_id, product_price, cart_id, product_qty) {
+    let btnHtml = '';
+
+    if (cart_id) {
+        let dataSubmit = JSON.stringify({
+            'updateProductQty': true,
+            'id': cart_id
+        }).replace(/"/g, '&quot;');
+
+        btnHtml += `<div class="quantity-controls">
+                        <button class="quantity-btn" data-type="decrease"><i class="hgi hgi-stroke hgi-minus-sign"></i></button>
+                        <input type="number" name="qty" class="quantity-input ss-jx-element" id="quantityInput" value="${product_qty}" min="1" readonly data-submit="${dataSubmit}" data-target="cart" data-listener="change" data-callback="quantityUpdateCB">
+                        <button class="quantity-btn" data-type="increase"><i class="hgi hgi-stroke hgi-plus-sign"></i></button>
+                    </div>`;
+
+    } else {
+
+        let dataSubmit = JSON.stringify({
+            'addToCartProduct': true,
+            'product_id': product_id,
+            'unit_price': product_price
+        }).replace(/"/g, '&quot;');
+
+        btnHtml += `<button class="add-to-cart ss-jx-element" data-target="cart" data-submit="${dataSubmit}" data-callback="addProductToCartCB">
+                    <i class="hgi hgi-stroke hgi-shopping-cart-add-02"></i>
+                    Add to Cart
+                    </button>`;
+    }
+
+    return btnHtml;
 }
