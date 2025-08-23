@@ -1,6 +1,26 @@
 <?php
 require_once 'includes/db.php';
+require_once 'Functions/single-product.php';
 $page_name = 'Product';
+$uid = _get_param('uid', false);
+
+// Get Location
+$product = [];
+if ($uid) {
+    $product = $db->select_one('products', 'id,uid,title,description,images,price,sale_price,weight', ['uid' => $uid]);
+    $images = json_decode($product['images'], true);
+    $primaryImage = null;
+    foreach ($images as $img) {
+        if (!empty($img['isPrimary'])) {
+            $primaryImage = $img['name'];
+            break;
+        }
+    }
+    // If not primary then select first image
+    if ($primaryImage === null && !empty($images)) {
+        $primaryImage = $images[0]['name'];
+    }
+}
 
 $CSS_FILES = [
     'single-product.css'
@@ -22,112 +42,101 @@ require_once 'includes/head.php';
                 <div class="col-lg-6 col-md-6 col-12">
                     <div class="product-image-container">
                         <div class="sale-badge">SALE</div>
-                        <img src="https://images.unsplash.com/photo-1484704849700-f032a568e944?w=300&h=200&fit=crop" alt="Premium Wireless Headphones" class="main-product-image" id="mainImage">
+                        <img src="<?= merge_url(SITE_URL, 'images/products/', $primaryImage) ?>" alt="Premium Wireless Headphones" class="main-product-image" id="mainImage">
 
                         <div class="thumbnail-container">
-                            <img src="https://images.unsplash.com/photo-1484704849700-f032a568e944?w=300&h=200&fit=crop" alt="Thumbnail 1" class="thumbnail-image active" data-main="https://images.unsplash.com/photo-1484704849700-f032a568e944?w=300&h=200&fit=crop">
-                            <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300&h=200&fit=crop" alt="Thumbnail 2" class="thumbnail-image" data-main="https://images.unsplash.com/photo-1484704849700-f032a568e944?w=300&h=200&fit=crop">
-                            <img src="https://images.unsplash.com/photo-1484704849700-f032a568e944?w=300&h=200&fit=crop" alt="Thumbnail 3" class="thumbnail-image" data-main="https://images.unsplash.com/photo-1484704849700-f032a568e944?w=300&h=200&fit=crop">
-                            <img src="https://images.unsplash.com/photo-1484704849700-f032a568e944?w=300&h=200&fit=crop" alt="Thumbnail 4" class="thumbnail-image" data-main="https://images.unsplash.com/photo-1484704849700-f032a568e944?w=300&h=200&fit=crop">
+                            <?php
+                            foreach ($images as $image) {
+                                $isPrimary = !empty($image['isPrimary']);
+                            ?>
+                                <img src="<?= merge_url(SITE_URL, 'images/products/', $image['name']) ?>" alt="Product Img" class="thumbnail-image <?= $isPrimary ? 'active' : '' ?>" data-image="<?= $image['name'] ?>">
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
 
                 <!-- Product Information -->
                 <div class="col-lg-6 col-md-6 col-12">
-                    <div class="product-info">
-                        <h1 class="product-title">Premium Wireless Headphones</h1>
+                    <form action="carts" class="js-form h-100" data-callback="addProductToCartCB">
+                        <div class="product-info h-100">
+                            <div class="product-details">
+                                <h1 class="product-title"><?= $product['title'] ?></h1>
 
-                        <div class="product-rating">
-                            <div class="rating-stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
-                            <span class="rating-count">(4.5) 324 Reviews</span>
-                        </div>
-
-                        <div class="product-price">
-                            \$129.99
-                            <span class="original-price">\$199.99</span>
-                        </div>
-
-                        <p class="product-description">
-                            Experience premium audio quality with our advanced wireless headphones. Features include active noise cancellation, 30-hour battery life, and premium comfort design for all-day listening pleasure.
-                        </p>
-
-                        <!-- Product Options -->
-                        <div class="product-options">
-                            <div class="option-group">
-                                <label class="option-label">Color:</label>
-                                <div class="color-options">
-                                    <div class="color-option active" style="background: #000000;" data-color="Black"></div>
-                                    <div class="color-option" style="background: #FFFFFF; border: 1px solid #ccc;" data-color="White"></div>
-                                    <div class="color-option" style="background: #228B22;" data-color="Green"></div>
-                                    <div class="color-option" style="background: #FF4444;" data-color="Red"></div>
+                                <div class="product-rating">
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <span class="rating-count">(4.5) 324 Reviews</span>
                                 </div>
-                            </div>
 
-                            <div class="option-group">
-                                <label class="option-label">Size:</label>
-                                <div class="size-options">
-                                    <div class="size-option active" data-size="Regular">Regular</div>
-                                    <div class="size-option" data-size="Large">Large</div>
-                                    <div class="size-option" data-size="X-Large">X-Large</div>
+                                <div class="product-price">
+                                    <?= CURRENCY . $product['sale_price'] . "/" ?>
+                                    <span class="original-price"><?= CURRENCY . $product['price'] ?></span>
                                 </div>
+
+                                <p class="product-description">
+                                    <?= $product['description'] ?>
+                                </p>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="add-to-cart-btn">
+                                <input type="hidden" name="unit_price" value="<?= $product['sale_price'] ?>">
+                                <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+                                <input type="hidden" name="addToCartProduct" value="true">
+                                <?php
+                                $cart_id = is_product_added($product['id']);
+                                if ($cart_id) { ?>
+                                    <div class="quantity-controls">
+                                        <button class="quantity-btn" data-type="decrease"><i class="hgi hgi-stroke hgi-minus-sign"></i></button>
+                                        <input type="number" name="qty" class="quantity-input ss-jx-element" id="quantityInput" value="<?= is_product_added($product['id'], 'qty') ?>" min="1" readonly data-submit='<?= json_encode(['updateProductQty' => true, 'id' => $cart_id]) ?>' data-target="carts" data-listener="change" data-callback="quantityUpdateCB">
+                                        <button class="quantity-btn" data-type="increase"><i class="hgi hgi-stroke hgi-plus-sign"></i></button>
+                                    </div>
+                                <?php } else { ?>
+                                    <button type="submit" class="btn btn-custom btn-primary-custom w-50" id="addToCartBtn">
+                                        <i class="hgi hgi-stroke hgi-shopping-cart-01"></i>
+                                        <span class="text">Add to Cart</span>
+                                    </button>
+                                <?php } ?>
                             </div>
                         </div>
+                    </form>
+                </div>
 
-                        <!-- Quantity -->
-                        <div class="quantity-selector">
-                            <label class="option-label">Quantity:</label>
-                            <div class="quantity-controls">
-                                <button class="quantity-btn" id="decreaseBtn">-</button>
-                                <input type="number" class="quantity-input" id="quantityInput" value="1" min="1">
-                                <button class="quantity-btn" id="increaseBtn">+</button>
-                            </div>
-                        </div>
-
-                        <!-- Action Buttons -->
+                <!-- Product Features -->
+                <div class="col-lg-12 col-md-12 col-12 mt-5">
+                    <div class="product-features">
                         <div class="row">
-                            <div class="col-md-8 col-12">
-                                <button class="btn btn-custom btn-primary-custom w-100" id="addToCartBtn">
-                                    <i class="hgi hgi-stroke hgi-shopping-cart-01"></i>
-                                    Add to Cart
-                                </button>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <button class="btn btn-custom btn-secondary-custom w-100" id="wishlistBtn">
-                                    <i class="hgi hgi-stroke hgi-favourite"></i>
-                                    Wishlist
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Product Features -->
-                        <div class="product-features">
-                            <div class="feature-card">
-                                <div class="feature-icon">
-                                    <i class="hgi hgi-stroke hgi-truck"></i>
+                            <div class="col-lg-3 col-md-3">
+                                <div class="feature-card">
+                                    <div class="feature-icon">
+                                        <i class="hgi hgi-stroke hgi-truck"></i>
+                                    </div>
+                                    <div class="feature-title">Free Shipping</div>
+                                    <div class="feature-description">Free delivery on orders over $50</div>
                                 </div>
-                                <div class="feature-title">Free Shipping</div>
-                                <div class="feature-description">Free delivery on orders over $50</div>
                             </div>
-                            <div class="feature-card">
-                                <div class="feature-icon">
-                                    <i class="hgi hgi-stroke hgi-undo-02"></i>
+                            <div class="col-lg-3 col-md-3">
+                                <div class="feature-card">
+                                    <div class="feature-icon">
+                                        <i class="hgi hgi-stroke hgi-undo-02"></i>
+                                    </div>
+                                    <div class="feature-title">30-Day Return</div>
+                                    <div class="feature-description">Easy returns within 30 days</div>
                                 </div>
-                                <div class="feature-title">30-Day Return</div>
-                                <div class="feature-description">Easy returns within 30 days</div>
                             </div>
-                            <div class="feature-card">
-                                <div class="feature-icon">
-                                    <i class="hgi hgi-stroke hgi-shield-02"></i>
+                            <div class="col-lg-3 col-md-3">
+                                <div class="feature-card">
+                                    <div class="feature-icon">
+                                        <i class="hgi hgi-stroke hgi-shield-02"></i>
+                                    </div>
+                                    <div class="feature-title">2-Year Warranty</div>
+                                    <div class="feature-description">Full warranty coverage</div>
                                 </div>
-                                <div class="feature-title">2-Year Warranty</div>
-                                <div class="feature-description">Full warranty coverage</div>
                             </div>
                         </div>
                     </div>

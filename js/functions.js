@@ -1,4 +1,5 @@
-const l = console.log.bind(this);
+const l = console.log.bind(this),
+    logError = console.error.bind(this);
 
 function htmlspecialchars_decode(text) {
     if (typeof (text) !== "string") return text;
@@ -269,4 +270,28 @@ function positionDropdown($dropdown) {
     } else {
         $menu.addClass('dropdown-menu-start');
     }
+}
+
+// Function to merge url
+function mergeUrl(...parts) {
+    if (!parts.length) return "";
+
+    let first = parts.shift().replace(/[\/\\]+$/, "");
+    let middle = parts.map(p => p.replace(/^[\/\\]+|[\/\\]+$/g, ""));
+    let url = first + "/" + middle.join("/");
+
+    if (parts.length && /[\/\\]$/.test(parts[parts.length - 1])) {
+        url += "/";
+    }
+
+    return url;
+}
+
+function handleQuantity(current = 0, type = "increase") {
+    if (type === "increase") {
+        return current + 1;
+    } else if (type === "decrease") {
+        return current > 1 ? current - 1 : 1; // minimum 1
+    }
+    return current;
 }

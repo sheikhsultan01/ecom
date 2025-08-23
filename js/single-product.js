@@ -1,8 +1,47 @@
 $(document).ready(function () {
+
+    // Add Product Callback
+    ss.fn.cb.addProductToCartCB = function ($form, res) {
+
+        let { data, status } = res;
+
+        if (status == 'success') {
+
+            let $btn = $form.find('#addToCartBtn'),
+                $cartContainer = $form.find('.add-to-cart-btn');
+
+            let dataSubmit = JSON.stringify({
+                'updateProductQty': true,
+                'id': data.id
+            }).replace(/"/g, '&quot;');
+
+            let qtyBtnHtml = `<div class="quantity-controls">
+                            <button class="quantity-btn" data-type="decrease"><i class="hgi hgi-stroke hgi-minus-sign"></i></button>
+                            <input type="number" name="qty" class="quantity-input ss-jx-element" id="quantityInput" value="1" min="1" readonly data-submit="${dataSubmit}" data-target="carts" data-listener="change" data-callback="quantityUpdateCB">
+                            <button class="quantity-btn" data-type="increase"><i class="hgi hgi-stroke hgi-plus-sign"></i></button>
+                          </div>`;
+
+            $btn.remove();  // Remove add to cart button
+            $cartContainer.append(qtyBtnHtml);
+            initSsJxElements('.ss-jx-element'); // Jx Elements
+            notify(data.msg, status); // Notify User
+        } else {
+            notify(data, status);
+        }
+
+    }
+
+    // Update Product Quantity Callback
+    ss.fn.cb.quantityUpdateCB = function ($form, res) {
+        if (res.status !== "success") {
+            notify(res.data, res.status)
+        }
+    }
+
     // Thumbnail image switching
     $('.thumbnail-image').click(function () {
-        const mainImageSrc = $(this).data('main');
-        $('#mainImage').attr('src', mainImageSrc);
+        const mainImageSrc = $(this).data('image');
+        $('#mainImage').attr('src', mergeUrl(SITE_URL, 'images/products/', mainImageSrc));
 
         $('.thumbnail-image').removeClass('active');
         $(this).addClass('active');
@@ -19,71 +58,6 @@ $(document).ready(function () {
     $('.close-modal, #imageModal').click(function (e) {
         if (e.target === this) {
             $('#imageModal').fadeOut();
-        }
-    });
-
-    // Color option selection
-    $('.color-option').click(function () {
-        $('.color-option').removeClass('active');
-        $(this).addClass('active');
-
-        const color = $(this).data('color');
-        console.log('Selected color:', color);
-    });
-
-    // Size option selection
-    $('.size-option').click(function () {
-        $('.size-option').removeClass('active');
-        $(this).addClass('active');
-
-        const size = $(this).data('size');
-        console.log('Selected size:', size);
-    });
-
-    // Quantity controls
-    $('#increaseBtn').click(function () {
-        const current = parseInt($('#quantityInput').val());
-        $('#quantityInput').val(current + 1);
-    });
-
-    $('#decreaseBtn').click(function () {
-        const current = parseInt($('#quantityInput').val());
-        if (current > 1) {
-            $('#quantityInput').val(current - 1);
-        }
-    });
-
-    // Add to cart functionality
-    $('#addToCartBtn').click(function () {
-        const quantity = $('#quantityInput').val();
-        const color = $('.color-option.active').data('color');
-        const size = $('.size-option.active').data('size');
-
-        // Add animation
-        $(this).html('<i class="fas fa-check"></i> Added to Cart');
-        $(this).removeClass('btn-primary-custom').css('background', '#28a745');
-
-        setTimeout(() => {
-            $(this).html('<i class="fas fa-cart-plus"></i> Add to Cart');
-            $(this).addClass('btn-primary-custom').css('background', '');
-        }, 2000);
-
-        console.log('Added to cart:', {
-            quantity,
-            color,
-            size
-        });
-    });
-
-    // Wishlist functionality
-    $('#wishlistBtn').click(function () {
-        $(this).toggleClass('active');
-        if ($(this).hasClass('active')) {
-            $(this).html('<i class="fas fa-heart"></i> Added');
-            $(this).css('background', '#ff4444').css('color', 'white');
-        } else {
-            $(this).html('<i class="fas fa-heart"></i> Wishlist');
-            $(this).css('background', '').css('color', '');
         }
     });
 

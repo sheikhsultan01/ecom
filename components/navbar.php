@@ -9,7 +9,7 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-3">
-                <a href="#" class="logo">
+                <a href="./" class="logo">
                     <i class="hgi hgi-stroke hgi-leaf-01"></i>
                     GreenShop
                 </a>
@@ -24,11 +24,11 @@
             </div>
             <div class="col-md-3 text-end">
                 <div class="d-flex justify-content-between align-center">
-                    <button class="cart-btn">
+                    <a href="cart" class="cart-btn">
                         <i class="hgi hgi-stroke hgi-shopping-cart-01"></i>
                         Cart
                         <span class="cart-count">3</span>
-                    </button>
+                    </a>
                     <div class="nav-item dropdown" data-hoverable="true">
                         <a class="profile-btn" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="hgi hgi-stroke hgi-user-circle-02 me-1"></i>

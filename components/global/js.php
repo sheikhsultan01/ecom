@@ -10,6 +10,7 @@
     "SS/functions.js",
     "SS/helper-jquery.js",
     "SS/js-form.js",
+    "SS/events.js",
     "script.js",
 ], 'js', _DIR_ . "js");
 

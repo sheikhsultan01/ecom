@@ -86,3 +86,20 @@ if (_is('add_is_seller_column_in_users_table')) {
 if (_is('add_profile_related_columns_in_users_table')) {
   $db->squery("ALTER TABLE users ADD `address` JSON NOT NULL DEFAULT (JSON_OBJECT()), ADD `date_of_birth` DATE DEFAULT NULL, ADD `bio` TEXT DEFAULT NULL, ADD `gender` ENUM('male', 'female','other') NOT NULL DEFAULT 'male'");
 }
+
+// Create carts table
+if (_is('create_carts_table')) {
+  $db->squery("CREATE TABLE `carts` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `product_id` INT NOT NULL,
+  `attributes` JSON NOT NULL DEFAULT (JSON_OBJECT()),
+  `user_id` INT NOT NULL,
+  `qty` INT NOT NULL,
+  `unit_price` VARCHAR(50) NOT NULL,
+  `status` ENUM('pending', 'placed') NOT NULL DEFAULT 'pending',
+  `uid` VARCHAR(36) NOT NULL DEFAULT (uuid()),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+)");
+}
