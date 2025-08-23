@@ -4,8 +4,10 @@ $(document).ready(function () {
 
     // Profile Update Callback
     ss.fn.cb.updateProfileCB = function ($form, res) {
-        if (res.status == 'success') {
-            notify(res.data, res.status);
+        let { data, status } = res;
+        if (status == 'success') {
+            $('.profile-info').find('.login-user-name').text(data.name);  // Set user name
+            notify(data.msg, status);
             return true;
         }
         notify(res.data, res.status);

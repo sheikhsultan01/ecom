@@ -24,7 +24,10 @@ if (isset($_POST['updateUserProfile'])) {
     ];
 
     $update = $db->update('users', $dbData, ['id' => LOGGED_IN_USER_ID]);
-    if ($update) returnSuccess("Profile Updated Successfully!");
+    if ($update) returnSuccess([
+        'msg' => "Profile Updated Successfully!",
+        'name' => $fname . " " . $lname
+    ]);
 }
 
 // Save user addresses
@@ -58,7 +61,7 @@ if (isset($_POST['saveUserAddressData'])) {
     ];
 
     // Select User data
-    $user = $db->select_one("users", 'address', ['id' => LOGGED_IN_USER_ID]);
+    $user = LOGGED_IN_USER;
 
     $finalAddresses = [];
 
@@ -93,9 +96,8 @@ if (isset($_POST['deleteData'])) {
     $action = _POST('action');
     $target = _POST('target');
 
-    // Select user from db
-    $user = $db->select_one($action, 'address', ['id' => LOGGED_IN_USER_ID]);
-    $addresses = json_decode($user['address'], true);
+    // Select user address from db
+    $addresses = json_decode(LOGGED_IN_USER['address'], true);
 
     if (isset($addresses[$target])) {
         unset($addresses[$target]);
@@ -151,9 +153,7 @@ if (isset($_POST['updateUserPassword'])) {
     $new_password = _POST('new_password');
     $c_password = _POST('c_password');
 
-    $user = $db->select_one('users', 'password', ['id' => LOGGED_IN_USER_ID]);
-
-    if (password_verify($password, $user['password'])) {
+    if (password_verify($password, LOGGED_IN_USER['password'])) {
 
         if ($new_password === $c_password) $password_ = password_hash($new_password, PASSWORD_DEFAULT);
 
