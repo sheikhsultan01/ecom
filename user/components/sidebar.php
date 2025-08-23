@@ -14,7 +14,7 @@
                     </a>
                 </div>
                 <div class="bottom-nav-items">
-                    <a href="#" class="sidebar-link text-danger">
+                    <a href="../logout" class="sidebar-link text-danger">
                         <i class="hgi hgi-stroke hgi-logout-03"></i>
                         Logout
                     </a>

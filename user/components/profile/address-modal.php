@@ -69,7 +69,6 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" name="uid" value="<?= LOGGED_IN_USER['uid'] ?>">
                     <input type="text" class="d-none" name="address_uid">
                     <input type="hidden" name="saveUserAddressData" value="true">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>

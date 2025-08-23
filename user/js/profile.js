@@ -20,6 +20,29 @@ $(document).ready(function () {
         notify(res.data, res.status);
     }
 
+    // Callbefore of update password
+    ss.fn.bc.updatePasswordCB = function ($form) {
+        const newPassword = $form.find('#newPassword').val();
+        const confirmPassword = $form.find('#confirmPassword').val();
+
+        // Check if new password and confirm password match
+        if (newPassword !== confirmPassword) {
+            notify("New Password is not matching with confirm Password", 'error');
+            return false;
+        }
+        return true;
+    }
+
+    ss.fn.cb.updatePasswordCB = function ($form, res) {
+        let { data, status } = res;
+        if (status == 'success') {
+            $form.trigger('reset');
+            notify(data, status);
+            return true;
+        }
+        notify(data, status);
+    }
+
     // Initialize google map
     new LocationMap('map-canvas', 'map-lat', 'map-lng', {
         'street_number': 'street_number',
@@ -121,27 +144,6 @@ $(document).ready(function () {
                 });
             }, 'image/jpeg'); // output format
         }
-    });
-
-    $('#passwordChangeForm').submit(function (e) {
-        e.preventDefault();
-
-        // Validate password
-        const currentPassword = $('#currentPassword').val();
-        const newPassword = $('#newPassword').val();
-        const confirmPassword = $('#confirmPassword').val();
-
-        // Check if new password and confirm password match
-        if (newPassword !== confirmPassword) {
-            $('#confirmPasswordFeedback').text('Passwords do not match').addClass('text-danger');
-            return;
-        }
-
-        // Reset form
-        this.reset();
-        $('#passwordStrength').css('width', '0');
-        $('#passwordFeedback').text('Password must be at least 8 characters long');
-        $('#confirmPasswordFeedback').text('');
     });
 
     // Password strength meter

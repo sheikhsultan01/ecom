@@ -96,7 +96,6 @@
 
                 <div class="text-end mt-4">
                     <input type="hidden" name="updateUserProfile" value="true">
-                    <input type="hidden" name="uid" value="<?= LOGGED_IN_USER['uid'] ?>">
                     <button type="submit" class="btn btn-primary">
                         <i class="hgi hgi-stroke hgi-checkmark-circle-01 me-2"></i>
                         Save Changes
@@ -153,11 +152,11 @@
                             <i class="bi bi-key me-2"></i>Change Password
                         </div>
                         <div class="card-body">
-                            <form id="passwordChangeForm">
+                            <form action="profile" class="js-form" id="passwordChangeForm" data-callbefore="updatePasswordCB" data-callback="updatePasswordCB">
                                 <div class="form-group">
                                     <label for="currentPassword" class="form-label">Current Password</label>
                                     <div class="input-group">
-                                        <input type="password" class="form-control" id="currentPassword" required>
+                                        <input type="password" name="password" class="form-control" id="currentPassword" required>
                                         <button class="btn btn-outline-secondary password-toggle" type="button" data-target="currentPassword">
                                             <i class="hgi-stroke hgi-view" data-target="currentPassword"></i>
                                         </button>
@@ -167,7 +166,7 @@
                                 <div class="form-group">
                                     <label for="newPassword" class="form-label">New Password</label>
                                     <div class="input-group">
-                                        <input type="password" class="form-control" id="newPassword" required>
+                                        <input type="password" name="new_password" class="form-control" id="newPassword" required>
                                         <button class="btn btn-outline-secondary password-toggle" type="button" data-target="newPassword">
                                             <i class="hgi-stroke hgi-view" data-target="newPassword"></i>
                                         </button>
@@ -181,7 +180,7 @@
                                 <div class="form-group">
                                     <label for="confirmPassword" class="form-label">Confirm Password</label>
                                     <div class="input-group">
-                                        <input type="password" class="form-control" id="confirmPassword" required>
+                                        <input type="password" name="c_password" class="form-control" id="confirmPassword" required>
                                         <button class="btn btn-outline-secondary password-toggle" type="button" data-target="confirmPassword">
                                             <i class="hgi-stroke hgi-view" data-target="confirmPassword"></i>
                                         </button>
@@ -190,6 +189,7 @@
                                 </div>
 
                                 <div class="text-end mt-4">
+                                    <input type="hidden" name="updateUserPassword" value="true">
                                     <button type="submit" class="btn btn-primary">
                                         <i class="hgi hgi-stroke hgi-checkmark-circle-01 me-2"></i>
                                         Update Password

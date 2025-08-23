@@ -121,9 +121,11 @@ $(document).on('submit', '.js-form, .ajax-form', function (e) {
         callbefore = $form.data('callbefore'),
         onSuccessAttr = $form.attr('on-success');
 
+    let confirmContiue = true;
     if (callbefore) {
-        return ss.fn._handle($form, res);
+        confirmContiue = ss.fn._handle($form, null, 'callbefore');
     }
+    if (!confirmContiue) return;
 
     // Normalize action URL
     if (!action.endsWith('.php')) action += '.php';

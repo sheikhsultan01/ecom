@@ -5,7 +5,6 @@ require_once _DIR_ . 'includes/db.php';
 
 // Update User Profile
 if (isset($_POST['updateUserProfile'])) {
-    $uid = _POST('uid');
     $fname = _POST('fname');
     $lname = _POST('lname');
     $phone = _POST('phone');
@@ -24,13 +23,12 @@ if (isset($_POST['updateUserProfile'])) {
         'bio' => $bio
     ];
 
-    $update = $db->update('users', $dbData, ['uid' => $uid]);
+    $update = $db->update('users', $dbData, ['id' => LOGGED_IN_USER_ID]);
     if ($update) returnSuccess("Profile Updated Successfully!");
 }
 
 // Save user addresses
 if (isset($_POST['saveUserAddressData'])) {
-    $uid = _POST('uid');
     $address_uid = _post_param('address_uid', false);
     $street_address = _POST('street_address');
     $street_number = _POST('street_number');
@@ -60,7 +58,7 @@ if (isset($_POST['saveUserAddressData'])) {
     ];
 
     // Select User data
-    $user = $db->select_one("users", 'address', ['uid' => $uid]);
+    $user = $db->select_one("users", 'address', ['id' => LOGGED_IN_USER_ID]);
 
     $finalAddresses = [];
 
@@ -81,7 +79,7 @@ if (isset($_POST['saveUserAddressData'])) {
     $address_enc = json_encode($finalAddresses, JSON_UNESCAPED_UNICODE);
 
     // Update User address in db
-    $update = $db->update('users', ['address' => $address_enc], ['uid' => $uid]);
+    $update = $db->update('users', ['address' => $address_enc], ['id' => LOGGED_IN_USER_ID]);
 
     if ($update) {
         returnSuccess('Save Address Successfully!');
@@ -144,5 +142,24 @@ if (isset($_POST['updateUserProfilePicture'])) {
         ]);
     } else {
         returnError("Failed to Update Picture!");
+    }
+}
+
+// Update Password
+if (isset($_POST['updateUserPassword'])) {
+    $password = _POST('password');
+    $new_password = _POST('new_password');
+    $c_password = _POST('c_password');
+
+    $user = $db->select_one('users', 'password', ['id' => LOGGED_IN_USER_ID]);
+
+    if (password_verify($password, $user['password'])) {
+
+        if ($new_password === $c_password) $password_ = password_hash($new_password, PASSWORD_DEFAULT);
+
+        $update = $db->update("users", ['password' => $password_], ['id' => LOGGED_IN_USER_ID]);
+        if ($update) returnSuccess("Password Updated Successfully!");
+    } else {
+        returnError('Current Password is not matched!');
     }
 }
