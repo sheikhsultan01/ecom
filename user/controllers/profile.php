@@ -94,7 +94,7 @@ if (isset($_POST['deleteData'])) {
     $target = _POST('target');
 
     // Select user from db
-    $user = $db->select_one($action, 'address', ['id' => $extra_data]);
+    $user = $db->select_one($action, 'address', ['id' => LOGGED_IN_USER_ID]);
     $addresses = json_decode($user['address'], true);
 
     if (isset($addresses[$target])) {
