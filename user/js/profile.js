@@ -45,15 +45,20 @@ $(document).ready(function () {
         notify(data, status);
     }
 
-    // Initialize google map
-    new LocationMap('map-canvas', 'map-lat', 'map-lng', {
-        'street_number': 'street_number',
-        'route': 'street_address',
-        'locality': 'town_city',
-        'administrative_area_level_1': 'state',
-        'country': 'country',
-        'postal_code': 'postal_code'
-    }, "#addressForm");
+    // Edit Address Callback
+    ss.fn.cb.editAddressModalCB = function ($popup, e) {
+        l("Address Modal Displayingggggg");
+        // Initialize google map
+        new LocationMap('map-canvas', 'map-lat', 'map-lng', {
+            'street_number': 'street_number',
+            'route': 'street_address',
+            'locality': 'town_city',
+            'administrative_area_level_1': 'state',
+            'country': 'country',
+            'postal_code': 'postal_code'
+        }, "#addressForm");
+    }
+
 
     // Open avatar upload modal
     $('#uploadAvatarBtn').click(function () {

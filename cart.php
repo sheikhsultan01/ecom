@@ -12,7 +12,7 @@ $CSS_FILES = [
 $JS_FILES = [
     'cart.js'
 ];
-
+add_assets_template('map-selector');
 require_once 'includes/head.php';
 ?>
 
@@ -24,7 +24,7 @@ require_once 'includes/head.php';
         <div class="col-lg-8">
             <div class="gs-card gs-cart-items-card p-3 shadow-sm mb-4">
                 <!-- Cart Items Table (Desktop View) -->
-                <div class="d-none d-md-block">
+                <div class="d-md-block">
                     <table class="table align-middle gs-cart-table">
                         <thead>
                             <tr>
@@ -71,13 +71,13 @@ require_once 'includes/head.php';
                     <li class="list-group-item px-0 bg-transparent">
                         <div class="prcing-row" jd-data>
                             <span>Cart Subtotal:</span>
-                            <span id="cart-subtotal" class="gs-price-value animate__animated">${summary.sub_total}</span>
+                            <span id="cart-subtotal" class="gs-price-value animate__animated">${"$" + summary.sub_total}</span>
                         </div>
                     </li>
                     <li class="list-group-item px-0 bg-transparent">
                         <div class="prcing-row" jd-data>
                             <span>Discount: </span>
-                            <span class="text-danger gs-price-value animate__animated" id="cart-discount">${summary.discount}</span>
+                            <span class="text-danger gs-price-value animate__animated" id="cart-discount">${"$" + summary.discount}</span>
                         </div>
                     </li>
                     <li class="list-group-item px-0 bg-transparent">
@@ -89,14 +89,16 @@ require_once 'includes/head.php';
                 </ul>
                 <div class="d-flex justify-content-between align-items-center mb-3" jd-data>
                     <h4 class="mb-0 gs-section-title">Total:</h4>
-                    <h4 class="mb-0 gs-total-price" id="cart-grand-total">${summary.total_amount}</h4>
+                    <h4 class="mb-0 gs-total-price" id="cart-grand-total">${"$" + summary.total_amount}</h4>
                 </div>
                 <div class="coupon-input d-none">
                     <input type="text" placeholder="Enter coupon code" class="form-control">
                     <button>Apply</button>
                 </div>
-                <button class="btn btn-success checkout-btn w-100">
-                    Proceed to Checkout <i class="bi bi-arrow-right ms-2"></i>
+                <button class="btn btn-success checkout-btn w-100 ${!data.length ? 'd-none': ''}" data-bs-toggle="modal" data-bs-target="#mdlVerifyAddress" jd-data>
+                    <code class="d-none">${summary}</code>
+                    Proceed to Checkout
+                    <i class="hgi hgi-stroke hgi-arrow-right-double ms-2"></i>
                 </button>
             </div>
 
@@ -185,6 +187,9 @@ require_once 'includes/head.php';
     </div>
 </main>
 
+<?php require_once 'components/modals/verify-address.php'; ?>
+<?php require_once 'components/modals/address-modal.php'; ?>
+
 <script>
     function cartSuccessCB(res, $ele) {
         initSsJxElements('.ss-jx-element'); // Jx Elements
@@ -193,7 +198,7 @@ require_once 'includes/head.php';
 
 <script type="text/html" id="singleCartItem">
     <js-script>
-    let subTotal = '$' + sale_price * qty;
+        let subTotal = '$' + sale_price * qty;
     </js-script>
     <tr class="gs-cart-item-row" data-item-id="1">
         <td>
@@ -221,4 +226,5 @@ require_once 'includes/head.php';
     </tr>
 </script>
 
+<script src="<?= GOOGLE_MAP_URL ?>"></script>
 <?php require_once 'includes/foot.php'; ?>

@@ -1,9 +1,11 @@
 :root {
     --primary-green: #22c55e;
+    --primary-color: #28a745;
     --dark-green: #16a34a;
     --light-green: #dcfce7;
     --text-gray: #6b7280;
     --border-gray: #e5e7eb;
+    --primary-gradient: linear-gradient(135deg, #2E8B57 0%, #228B22 50%, #32CD32 100%);
     --green-gradient: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
     --blue-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
     --purple-gradient: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
@@ -124,4 +126,59 @@ body {
         -o-transform: rotate(360deg);
         transform: rotate(360deg);
     }
+}
+
+.form-control {
+    border-radius: 7px;
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    transition: all 0.3s;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+}
+
+textarea.form-control {
+    min-height: 120px;
+    border-radius: 20px;
+}
+
+.btn.btn-primary {
+    background: var(--primary-color) !important;
+    outline: none !important;
+    border: none !important;
+    transition: all 0.3s ease;
+}
+
+.btn.btn-primary:hover {
+    background: var(--dark-green) !important;
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+.modal .modal-header {
+    background: var(--primary-gradient);
+    color: white;
+}
+
+.modal .modal-content {
+    border-radius: 15px;
+    border: none;
+    overflow: hidden;
+}
+
+.modal .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+.modal .btn-close:focus:not(:focus-visible) {
+    outline: 0;
+    box-shadow: none !important;
+}
+
+.modal .modal-footer {
+    border-top: none;
 }

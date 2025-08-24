@@ -34,6 +34,7 @@ function wait(ms) {
 }
 
 function refreshFns() {
+    ssCheckbox();
     initTcTags(".tc-tags") // Tc Tags Input
     initSsJxElements('.ss-jx-element'); // Jx Elements
     initializeHoverableDropdowns();

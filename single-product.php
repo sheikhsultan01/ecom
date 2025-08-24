@@ -64,11 +64,11 @@ require_once 'includes/head.php';
 
                                 <div class="product-rating">
                                     <div class="rating-stars">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
+                                        <i class="hgi hgi-solid hgi-star"></i>
+                                        <i class="hgi hgi-solid hgi-star"></i>
+                                        <i class="hgi hgi-solid hgi-star"></i>
+                                        <i class="hgi hgi-solid hgi-star"></i>
+                                        <i class="hgi hgi-solid hgi-star-half"></i>
                                     </div>
                                     <span class="rating-count">(4.5) 324 Reviews</span>
                                 </div>

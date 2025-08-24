@@ -1,4 +1,4 @@
-<div class="modal fade" id="saveAddressMdl" tabindex="-1" aria-labelledby="addAddressModalLabel" aria-hidden="true">
+<div class="modal fade" id="saveAddressMdl" tabindex="-1" aria-labelledby="addAddressModalLabel" aria-hidden="true" data-callback="editAddressModalCB">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">

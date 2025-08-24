@@ -26,6 +26,30 @@ function htmlspecialchars(str) {
 
     return str.replace(/[&<>"']/g, function (m) { return map[m]; });
 }
+
+const ssCheckbox = () => {
+    $(".ss-checkbox").each(function () {
+        if (this.hasAttribute("data-fetched")) return;
+        $(this).attr("data-fetched", "true");
+
+        let $input = $(this).clone();
+        let id = $input.attr("id") || ("ss_" + Math.random().toString(36).substr(2, 9));
+        $input.attr("id", id);
+        $input.addClass("form-check-input");
+        let labelText = $input.attr("data-label") || $input.attr("title") || "";
+
+        let html = `
+            <div class="form-check">
+                ${$input.get(0).outerHTML}
+                <label class="form-check-label" for="${id}">${labelText}</label>
+            </div>
+        `;
+
+        $(html).insertBefore($(this));
+        $(this).remove();
+    });
+};
+
 // Alert Fuction
 function sAlert(text, heading, options = {}) {
     let type = ("type" in options) ? options.type : false,

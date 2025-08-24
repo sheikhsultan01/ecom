@@ -34,3 +34,8 @@ $(document).on('input change', '.quantity-controls .quantity-input', function ()
         $input.val(1); // minimum 1 enforce
     }
 });
+
+// Bootstrap modal callback
+$(document).on("show.bs.modal", ".modal[data-callback]", function (e) {
+    ss.fn._handle(this, e, 'callback');
+});

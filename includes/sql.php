@@ -103,3 +103,19 @@ if (_is('create_carts_table')) {
   PRIMARY KEY (`id`)
 )");
 }
+
+// Create orders table
+if (_is('create_orders_table')) {
+  $db->squery("CREATE TABLE `orders` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `products` JSON NOT NULL DEFAULT (JSON_OBJECT()),
+  `address` JSON NOT NULL DEFAULT (JSON_OBJECT()),
+  `user_id` INT NOT NULL,
+  `amount` VARCHAR(50) NOT NULL,
+  `status` ENUM('pending', 'confirmed','in_transit','completed','cancelled','archived') NOT NULL DEFAULT 'pending',
+  `uid` VARCHAR(36) NOT NULL DEFAULT (uuid()),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+)");
+}

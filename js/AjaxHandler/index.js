@@ -882,11 +882,15 @@ class AjaxBulkRequestSystem {
         start = Math.max(1, Math.min(start, end - windowSize + 1));
 
         let html = '';
-        html += `<li class="jd-page page-item jd-prev" data-source="${sourceName}" data-page="${Math.max(1, current - 1)}" ${current <= 1 ? 'disabled' : ''}>&laquo;</li>`;
+        html += `<li class="jd-page page-item jd-prev" data-source="${sourceName}" data-page="${Math.max(1, current - 1)}" ${current <= 1 ? 'disabled' : ''}>
+                    <i class="hgi hgi-stroke hgi-arrow-left-double"></i>
+                </li>`;
         for (let i = start; i <= end; i++) {
             html += `<li class="jd-page page-item ${i === current ? 'active' : ''}" data-source="${sourceName}" data-page="${i}">${i}</li>`;
         }
-        html += `<li class="jd-page page-item jd-next" data-source="${sourceName}" data-page="${Math.min(totalPages, current + 1)}" ${current >= totalPages ? 'disabled' : ''}>&raquo;</li>`;
+        html += `<li class="jd-page page-item jd-next" data-source="${sourceName}" data-page="${Math.min(totalPages, current + 1)}" ${current >= totalPages ? 'disabled' : ''}>
+                    <i class="hgi hgi-stroke hgi-arrow-right-double"></i>
+                </li>`;
 
         $container.html(html);
     }

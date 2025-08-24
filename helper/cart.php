@@ -45,9 +45,10 @@ $jdManager->defineData('cartItems', [
         return [
             'data' => $cart_items,
             'summary' => [
-                'sub_total' => CURRENCY . $sub_total,
-                'discount' => CURRENCY . $discount,
-                'total_amount' => CURRENCY . $total_amount
+                'sub_total' => $sub_total,
+                'discount' => $discount,
+                'total_amount' => $total_amount,
+                'addresses' => json_decode(LOGGED_IN_USER['address'], true)
             ],
             'pagination' => [
                 'total' => $total_items[0]['total'],
