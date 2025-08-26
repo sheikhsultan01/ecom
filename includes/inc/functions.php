@@ -343,3 +343,8 @@ function check_cart_product($id)
     if ($cart) return $cart[0];
     return false;
 }
+// Parse end date
+function parse_end_date($date)
+{
+    return date("Y-m-d 23:59:59", strtotime($date));
+}

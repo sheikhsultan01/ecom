@@ -1027,6 +1027,8 @@ $(document).ready(function () {
 // Send source request on applying filter
 $(document).on('change', '[jd-filter]', function (e) {
     e.preventDefault();
+    if ($(this).hasClass('jd-date-selector-type')) return false;
+
     const source = $(this).closest('[jd-filters]').attr('jd-filters');
     // Reset page to 1 on filter change
     const $element = $(`[jd-source="${source}"]`).first();

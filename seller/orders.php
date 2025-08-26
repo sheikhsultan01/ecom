@@ -1,6 +1,7 @@
 <?php
 define('_DIR_', '../');
 require_once 'includes/db.php';
+require_once 'helper/orders.php';
 $page_name = 'Orders';
 
 $CSS_FILES = [
@@ -11,6 +12,7 @@ $JS_FILES = [
     'orders.js'
 ];
 
+add_assets_template('date-input');
 require_once 'includes/head.php';
 ?>
 <div class="order-container">
@@ -89,49 +91,27 @@ require_once 'includes/head.php';
         </div>
     </div>
 
-    <!-- Filter Card -->
-    <div class="card filter-card">
-        <div class="card-body">
-            <h5 class="card-title mb-3">Filter Orders</h5>
-            <form id="filter-form">
-                <div class="row g-3">
-                    <div class="col-lg-3 col-md-6">
-                        <label class="form-label">Search</label>
-                        <input type="text" class="form-control search-input" id="search-input" placeholder="Order ID, Customer...">
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <label class="form-label">Status</label>
-                        <select class="form-select search-input" id="status-filter">
-                            <option value="">All Statuses</option>
-                            <option value="pending">Pending</option>
-                            <option value="completed">Completed</option>
-                            <option value="transit">In Transit</option>
-                            <option value="cancelled">Cancelled</option>
-                        </select>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <label class="form-label">From Date</label>
-                        <input type="date" class="form-control date-input" id="from-date">
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <label class="form-label">To Date</label>
-                        <input type="date" class="form-control date-input" id="to-date">
-                    </div>
-                    <div class="col-12 d-flex justify-content-end mt-4">
-                        <button type="button" class="btn btn-reset me-2" id="reset-filter">
-                            <i class="fas fa-undo me-1"></i> Reset
-                        </button>
-                        <button type="button" class="btn btn-filter" id="apply-filter">
-                            <i class="fas fa-filter me-1"></i> Apply Filters
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <!-- Orders Table -->
-    <div class="card my-4">
+    <div class="custom-card card my-4">
+        <div class="card-header" jd-filters="orders">
+            <div class="row g-3">
+                <div class="col-lg-6 col-md-6">
+                    <input type="text" name="query" class="form-control search-input" id="search-input" placeholder="Order ID, Customer..." jd-filter="query">
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <select class="form-select search-input" name="status" jd-filter="status">
+                        <option value="*">All Statuses</option>
+                        <option value="pending" selected>Pending</option>
+                        <option value="completed">Completed</option>
+                        <option value="transit">In Transit</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <?php __gcomp('date-input'); ?>
+                </div>
+            </div>
+        </div>
         <div class="card-body p-0">
             <div class="table-responsive orders-table">
                 <table class="table table-hover mb-0" id="orders-table">
@@ -145,32 +125,15 @@ require_once 'includes/head.php';
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <!-- Table content will be dynamically populated -->
+                    <tbody jd-source="orders" jd-pick="#orderTemplate" jd-drop="this" jd-pagination="#ordersPagination">
+                        <?= skeleton("table", [
+                            'columns' => 6,
+                        ]) ?>
                     </tbody>
                 </table>
-            </div>
-
-            <!-- Pagination -->
-            <div class="d-flex justify-content-between align-items-center p-3">
-                <div class="text-muted">Showing <span id="showing-entries">1-10</span> of <span id="total-entries">270</span> entries</div>
-                <nav>
-                    <ul class="pagination mb-0">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <i class="hgi hgi-stroke hgi-arrow-left-01"></i>
-                            </a>
-                        </li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <i class="hgi hgi-stroke hgi-arrow-right-01"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+                <div class="jd-pagination">
+                    <ul id="ordersPagination" class="mt-2 pagination"></ul>
+                </div>
             </div>
         </div>
     </div>
@@ -275,5 +238,34 @@ require_once 'includes/head.php';
         </div>
     </div>
 </div>
+
+<script type="text/html" id="orderTemplate">
+    <tr>
+        <td class="order-id">${generateOrderId(created_at, id)}</td>
+        <td>
+            <div class="customer-info">
+                <div class="customer-avatar">${fname.charAt(0) + lname.charAt(0)}</div>
+                <div>
+                    <p class="customer-name">${name}</p>
+                    <p class="customer-email">${email}</p>
+                </div>
+            </div>
+        </td>
+        <td class="date-cell">${moment(created_at).format("MMM DD, YYYY")}</td>
+        <td class="amount-cell">${'$' + amount}</td>
+        <td><span class="status-badge status-${status}">${toCapitalize(status)}</span></td>
+        <td>
+            <a href="#" class="action-btn view-btn view-order" data-bs-toggle="modal" data-bs-target="#orderDetailsModal">
+                <i class="hgi hgi-stroke hgi-view"></i>
+            </a>
+            <a href="#" class="action-btn edit-btn">
+                <i class="hgi hgi-stroke hgi-pencil-edit-02"></i>
+            </a>
+            <a href="#" class="action-btn delete-btn">
+                <i class="hgi hgi-stroke hgi-delete-01"></i>
+            </a>
+        </td>
+    </tr>
+</script>
 
 <?php require_once 'includes/foot.php'; ?>

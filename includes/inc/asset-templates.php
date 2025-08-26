@@ -9,4 +9,9 @@ $ASSETS_TEPLATES = [
             _DIR_ . 'css/map-selector.css',
         ]
     ],
+    'date-input' => [
+        'js' => [
+            _DIR_ . 'js/AjaxHandler/date.js',
+        ]
+    ],
 ];

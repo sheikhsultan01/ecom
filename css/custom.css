@@ -182,3 +182,32 @@ textarea.form-control {
 .modal .modal-footer {
     border-top: none;
 }
+
+.custom-card {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 25px;
+}
+
+.custom-card .card-header {
+    padding: 0;
+    background: #fff;
+    border: none;
+}
+
+.custom-card .card-body {
+    background: #fff;
+    border: none;
+}
+
+.jd-date-selector {
+    position: relative;
+}
+
+.jd-date-inputs {
+    position: absolute;
+    top: 55px;
+    display: flex;
+    gap: 5px;
+    right: 0;
+}
