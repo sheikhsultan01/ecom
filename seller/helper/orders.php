@@ -75,6 +75,7 @@ $jdManager->defineData('orders', [
                             u.name,
                             u.fname,
                             u.lname,
+                            u.phone,
                             u.image,
                             u.email
                         FROM orders o

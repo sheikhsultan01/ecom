@@ -377,3 +377,8 @@ function checkProductAddedToCart(product_id, product_price, cart_id, product_qty
 
     return btnHtml;
 }
+
+// Funciton to format date
+function formatDate(datetime, format = "YYYY-MM-DD") {
+    return moment(datetime).format(format);
+}

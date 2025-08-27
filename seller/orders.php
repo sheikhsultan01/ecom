@@ -140,104 +140,7 @@ require_once 'includes/head.php';
 </div>
 
 <!-- Order Details Modal -->
-<div class="modal fade" id="orderDetailsModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content" style="border-radius: 15px; border: none; overflow: hidden;">
-            <div class="modal-header" style="background: var(--primary-gradient); color: white;">
-                <h5 class="modal-title">Order Details #<span id="modal-order-id">ORD-7829</span></h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-4">
-                <div class="row mb-4">
-                    <div class="col-md-6">
-                        <h6 class="text-muted mb-2">Customer Information</h6>
-                        <h5 class="mb-1" id="modal-customer-name">Emma Johnson</h5>
-                        <p class="mb-1" id="modal-customer-email">emma.johnson@example.com</p>
-                        <p class="mb-0" id="modal-customer-phone">+1 (555) 123-4567</p>
-                    </div>
-                    <div class="col-md-6 text-md-end">
-                        <h6 class="text-muted mb-2">Order Information</h6>
-                        <p class="mb-1">Date: <span id="modal-order-date">June 15, 2023</span></p>
-                        <p class="mb-1">Status: <span class="badge status-completed" id="modal-order-status">Completed</span></p>
-                        <p class="mb-0">Payment: <span id="modal-payment-method">Credit Card</span></p>
-                    </div>
-                </div>
-
-                <div class="table-responsive mb-4">
-                    <table class="table" id="modal-order-items">
-                        <thead style="background: var(--secondary-gradient);">
-                            <tr>
-                                <th>Product</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                                <th class="text-end">Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Order items will be populated dynamically -->
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="3" class="text-end fw-bold">Subtotal:</td>
-                                <td class="text-end fw-bold" id="modal-subtotal">$129.97</td>
-                            </tr>
-                            <tr>
-                                <td colspan="3" class="text-end">Shipping:</td>
-                                <td class="text-end" id="modal-shipping">$8.99</td>
-                            </tr>
-                            <tr>
-                                <td colspan="3" class="text-end">Tax:</td>
-                                <td class="text-end" id="modal-tax">$10.40</td>
-                            </tr>
-                            <tr>
-                                <td colspan="3" class="text-end fw-bold">Total:</td>
-                                <td class="text-end fw-bold fs-5" id="modal-total">$149.36</td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6 mb-3 mb-md-0">
-                        <div class="card h-100" style="border-radius: 10px; border: none; box-shadow: var(--card-shadow);">
-                            <div class="card-body">
-                                <h6 class="card-title">Shipping Address</h6>
-                                <address class="mb-0" id="modal-shipping-address">
-                                    Emma Johnson<br>
-                                    123 Main Street, Apt 4B<br>
-                                    New York, NY 10001<br>
-                                    United States
-                                </address>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card h-100" style="border-radius: 10px; border: none; box-shadow: var(--card-shadow);">
-                            <div class="card-body">
-                                <h6 class="card-title">Notes</h6>
-                                <p class="mb-0" id="modal-notes">Please leave the package at the front door if no one answers.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-reset" data-bs-dismiss="modal">Close</button>
-                <div class="dropdown">
-                    <button class="btn btn-filter dropdown-toggle" type="button" id="updateStatusDropdown" data-bs-toggle="dropdown">
-                        Update Status
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="updateStatusDropdown">
-                        <li><a class="dropdown-item" href="#">Pending</a></li>
-                        <li><a class="dropdown-item" href="#">In Transit</a></li>
-                        <li><a class="dropdown-item" href="#">Completed</a></li>
-                        <li><a class="dropdown-item" href="#">Cancelled</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<?php require_once 'components/modals/order-details.php'; ?>
 
 <script type="text/html" id="orderTemplate">
     <tr>
@@ -256,6 +159,7 @@ require_once 'includes/head.php';
         <td><span class="status-badge status-${status}">${toCapitalize(status)}</span></td>
         <td>
             <a href="#" class="action-btn view-btn view-order" data-bs-toggle="modal" data-bs-target="#orderDetailsModal">
+                <code class="d-none">${item}</code>
                 <i class="hgi hgi-stroke hgi-view"></i>
             </a>
             <a href="#" class="action-btn edit-btn">

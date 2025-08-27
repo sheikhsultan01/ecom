@@ -85,11 +85,6 @@
     border-color: #f1f1f1;
 }
 
-.order-id {
-    font-weight: 600;
-    color: var(--accent-color);
-}
-
 .status-badge {
     padding: 0.5rem 1rem;
     border-radius: 50px;
