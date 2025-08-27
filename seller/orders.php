@@ -18,7 +18,7 @@ require_once 'includes/head.php';
 <div class="order-container">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="mb-0 fw-bold">Orders Management</h2>
-        <button class="btn btn-filter">
+        <button class="btn btn-filter btn-main">
             <i class="fas fa-plus me-2"></i> Create Order
         </button>
     </div>
@@ -102,6 +102,7 @@ require_once 'includes/head.php';
                     <select class="form-select search-input" name="status" jd-filter="status">
                         <option value="*">All Statuses</option>
                         <option value="pending" selected>Pending</option>
+                        <option value="confirmed">Confirmed</option>
                         <option value="completed">Completed</option>
                         <option value="transit">In Transit</option>
                         <option value="cancelled">Cancelled</option>
@@ -156,7 +157,7 @@ require_once 'includes/head.php';
         </td>
         <td class="date-cell">${moment(created_at).format("MMM DD, YYYY")}</td>
         <td class="amount-cell">${'$' + amount}</td>
-        <td><span class="status-badge status-${status}">${toCapitalize(status)}</span></td>
+        <td><span class="status-badge ${status}">${toCapitalize(status)}</span></td>
         <td>
             <a href="#" class="action-btn view-btn view-order" data-bs-toggle="modal" data-bs-target="#orderDetailsModal">
                 <code class="d-none">${item}</code>

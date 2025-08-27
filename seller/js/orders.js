@@ -20,7 +20,8 @@ ss.fn.cb.showCustomerOrderDetailsCB = function ($popup, e) {
     // Set Order Information
     let $orderInfo = $('#orderDetailsModal').find('.order-information');
     $orderInfo.find('.order-date').text(formatDate(data.created_at, 'MMMM DD, YYYY'));
-    $orderInfo.find('.order-status').text(toCapitalize(data.status)).addClass(`status-${data.status}`);
+    $orderInfo.find('.order-status').removeClass('pending confirmed completed cancelled in_transit');
+    $orderInfo.find('.order-status').text(toCapitalize(data.status)).addClass(`${data.status}`).attr('data-status', data.status);
 
     // Set Shipping Address
     let $shipAddress = $('.shipping-address');
@@ -60,5 +61,38 @@ ss.fn.cb.showCustomerOrderDetailsCB = function ($popup, e) {
     $productSummary.find('.discount').text(CURRENCY + (total - subTotal));
     $productSummary.find('.total-amount').text(CURRENCY + total);
     $('#orderDetailsModal').find('.order-id').text(generateOrderId(data.created_at, data.id));
+    $('#orderDetailsModal').find('.curr-order-id').attr('data-id', data.id);
 
 }
+
+// Ajax request to update order status
+$(document).on('click', '.update-order-status .dropdown-item', function (e) {
+    e.preventDefault();
+    let $this = $(this),
+        type = $this.data('type'),
+        id = $this.closest('.update-order-status').attr('data-id'),
+        $orderInfo = $('#orderDetailsModal').find('.order-information'),
+        $orderStatus = $orderInfo.find('.order-status'),
+        oldOrderStatus = $orderInfo.find('.order-status').attr('data-status');
+
+    $.ajax({
+        url: "controllers/orders",
+        type: "POST",
+        data: { updateOrderStatus: true, status: type, id },
+        dataType: "json",
+        success: function (res) {
+            let { data, status } = res;
+            if (status === 'success') {
+                refreshSource('orders'); // Refresh the Orders data in table
+
+                // Change the status in Order modal
+                $orderStatus.text(toCapitalize(type)).removeClass(`${oldOrderStatus}`);
+                $orderStatus.addClass(`${type}`).attr('data-status', type);
+
+                notify(data, status);
+            } else {
+                notify(data, status);
+            }
+        }
+    });
+});

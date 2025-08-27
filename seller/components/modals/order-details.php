@@ -83,16 +83,17 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-reset" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-reset btn-outline-secondary" data-bs-dismiss="modal">Close</button>
                 <div class="dropdown">
                     <button class="btn btn-primary btn-filter dropdown-toggle" type="button" id="updateStatusDropdown" data-bs-toggle="dropdown">
                         Update Status
                     </button>
-                    <ul class="dropdown-menu" aria-labelledby="updateStatusDropdown">
-                        <li><a class="dropdown-item" href="#">Pending</a></li>
-                        <li><a class="dropdown-item" href="#">In Transit</a></li>
-                        <li><a class="dropdown-item" href="#">Completed</a></li>
-                        <li><a class="dropdown-item" href="#">Cancelled</a></li>
+                    <ul class="dropdown-menu curr-order-id update-order-status" aria-labelledby="updateStatusDropdown">
+                        <li><a class="dropdown-item" data-type="pending" href="#">Pending</a></li>
+                        <li><a class="dropdown-item" data-type="confirmed" href="#">Confirmed</a></li>
+                        <li><a class="dropdown-item" data-type="in_transit" href="#">In Transit</a></li>
+                        <li><a class="dropdown-item" data-type="completed" href="#">Completed</a></li>
+                        <li><a class="dropdown-item" data-type="cancelled" href="#">Cancelled</a></li>
                     </ul>
                 </div>
             </div>

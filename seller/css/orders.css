@@ -92,22 +92,33 @@
     font-size: 0.8rem;
 }
 
-.status-pending {
+
+.status-badge.pending,
+.order-status.pending {
     background-color: #FFF3E0;
     color: #FF9800;
 }
 
-.status-completed {
+.status-badge.confirmed,
+.order-status.confirmed {
+    background-color: #E8F5E9;
+    color: #257a28;
+}
+
+.status-badge.completed,
+.order-status.completed {
     background-color: #E8F5E9;
     color: #4CAF50;
 }
 
-.status-in_transit {
+.status-badge.in_transit,
+.order-status.in_transit {
     background-color: #E3F2FD;
     color: #2196F3;
 }
 
-.status-cancelled {
+.status-badge.cancelled,
+.order-status.cancelled {
     background-color: #FCE4EC;
     color: #E91E63;
 }
