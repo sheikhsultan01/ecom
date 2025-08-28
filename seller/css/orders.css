@@ -235,3 +235,11 @@
     font-size: 1.2rem;
     margin-bottom: 1.5rem;
 }
+
+.update-order-status .dropdown-item.active {
+    background: var(--secondary-gradient);
+    color: var(--accent-color);
+    transform: translateX(5px);
+    border-radius: 10px;
+    width: 95%;
+}

@@ -33,6 +33,9 @@ if (isset($_POST['placeUserOrder'])) {
 
     $insert = $db->insert('orders', $dbData);
     if ($insert) {
+        // Insert order status in order_statuses
+        $db->insert('order_statuses', ['status' => 'pending', 'order_id' => $insert]);
+
         // Update the cart item status to placed
         $cart_update = $db->update('carts', [
             'status' => 'placed'

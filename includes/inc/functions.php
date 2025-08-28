@@ -348,3 +348,50 @@ function parse_end_date($date)
 {
     return date("Y-m-d 23:59:59", strtotime($date));
 }
+
+function generateOrderId($created_at, $id)
+{
+    $date = new DateTime($created_at);
+    $month = strtoupper($date->format('M'));
+    $day   = $date->format('d');
+
+    // Build order ID
+    return $month . '-' . $day . '-' . $id;
+}
+
+function decodeOrderId($orderId)
+{
+    $parts = explode('-', strtoupper($orderId));
+    $count = count($parts);
+
+    // Map month short names to numbers
+    $months = [
+        "JAN" => 1, "FEB" => 2, "MAR" => 3,
+        "APR" => 4, "MAY" => 5, "JUN" => 6,
+        "JUL" => 7, "AUG" => 8, "SEP" => 9,
+        "OCT" => 10, "NOV" => 11, "DEC" => 12
+    ];
+
+    switch ($count) {
+        case 3:
+            $id = (int) $parts[2];
+            return "o.id = " . $id;
+
+        case 2:
+            $month = $months[$parts[0]] ?? null;
+            $day   = (int) $parts[1];
+            if ($month) {
+                return "MONTH(o.created_at) = $month AND DAY(o.created_at) = $day";
+            }
+            break;
+
+        case 1:
+            $month = $months[$parts[0]] ?? null;
+            if ($month) {
+                return "MONTH(o.created_at) = $month";
+            }
+            break;
+    }
+
+    return true;
+}

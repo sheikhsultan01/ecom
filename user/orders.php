@@ -1,6 +1,7 @@
 <?php
 define('_DIR_', '../');
 require_once 'includes/db.php';
+require_once 'helper/orders.php';
 $page_name = 'Orders';
 
 $CSS_FILES = [
@@ -10,6 +11,7 @@ $CSS_FILES = [
 $JS_FILES = [
     'orders.js'
 ];
+add_assets_template('date-input');
 
 require_once 'includes/head.php';
 ?>

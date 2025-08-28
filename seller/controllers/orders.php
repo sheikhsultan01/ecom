@@ -8,7 +8,14 @@ if (isset($_POST['updateOrderStatus'])) {
     $id = _POST('id');
     $status = _POST('status');
 
-    $update = $db->update('orders', ['status' => $status], ['id' => $id]);
-    if ($update) returnSuccess('Order Status Updated Successfully!');
+    // Insert status history if already not exist
+    $is_status_exist = $db->select_one('order_statuses', 'id', ['status' => $status, 'order_id' => $id]);
+    if (!$is_status_exist) {
+        $update = $db->update('orders', ['status' => $status], ['id' => $id]);
+        if ($update) {
+            $insert = $db->insert('order_statuses', ['status' => $status, 'order_id' => $id]);
+            if ($insert) returnSuccess('Order Status Updated Successfully!');
+        }
+    }
     returnError('Failed to update status!');
 }

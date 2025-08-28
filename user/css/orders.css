@@ -153,11 +153,6 @@
     color: var(--text-light);
 }
 
-.orders-container .search-container {
-    position: relative;
-    max-width: 400px;
-}
-
 .orders-container .table-responsive {
     border-radius: 15px;
     overflow: hidden;
@@ -207,32 +202,32 @@
     display: inline-block;
 }
 
-.orders-container .status-delivered {
+.orders-container .order-status.completed {
     background-color: rgba(76, 175, 80, 0.15);
     color: #4CAF50;
 }
 
-.orders-container .status-transit {
+.orders-container .order-status.in_transit {
     background-color: rgba(33, 150, 243, 0.15);
     color: #2196F3;
 }
 
-.orders-container .status-processing {
+.orders-container .order-status.pending {
     background-color: rgba(255, 152, 0, 0.15);
     color: #FF9800;
 }
 
-.orders-container .status-placed {
+.orders-container .order-status.confirmed {
     background-color: rgba(156, 39, 176, 0.15);
     color: #9C27B0;
 }
 
-.orders-container .status-cancelled {
+.orders-container .order-status.cancelled {
     background-color: rgba(244, 67, 54, 0.15);
     color: #F44336;
 }
 
-.orders-container .status-returned {
+.orders-container .order-status.returned {
     background-color: rgba(158, 158, 158, 0.15);
     color: #9E9E9E;
 }
@@ -861,4 +856,19 @@
     .orders-container .tracking-time-horizontal {
         font-size: 0.65rem;
     }
+}
+
+.orders-container .product-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.empty-select-order .order-msg-container i {
+    font-size: 5rem;
+    color: #c2c1c1;
+}
+
+.empty-select-order .order-msg-container .text {
+    color: #c2c1c1;
 }

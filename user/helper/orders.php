@@ -1,7 +1,7 @@
 <?php
-// Orders
+// User Orders
 $jdManager->defineData('orders', [
-    'data' => function ($params) use ($db) {
+    'data' => function ($params) use ($db, $l_user) {
 
         $pagination = $params['pagination'];
         $filters = $params['filters'];
@@ -9,14 +9,14 @@ $jdManager->defineData('orders', [
         $page = intval(arr_val($pagination, 'page', 1));
         $offset = ($page - 1) * $limit;
         $query = $filters['query'] ?? '';
-        $status = $filters['status'] ? $filters['status'] : 'pending';
+        $status = $filters['status'] ? $filters['status'] : '*';
         $start_date = $filters['start_date'] ?? '';
         $end_date = $filters['end_date'] ? $filters['end_date'] : date('Y-m-d');
 
         $conditions = [];
         if (!empty($query)) {
             $order_id = decodeOrderId($query);
-            $conditions[] = "(u.name LIKE '%$query%' OR ($order_id))";
+            $conditions[] = "$order_id";
         }
         // Status Condition
         if (!empty($status) && $status != '*') {
@@ -31,24 +31,21 @@ $jdManager->defineData('orders', [
         // Combine all WHERE conditions
         $condition = "";
         if (!empty($conditions)) {
-            $condition = "WHERE " . implode(" AND ", $conditions);
+            $condition = "WHERE " . implode(" AND ", $conditions) . " AND o.user_id = '$l_user'";
         }
 
-        $order_query = "SELECT o.*,
-                            u.name,
-                            u.fname,
-                            u.lname,
-                            u.phone,
-                            u.image,
-                            u.email
+        $order_query = "SELECT o.*
                         FROM orders o
-                        LEFT JOIN users u
-                            ON o.user_id  = u.id
                             $condition
                         ORDER BY o.id ASC LIMIT $limit OFFSET $offset";
         $orders = $db->squery($order_query);
 
-        $total = $db->select("orders", 'COUNT(id) AS total');
+        foreach ($orders as &$order) {
+            $products = json_decode($order['products'], true);
+            $order['total_items'] = count($products);
+        }
+
+        $total = $db->select("orders", 'COUNT(id) AS total', ['user_id' => $l_user]);
 
         return [
             'data' => $orders,

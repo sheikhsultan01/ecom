@@ -5,56 +5,58 @@
             <div class="col-12 mb-3">
                 <div class="card mb-4">
                     <div class="card-header">
-                        <h5 class="card-title">Order #GC78945</h5>
+                        <h5 class="card-title">Order Details <span class="order-number"></span></h5>
                         <div class="dropdown">
-                            <button class="btn btn-outline-filter dropdown-toggle" type="button" id="orderDropdown" data-bs-toggle="dropdown">
+                            <button class="btn btn-outline-filter" type="button" id="orderDropdown" data-bs-toggle="dropdown">
                                 Select Order
                             </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="orderDropdown">
-                                <li><a class="dropdown-item active" href="#">Order #GC78945</a></li>
-                                <li><a class="dropdown-item" href="#">Order #GC78932</a></li>
-                                <li><a class="dropdown-item" href="#">Order #GC78901</a></li>
-                                <li><a class="dropdown-item" href="#">Order #GC78890</a></li>
+                            <?php
+                            $curr_orders = $db->squery("SELECT id,created_at,status FROM orders WHERE user_id = '$l_user' AND (status != 'refunded' OR status != 'cancelled' OR status != 'completed')");
+                            ?>
+                            <ul class="dropdown-menu dropdown-menu-end orders-select-btn" aria-labelledby="orderDropdown">
+                                <?php foreach ($curr_orders as $order) { ?>
+                                    <li><a class="dropdown-item" href="#" data-id=<?= $order['id'] ?>>Order <?= generateOrderId($order['created_at'], $order['id']) ?></a></li>
+                                <?php } ?>
                             </ul>
                         </div>
                     </div>
                     <div class="card-body">
                         <!-- New Horizontal Order Tracking -->
-                        <div class="order-tracking-horizontal">
+                        <div class="order-tracking-horizontal d-none">
                             <div class="tracking-line-horizontal"></div>
                             <div class="tracking-progress-horizontal" id="progressLine"></div>
 
                             <div class="tracking-steps">
-                                <div class="tracking-step-horizontal completed" data-step="1">
-                                    <div class="tracking-icon-horizontal completed">
+                                <div class="tracking-step-horizontal" data-step="1">
+                                    <div class="tracking-icon-horizontal">
                                         <i class="hgi hgi-stroke hgi-shopping-basket-done-01"></i>
                                     </div>
                                     <h6 class="tracking-title-horizontal">Order Placed</h6>
-                                    <p class="tracking-time-horizontal">Jun 28, 10:30 AM</p>
+                                    <p class="tracking-time-horizontal"></p>
                                 </div>
 
-                                <div class="tracking-step-horizontal completed" data-step="2">
-                                    <div class="tracking-icon-horizontal completed">
+                                <div class="tracking-step-horizontal" data-step="2">
+                                    <div class="tracking-icon-horizontal">
                                         <i class="hgi hgi-stroke hgi-checkmark-circle-01"></i>
                                     </div>
                                     <h6 class="tracking-title-horizontal">Confirmed</h6>
-                                    <p class="tracking-time-horizontal">Jun 28, 11:45 AM</p>
+                                    <p class="tracking-time-horizontal"></p>
                                 </div>
 
-                                <div class="tracking-step-horizontal completed" data-step="3">
-                                    <div class="tracking-icon-horizontal completed">
+                                <div class="tracking-step-horizontal" data-step="3">
+                                    <div class="tracking-icon-horizontal">
                                         <i class="hgi hgi-stroke hgi-delivery-box-01"></i>
                                     </div>
                                     <h6 class="tracking-title-horizontal">Preparing</h6>
-                                    <p class="tracking-time-horizontal">Jun 28, 2:15 PM</p>
+                                    <p class="tracking-time-horizontal"></p>
                                 </div>
 
-                                <div class="tracking-step-horizontal active" data-step="4">
-                                    <div class="tracking-icon-horizontal active">
+                                <div class="tracking-step-horizontal" data-step="4">
+                                    <div class="tracking-icon-horizontal">
                                         <i class="hgi hgi-stroke hgi-shipping-truck-02"></i>
                                     </div>
                                     <h6 class="tracking-title-horizontal">In Transit</h6>
-                                    <p class="tracking-time-horizontal">Jun 29, 9:20 AM</p>
+                                    <p class="tracking-time-horizontal"></p>
                                 </div>
 
                                 <div class="tracking-step-horizontal" data-step="5">
@@ -62,33 +64,24 @@
                                         <i class="hgi hgi-stroke hgi-home-12"></i>
                                     </div>
                                     <h6 class="tracking-title-horizontal">Delivered</h6>
-                                    <p class="tracking-time-horizontal">Est: Jun 30</p>
+                                    <p class="tracking-time-horizontal"></p>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="mt-4">
+                        <div class="mt-4 order-tracking-vertical d-none">
                             <h6 class="mb-3">Shipping Updates</h6>
                             <div class="order-timeline">
-                                <div class="timeline-item">
-                                    <p class="timeline-time">June 29, 2023 at 9:20 AM</p>
-                                    <h6 class="timeline-title">Order Shipped</h6>
-                                    <p class="timeline-text">Your order has been picked up by the courier and is on its way to you.</p>
-                                </div>
-                                <div class="timeline-item">
-                                    <p class="timeline-time">June 28, 2023 at 2:15 PM</p>
-                                    <h6 class="timeline-title">Order Prepared</h6>
-                                    <p class="timeline-text">Your order has been prepared and packaged for shipping.</p>
-                                </div>
-                                <div class="timeline-item">
-                                    <p class="timeline-time">June 28, 2023 at 11:45 AM</p>
-                                    <h6 class="timeline-title">Order Confirmed</h6>
-                                    <p class="timeline-text">Your order has been confirmed and payment has been processed.</p>
-                                </div>
-                                <div class="timeline-item">
-                                    <p class="timeline-time">June 28, 2023 at 10:30 AM</p>
-                                    <h6 class="timeline-title">Order Placed</h6>
-                                    <p class="timeline-text">You placed an order for 3 items.</p>
+                            </div>
+                        </div>
+
+                        <div class="empty-select-order">
+                            <div class="order-msg-container my-5">
+                                <div class="d-flex flex-column align-items-center gap-3">
+                                    <span>
+                                        <i class="hgi hgi-stroke hgi-package-remove"></i>
+                                    </span>
+                                    <span class="text mt-2">No Order Selected!</span>
                                 </div>
                             </div>
                         </div>
@@ -96,7 +89,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-6">
+            <div class="col-lg-6 d-none" id="orderDetailCard">
                 <div class="order-detail-card">
                     <div class="order-detail-header">
                         <h5 class="order-detail-title">Order Details</h5>
@@ -108,29 +101,18 @@
                                 <i class="hgi hgi-stroke hgi-delivery-box-01"></i>
                                 Order Items
                             </h6>
-                            <div class="order-product">
-                                <div class="product-image">
-                                    <i class="fas fa-leaf"></i>
-                                </div>
-                                <div class="product-details">
-                                    <h6 class="product-name">Organic Green Tea</h6>
-                                    <p class="product-variant">Premium Quality, 100g</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span class="product-price">$18.99</span>
-                                        <span class="product-quantity">Qty: 2</span>
+                            <div class="order-products">
+                                <div class="order-product">
+                                    <div class="product-image">
+                                        <i class="fas fa-leaf"></i>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="order-product">
-                                <div class="product-image">
-                                    <i class="fas fa-tint"></i>
-                                </div>
-                                <div class="product-details">
-                                    <h6 class="product-name">Bamboo Water Bottle</h6>
-                                    <p class="product-variant">Eco-friendly, 750ml</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span class="product-price">$24.99</span>
-                                        <span class="product-quantity">Qty: 1</span>
+                                    <div class="product-details">
+                                        <h6 class="product-name">Organic Green Tea</h6>
+                                        <p class="product-variant">Premium Quality, 100g</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="product-price">$18.99</span>
+                                            <span class="product-quantity">Qty: 2</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -139,27 +121,27 @@
                         <div class="order-summary mt-3">
                             <div class="summary-item">
                                 <span class="summary-label">Subtotal</span>
-                                <span class="summary-value">$62.97</span>
+                                <span class="summary-value subtotal">$62.97</span>
                             </div>
                             <div class="summary-item">
                                 <span class="summary-label">Shipping</span>
-                                <span class="summary-value">$5.99</span>
+                                <span class="summary-value">Free</span>
                             </div>
                             <div class="summary-item">
-                                <span class="summary-label">Tax</span>
-                                <span class="summary-value">$4.10</span>
+                                <span class="summary-label">Discount</span>
+                                <span class="summary-value discount"></span>
                             </div>
                             <div class="summary-item">
                                 <span class="summary-label">Total</span>
-                                <span class="summary-total">$73.06</span>
+                                <span class="summary-total total-amount">$73.06</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-6">
-                <div class="order-detail-card">
+            <div class="col-lg-6 d-none" id="shippingDetailCard">
+                <div class="order-detail-card shipping-details">
                     <div class="order-detail-header">
                         <h5 class="order-detail-title">Shipping & Payment</h5>
                         <p class="order-detail-subtitle">Estimated Delivery: June 30, 2023</p>
@@ -171,13 +153,13 @@
                                 Shipping Address
                             </h6>
                             <div class="address-card">
-                                <h6 class="address-title">John Smith</h6>
+                                <h6 class="address-title"><?= LOGGED_IN_USER['name'] ?></h6>
                                 <p class="address-text">
-                                    123 Green Street<br>
-                                    Apt 4B<br>
-                                    Eco City, EC 12345<br>
-                                    United States<br>
-                                    Phone: (555) 123-4567
+                                    <span class="street-address">123 Green Street</span><br>
+                                    <span class="street-number">Apt 4B</span><br>
+                                    <span class="town-city">Eco City, EC 12345</span><br>
+                                    <span class="country">United States</span><br>
+                                    <span>Phone: <?= LOGGED_IN_USER['phone'] ?></span>
                                 </p>
                             </div>
                         </div>
@@ -221,43 +203,34 @@
         <div class="card">
             <div class="card-header">
                 <h5 class="card-title">Order History</h5>
-                <div class="search-container">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" class="search-input" placeholder="Search orders...">
-                </div>
             </div>
             <div class="card-body">
-                <div class="order-filter-bar">
-                    <div class="filter-item">
-                        <p class="filter-label">Status</p>
-                        <select class="filter-select">
-                            <option value="">All Statuses</option>
-                            <option value="delivered">Delivered</option>
-                            <option value="transit">In Transit</option>
-                            <option value="processing">Processing</option>
-                            <option value="placed">Placed</option>
-                            <option value="cancelled">Cancelled</option>
-                            <option value="returned">Returned</option>
-                        </select>
-                    </div>
-                    <div class="filter-item">
-                        <p class="filter-label">Time Period</p>
-                        <select class="filter-select">
-                            <option value="">Last 30 Days</option>
-                            <option value="90days">Last 90 Days</option>
-                            <option value="6months">Last 6 Months</option>
-                            <option value="year">Last Year</option>
-                            <option value="all">All Time</option>
-                        </select>
-                    </div>
-                    <div class="filter-item">
-                        <p class="filter-label">Sort By</p>
-                        <select class="filter-select">
-                            <option value="date-desc">Date (Newest First)</option>
-                            <option value="date-asc">Date (Oldest First)</option>
-                            <option value="amount-desc">Amount (High to Low)</option>
-                            <option value="amount-asc">Amount (Low to High)</option>
-                        </select>
+                <div class="order-filter-bar" jd-filters="orders">
+                    <div class="row w-100">
+                        <div class="col-md-6">
+                            <div class="search-container">
+                                <i class="fas fa-search search-icon"></i>
+                                <input type="text" name="query" class="form-control search-input" placeholder="Search orders by ID..." jd-filter="query">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="filter-item">
+                                <select class="form-control filter-select" name="status" jd-filter="status">
+                                    <option value="*" selected>All Statuses</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="confirmed">Confirmed</option>
+                                    <option value="in_transit">In Transit</option>
+                                    <option value="completed">Completed</option>
+                                    <option value="cancelled">Cancelled</option>
+                                    <option value="returned">Returned</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="filter-item">
+                                <?php __gcomp('date-input'); ?>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -273,224 +246,44 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <span class="order-id">#GC78945</span>
-                                </td>
-                                <td>
-                                    <div>
-                                        <p class="mb-0">June 28, 2023</p>
-                                        <p class="order-date">10:30 AM</p>
-                                    </div>
-                                </td>
-                                <td>3 items</td>
-                                <td>
-                                    <span class="order-amount">$73.06</span>
-                                </td>
-                                <td>
-                                    <span class="order-status status-transit">In Transit</span>
-                                </td>
-                                <td>
-                                    <div class="order-actions">
-                                        <button class="btn btn-outline-filter me-2" onclick="document.getElementById('tracking-tab').click()">Track</button>
-                                        <button class="btn btn-outline-filter" onclick="document.getElementById('tracking-tab').click()">Details</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span class="order-id">#GC78932</span>
-                                </td>
-                                <td>
-                                    <div>
-                                        <p class="mb-0">June 20, 2023</p>
-                                        <p class="order-date">2:15 PM</p>
-                                    </div>
-                                </td>
-                                <td>2 items</td>
-                                <td>
-                                    <span class="order-amount">$45.98</span>
-                                </td>
-                                <td>
-                                    <span class="order-status status-delivered">Delivered</span>
-                                </td>
-                                <td>
-                                    <div class="order-actions">
-                                        <button class="btn btn-outline-filter me-2" onclick="document.getElementById('tracking-tab').click()">Track</button>
-                                        <button class="btn btn-outline-filter" onclick="document.getElementById('tracking-tab').click()">Details</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span class="order-id">#GC78901</span>
-                                </td>
-                                <td>
-                                    <div>
-                                        <p class="mb-0">June 15, 2023</p>
-                                        <p class="order-date">11:45 AM</p>
-                                    </div>
-                                </td>
-                                <td>1 item</td>
-                                <td>
-                                    <span class="order-amount">$29.99</span>
-                                </td>
-                                <td>
-                                    <span class="order-status status-delivered">Delivered</span>
-                                </td>
-                                <td>
-                                    <div class="order-actions">
-                                        <button class="btn btn-outline-filter me-2" onclick="document.getElementById('tracking-tab').click()">Track</button>
-                                        <button class="btn btn-outline-filter" onclick="document.getElementById('tracking-tab').click()">Details</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span class="order-id">#GC78890</span>
-                                </td>
-                                <td>
-                                    <div>
-                                        <p class="mb-0">June 10, 2023</p>
-                                        <p class="order-date">9:20 AM</p>
-                                    </div>
-                                </td>
-                                <td>4 items</td>
-                                <td>
-                                    <span class="order-amount">$102.45</span>
-                                </td>
-                                <td>
-                                    <span class="order-status status-delivered">Delivered</span>
-                                </td>
-                                <td>
-                                    <div class="order-actions">
-                                        <button class="btn btn-outline-filter me-2" onclick="document.getElementById('tracking-tab').click()">Track</button>
-                                        <button class="btn btn-outline-filter" onclick="document.getElementById('tracking-tab').click()">Details</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span class="order-id">#GC78875</span>
-                                </td>
-                                <td>
-                                    <div>
-                                        <p class="mb-0">June 5, 2023</p>
-                                        <p class="order-date">3:40 PM</p>
-                                    </div>
-                                </td>
-                                <td>2 items</td>
-                                <td>
-                                    <span class="order-amount">$56.50</span>
-                                </td>
-                                <td>
-                                    <span class="order-status status-delivered">Delivered</span>
-                                </td>
-                                <td>
-                                    <div class="order-actions">
-                                        <button class="btn btn-outline-filter me-2" onclick="document.getElementById('tracking-tab').click()">Track</button>
-                                        <button class="btn btn-outline-filter" onclick="document.getElementById('tracking-tab').click()">Details</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span class="order-id">#GC78850</span>
-                                </td>
-                                <td>
-                                    <div>
-                                        <p class="mb-0">May 28, 2023</p>
-                                        <p class="order-date">1:15 PM</p>
-                                    </div>
-                                </td>
-                                <td>3 items</td>
-                                <td>
-                                    <span class="order-amount">$78.25</span>
-                                </td>
-                                <td>
-                                    <span class="order-status status-delivered">Delivered</span>
-                                </td>
-                                <td>
-                                    <div class="order-actions">
-                                        <button class="btn btn-outline-filter me-2" onclick="document.getElementById('tracking-tab').click()">Track</button>
-                                        <button class="btn btn-outline-filter" onclick="document.getElementById('tracking-tab').click()">Details</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span class="order-id">#GC78825</span>
-                                </td>
-                                <td>
-                                    <div>
-                                        <p class="mb-0">May 20, 2023</p>
-                                        <p class="order-date">10:30 AM</p>
-                                    </div>
-                                </td>
-                                <td>1 item</td>
-                                <td>
-                                    <span class="order-amount">$24.99</span>
-                                </td>
-                                <td>
-                                    <span class="order-status status-cancelled">Cancelled</span>
-                                </td>
-                                <td>
-                                    <div class="order-actions">
-                                        <button class="btn btn-outline-filter" onclick="document.getElementById('tracking-tab').click()">Details</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span class="order-id">#GC78810</span>
-                                </td>
-                                <td>
-                                    <div>
-                                        <p class="mb-0">May 15, 2023</p>
-                                        <p class="order-date">4:45 PM</p>
-                                    </div>
-                                </td>
-                                <td>2 items</td>
-                                <td>
-                                    <span class="order-amount">$42.75</span>
-                                </td>
-                                <td>
-                                    <span class="order-status status-returned">Returned</span>
-                                </td>
-                                <td>
-                                    <div class="order-actions">
-                                        <button class="btn btn-outline-filter" onclick="document.getElementById('tracking-tab').click()">Details</button>
-                                    </div>
-                                </td>
-                            </tr>
+                        <tbody jd-source="orders" jd-pick="#singleOrderTemplate" jd-drop="this" jd-pagination="#ordersPagination">
+                            <?= skeleton("table", [
+                                'columns' => 6,
+                            ]) ?>
                         </tbody>
                     </table>
-                </div>
-
-                <div class="d-flex justify-content-between align-items-center mt-4">
-                    <div>
-                        <p class="text-muted mb-0">Showing 8 of 24 orders</p>
+                    <div class="jd-pagination">
+                        <ul id="ordersPagination" class="mt-2 pagination"></ul>
                     </div>
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination mb-0">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script type="text/html" id="singleOrderTemplate">
+    <tr>
+        <td>
+            <span class="order-id">${generateOrderId(created_at, id)}</span>
+        </td>
+        <td>
+            <div>
+                <p class="mb-0">${formatDate(created_at,'MMM DD, YYYY')}</p>
+                <p class="order-date">${formatDate(created_at,'h:mm A')}</p>
+            </div>
+        </td>
+        <td>${total_items} ${total_items === 1 ? 'item' : 'items'}</td>
+        <td>
+            <span class="order-amount">${'$' + amount}</span>
+        </td>
+        <td>
+            <span class="order-status ${status}">${toCapitalize(status)}</span>
+        </td>
+        <td>
+            <div class="order-actions">
+                <button class="btn btn-outline-filter me-2 order-action-btn" data-type="track" data-id="${id}">Track</button>
+                <button class="btn btn-outline-filter order-action-btn" data-type="details" data-id="${id}">Details</button>
+            </div>
+        </td>
+    </tr>
+</script>

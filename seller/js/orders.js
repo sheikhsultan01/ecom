@@ -1,10 +1,4 @@
-function generateOrderId(created_at, id) {
-    let date = moment(created_at);
-    let month = date.format("MMM").toUpperCase(); // e.g. DEC
-    let day = date.format("DD");                // e.g. 14
-    return month + '-' + day + '-' + id;
-}
-
+// Callback function to fill Orders details in modal
 ss.fn.cb.showCustomerOrderDetailsCB = function ($popup, e) {
     let $btn = $(e.relatedTarget),
         data = JSON.parse($btn.find('code').text()),
@@ -22,6 +16,8 @@ ss.fn.cb.showCustomerOrderDetailsCB = function ($popup, e) {
     $orderInfo.find('.order-date').text(formatDate(data.created_at, 'MMMM DD, YYYY'));
     $orderInfo.find('.order-status').removeClass('pending confirmed completed cancelled in_transit');
     $orderInfo.find('.order-status').text(toCapitalize(data.status)).addClass(`${data.status}`).attr('data-status', data.status);
+    $('.update-order-status').find('.dropdown-item').removeClass('active');
+    $('.update-order-status').find(`[data-type="${data.status}"]`).addClass('active');
 
     // Set Shipping Address
     let $shipAddress = $('.shipping-address');
@@ -66,7 +62,7 @@ ss.fn.cb.showCustomerOrderDetailsCB = function ($popup, e) {
 }
 
 // Ajax request to update order status
-$(document).on('click', '.update-order-status .dropdown-item', function (e) {
+$(document).on('click', '.update-order-status .dropdown-item:not(.active)', function (e) {
     e.preventDefault();
     let $this = $(this),
         type = $this.data('type'),
@@ -74,6 +70,9 @@ $(document).on('click', '.update-order-status .dropdown-item', function (e) {
         $orderInfo = $('#orderDetailsModal').find('.order-information'),
         $orderStatus = $orderInfo.find('.order-status'),
         oldOrderStatus = $orderInfo.find('.order-status').attr('data-status');
+
+    $('.update-order-status').find('.dropdown-item').removeClass('active');
+    $this.addClass('active');
 
     $.ajax({
         url: "controllers/orders",

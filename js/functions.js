@@ -382,3 +382,32 @@ function checkProductAddedToCart(product_id, product_price, cart_id, product_qty
 function formatDate(datetime, format = "YYYY-MM-DD") {
     return moment(datetime).format(format);
 }
+
+// Function to generate order ids
+function generateOrderId(created_at, id) {
+    let date = moment(created_at);
+    let month = date.format("MMM").toUpperCase(); // e.g. DEC
+    let day = date.format("DD");                // e.g. 14
+    return month + '-' + day + '-' + id;
+}
+
+// Function to return primary image name from product images
+function getPrimaryImage(imagesJson) {
+    let images;
+    try {
+        images = JSON.parse(imagesJson);
+    } catch (e) {
+        console.error("Invalid JSON:", e);
+        return null;
+    }
+
+    if (!Array.isArray(images) || images.length === 0) {
+        return null;
+    }
+
+    // Find primary image
+    let primary = images.find(img => img.isPrimary);
+
+    // Return primary if found, otherwise first image
+    return primary ? primary.name : images[0].name;
+}
