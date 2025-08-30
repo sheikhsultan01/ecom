@@ -400,3 +400,12 @@ function requestUrl($action)
 {
     return merge_url(SITE_URL, 'controllers/', $action);
 }
+
+function toCapitalize($string) {
+    if (strpos($string, '_') !== false) {
+        $string = str_replace('_', ' ', $string);
+        return ucwords($string);
+    } else {
+        return ucfirst($string);
+    }
+}

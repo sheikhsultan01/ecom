@@ -4,6 +4,9 @@ require_once 'includes/db.php';
 require_once 'helper/orders.php';
 $page_name = 'Orders';
 
+$get_status = _get_param('status', false);
+if (!$get_status) $get_status = 'pending';
+
 $CSS_FILES = [
     'orders.css'
 ];
@@ -101,11 +104,11 @@ require_once 'includes/head.php';
                 <div class="col-lg-3 col-md-6">
                     <select class="form-select search-input" name="status" jd-filter="status">
                         <option value="*">All Statuses</option>
-                        <option value="pending" selected>Pending</option>
-                        <option value="confirmed">Confirmed</option>
-                        <option value="completed">Completed</option>
-                        <option value="transit">In Transit</option>
-                        <option value="cancelled">Cancelled</option>
+                        <?php
+                        $order_status = ['pending', 'confirmed', 'completed', 'in_transit', 'cancelled'];
+                        foreach ($order_status as $name) { ?>
+                            <option value="<?= $name ?>" <?= $get_status == $name ? 'selected' : '' ?>><?= toCapitalize($name) ?></option>
+                        <?php } ?>
                     </select>
                 </div>
                 <div class="col-lg-3 col-md-6">
