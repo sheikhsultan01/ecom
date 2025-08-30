@@ -71,7 +71,7 @@ require_once 'includes/head.php';
                     <li class="list-group-item px-0 bg-transparent">
                         <div class="prcing-row" jd-data>
                             <span>Discount: </span>
-                            <span class="text-danger gs-price-value animate__animated" id="cart-discount">${"$" + summary.discount}</span>
+                            <span class="text-danger gs-price-value animate__animated" id="cart-discount">${summary.discount}</span>
                         </div>
                     </li>
                     <li class="list-group-item px-0 bg-transparent">

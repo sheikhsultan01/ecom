@@ -33,11 +33,11 @@ $jdManager->defineData('cartItems', [
             unset($item['images']);
 
             // Calculate total and subTotal
-            $sub_total += $item['price'] * $item['qty'];
-            $total_amount += $item['sale_price'] * $item['qty'];
+            $sub_total += $item['sale_price'] * $item['qty'];
+            $total_amount += $item['price'] * $item['qty'];
         }
 
-        $discount = $sub_total - $total_amount;
+        $discount = $total_amount - $sub_total;
 
         // Total Cart items
         $total_items = $db->select("carts", 'COUNT(id) AS total', ['user_id' => $user_id, 'status' => 'pending']);
