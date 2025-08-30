@@ -13,6 +13,8 @@ $JS_FILES = [
     'cart.js'
 ];
 add_assets_template('map-selector');
+
+define('INCLUDE_FOOTER', false);
 require_once 'includes/head.php';
 ?>
 
@@ -21,7 +23,7 @@ require_once 'includes/head.php';
 
     <div class="row gx-lg-5">
         <!-- Cart Items List -->
-        <div class="col-lg-8">
+        <div class="col-lg-8 d-none" id="cartItemsContainer">
             <div class="gs-card gs-cart-items-card p-3 shadow-sm mb-4">
                 <!-- Cart Items Table (Desktop View) -->
                 <div class="d-md-block">
@@ -47,14 +49,6 @@ require_once 'includes/head.php';
                 </div>
             </div>
 
-            <!-- Empty Cart State -->
-            <div id="empty-cart-message" class="text-center p-5 gs-card bg-light d-none">
-                <i class="fas fa-shopping-cart fa-4x text-muted mb-3 animate__animated animate__bounceIn"></i>
-                <h4 class="mb-3">Your shopping cart is empty!</h4>
-                <p class="text-muted">Looks like you haven't added anything to your cart yet.</p>
-                <a href="home.html" class="btn gs-btn-primary btn-lg mt-3"><i class="fas fa-shopping-bag me-2"></i> Start Shopping</a>
-            </div>
-
             <div class="d-flex justify-content-start">
                 <a href="home.html" class="btn gs-btn-outline-primary">
                     <i class="fas fa-arrow-left me-2"></i> Continue Shopping
@@ -63,7 +57,7 @@ require_once 'includes/head.php';
         </div>
 
         <!-- Order Summary & Policies -->
-        <div class="col-lg-4 mt-4 mt-lg-0">
+        <div class="col-lg-4 mt-4 mt-lg-0 d-none" id="itemsSummaryContainer">
             <!-- Order Summary -->
             <div class="gs-card gs-summary-card p-4 shadow-sm mb-4" jd-ref="cartItems">
                 <h5 class="mb-4 gs-section-title">Order Summary</h5>
@@ -147,10 +141,22 @@ require_once 'includes/head.php';
                 </div>
             </div>
         </div>
+
+        <!-- Empty Cart State -->
+        <div class="empty-cart-con d-none">
+            <div id="empty-cart-message" class="text-center mx-auto p-5 gs-card bg-light">
+                <i class="cart-icon hgi hgi-stroke hgi-shopping-cart-02 fa-4x text-muted mb-3 animate__animated animate__bounceIn"></i>
+                <h4 class="mb-3">Your shopping cart is empty!</h4>
+                <p class="text-muted">Looks like you haven't added anything to your cart yet.</p>
+                <a href="./" class="btn gs-btn-primary btn-lg mt-3 shopping-btn">
+                    <i class="hgi hgi-stroke hgi-shopping-basket-01"></i>
+                    Start Shopping</a>
+            </div>
+        </div>
     </div>
 
     <!-- Frequently Bought Together Section -->
-    <h3 class="related-title fade-in-up" style="animation-delay: 0.5s">Frequently Bought Together</h3>
+    <h3 class="related-title fade-in-up" style="animation-delay: 0.5s">Frequently Bought Products</h3>
     <div class="row fade-in-up" style="animation-delay: 0.6s">
         <div class="col-md-3 col-sm-6">
             <div class="related-product">
@@ -193,6 +199,16 @@ require_once 'includes/head.php';
 <script>
     function cartSuccessCB(res, $ele) {
         initSsJxElements('.ss-jx-element'); // Jx Elements
+
+        // Check if cart is empty
+        if (res.data.length) {
+            $('#cartItemsContainer').removeClass('d-none');
+            $('#itemsSummaryContainer').removeClass('d-none');
+        } else {
+            $('#cartItemsContainer').addClass('d-none');
+            $('#itemsSummaryContainer').addClass('d-none');
+            $('.empty-cart-con').removeClass('d-none');
+        }
     }
 </script>
 

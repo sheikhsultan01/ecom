@@ -30,6 +30,7 @@ $JS_FILES = [
     'single-product.js'
 ];
 
+define('INCLUDE_FOOTER', false);
 require_once 'includes/head.php';
 ?>
 

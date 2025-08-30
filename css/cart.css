@@ -100,10 +100,7 @@
     color: var(--text-muted);
     font-style: italic;
     background-color: #fff;
-}
-
-#empty-cart-message i {
-    color: var(--primary-color) !important;
+    width: 80%;
 }
 
 
@@ -575,4 +572,21 @@
 .address-type.other {
     background-color: #efe7fd;
     color: #9c52ff;
+}
+
+.empty-cart-con .cart-icon {
+    font-size: 3rem;
+    color: var(--primary-color) !important;
+}
+
+
+
+.empty-cart-con .shopping-btn:hover i {
+    color: var(--primary-color) !important;
+}
+
+.empty-cart-con .shopping-btn i {
+    font-size: 1rem;
+    color: #fff !important;
+    font-weight: 100;
 }
