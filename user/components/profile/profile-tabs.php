@@ -119,10 +119,10 @@
                 </div>
             </div>
 
-            <div class="address-list" jd-source="userAddress" jd-pick="#addressTemplate" jd-drop="this" jd-scroll-paginate>
+            <div class="address-list" jd-source="userAddress" jd-pick="#addressTemplate" jd-drop="this" jd-scroll-paginate jd-success="addressSuccessCB">
                 <?php for ($i = 0; $i < 2; $i++) { ?>
                     <div class="address-card">
-                        <div class="pull-away">
+                        <div class="pull-away align-items-center">
                             <span class="address-type mt-2" jd-data>Work</span>
                             <div class="address-actions" jd-data>
                                 <button class="btn btn-sm btn-outline-primary me-1" data-bs-toggle="modal" data-bs-target="#editAddressModal">
@@ -258,6 +258,25 @@
         </div>
     </div>
 </div>
+
+<script>
+    function addressSuccessCB(res, $btn) {
+        if (!res.data.length) {
+            let $addressCont = $('.address-list');
+            $addressCont.html(`<div class="empty-address">
+                            <div class="address-msg-container my-5">
+                                <div class="d-flex flex-column align-items-center gap-3">
+                                    <span>
+                                        <i class="hgi hgi-stroke hgi-home-03"></i>
+                                    </span>
+                                    <span class="text mt-2">No Address Added yet!</span>
+                                </div>
+                            </div>
+                        </div>`);
+        }
+    }
+</script>
+
 <script type="text/html" id="addressTemplate">
     <js-script>
         let editJson = {

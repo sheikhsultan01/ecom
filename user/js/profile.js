@@ -47,7 +47,6 @@ $(document).ready(function () {
 
     // Edit Address Callback
     ss.fn.cb.editAddressModalCB = function ($popup, e) {
-        l("Address Modal Displayingggggg");
         // Initialize google map
         new LocationMap('map-canvas', 'map-lat', 'map-lng', {
             'street_number': 'street_number',

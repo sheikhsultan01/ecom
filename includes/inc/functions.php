@@ -395,3 +395,8 @@ function decodeOrderId($orderId)
 
     return true;
 }
+
+function requestUrl($action)
+{
+    return merge_url(SITE_URL, 'controllers/', $action);
+}

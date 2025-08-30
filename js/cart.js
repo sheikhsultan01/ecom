@@ -37,18 +37,27 @@ ss.fn.cb.showAddressCB = function ($popup, e) {
         data = JSON.parse($btn.find('code').text()),
         addresses = data.addresses,
         total_amount = data.total_amount;
+    let hasAddresses = false;
 
-    let addressHtml = '';
-    Object.entries(addresses).forEach(([uid, address]) => {
-        let { address_type, country, address_uid, is_default, postal_code, state, street_address, street_number, town_city } = address;
+    // Check object ya array dono ke liye
+    if (addresses && typeof addresses === 'object') {
+        hasAddresses = Array.isArray(addresses)
+            ? addresses.length > 0
+            : Object.keys(addresses).length > 0;
+    }
 
-        let editJson = JSON.stringify({
-            ...address,
-            modalHeading: "Edit"
-        }).replace(/"/g, '&quot;');
+    if (hasAddresses) {
+        let addressHtml = '';
+        Object.entries(addresses).forEach(([uid, address]) => {
+            let { address_type, country, address_uid, is_default, postal_code, state, street_address, street_number, town_city } = address;
 
-        if (address) {
-            addressHtml += `<div class="address-card">
+            let editJson = JSON.stringify({
+                ...address,
+                modalHeading: "Edit"
+            }).replace(/"/g, '&quot;');
+
+            if (address) {
+                addressHtml += `<div class="address-card">
                             <div class="d-flex gap-2 align-items-center mb-2">
                                 <input type="radio" name="address_uid" value="${address_uid}" class="form-check-input m-0 address-select-btn" ${is_default == '1' ? 'checked' : ''}>
                                 <span class="address-type m-0 ${address_type}">${toCapitalize(address_type)}</span>
@@ -63,12 +72,26 @@ ss.fn.cb.showAddressCB = function ($popup, e) {
                             <p class="mb-1">${state + ", " + town_city + " " + postal_code}</p>
                             <p class=" mb-0">${country}</p>
                         </div>`;
-        }
+            }
 
-    });
+        });
 
-    $('#mdlVerifyAddress').find('.address-list').html(addressHtml); // Display the address cards
-    $('#mdlVerifyAddress').find('.order-total-amount').val(total_amount);  // Set Total Amount
+        $('#mdlVerifyAddress').find('.address-list').html(addressHtml); // Display the address cards
+        $('#mdlVerifyAddress').find('.order-total-amount').val(total_amount);  // Set Total Amount
+
+    } else {
+        let $addressCont = $('.address-list');
+        $addressCont.html(`<div class="empty-address">
+                            <div class="address-msg-container my-5">
+                                <div class="d-flex flex-column align-items-center gap-3">
+                                    <span>
+                                        <i class="hgi hgi-stroke hgi-home-03"></i>
+                                    </span>
+                                    <span class="text mt-2">No Address Added yet!</span>
+                                </div>
+                            </div>
+                        </div>`);
+    }
 
 }
 

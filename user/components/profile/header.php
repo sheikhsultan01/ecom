@@ -24,7 +24,11 @@
             <div class="profile-info">
                 <h3 class="login-user-name"><?= LOGGED_IN_USER['name'] ?></h3>
                 <p><?= LOGGED_IN_USER['email'] ?></p>
-                <p><i class="hgi hgi-stroke hgi-location-01 me-1"></i> <?= $user_address ?></p>
+                <p><?php if ($addresses) { ?>
+                        <i class="hgi hgi-stroke hgi-location-01 me-1"></i>
+                        <?= $user_address ?>
+                    <?php } ?>
+                </p>
                 <p><small>Member since: <?= date('F Y', strtotime(LOGGED_IN_USER['created_at'])) ?></small></p>
             </div>
         </div>

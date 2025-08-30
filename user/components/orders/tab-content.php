@@ -11,7 +11,7 @@
                                 Select Order
                             </button>
                             <?php
-                            $curr_orders = $db->squery("SELECT id,created_at,status FROM orders WHERE user_id = '$l_user' AND (status != 'refunded' OR status != 'cancelled' OR status != 'completed')");
+                            $curr_orders = $db->squery("SELECT id,created_at,status FROM orders WHERE user_id = '$l_user' AND (status != 'refunded' AND status != 'cancelled' AND status != 'completed')");
                             ?>
                             <ul class="dropdown-menu dropdown-menu-end orders-select-btn" aria-labelledby="orderDropdown">
                                 <?php foreach ($curr_orders as $order) { ?>

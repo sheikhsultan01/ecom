@@ -194,7 +194,10 @@ require_once 'includes/head.php';
 </main>
 
 <?php require_once 'components/modals/verify-address.php'; ?>
-<?php require_once 'components/modals/address-modal.php'; ?>
+<?php
+$request_name = 'cartItems';
+require_once 'components/modals/address-modal.php';
+?>
 
 <script>
     function cartSuccessCB(res, $ele) {

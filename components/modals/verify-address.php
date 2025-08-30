@@ -7,9 +7,16 @@
             </div>
             <form id="verifyAddressForm" action="order" class="js-form" on-success="jdRefreshAndHideModal('cartItems','mdlVerifyAddress')">
                 <div class="modal-body">
-                    <div class="user-info mb-3">
-                        <h6>Name: <?= LOGGED_IN_USER['name'] ?></h6>
-                        <span>Phone: <?= LOGGED_IN_USER['phone'] ?></span>
+                    <div class="pull-away align-items-start">
+                        <div class="user-info mb-3">
+                            <h6>Name: <?= LOGGED_IN_USER['name'] ?></h6>
+                            <span>Phone: <?= LOGGED_IN_USER['phone'] ?></span>
+                        </div>
+                        <button class="btn btn-primary editTableInfo" data-bs-toggle="modal" data-bs-target="#saveAddressMdl" onclick="$('#addressForm').trigger('reset');">
+                            <code class="d-none">{"modalHeading": "Add"}</code>
+                            <i class="hgi hgi-stroke hgi-add-01 me-2"></i>
+                            Add Address
+                        </button>
                     </div>
                     <div class="address-list"></div>
                 </div>

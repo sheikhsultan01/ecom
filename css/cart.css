@@ -590,3 +590,12 @@
     color: #fff !important;
     font-weight: 100;
 }
+
+.empty-address .address-msg-container i {
+    font-size: 5rem;
+    color: #c2c1c1;
+}
+
+.empty-address .address-msg-container .text {
+    color: #c2c1c1;
+}

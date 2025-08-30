@@ -5,7 +5,7 @@
                 <h5 class="modal-title" id="addAddressModalLabel"><span name="modalHeading">Add</span> Address</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="addressForm" action="profile" class="js-form" on-success="jdRefreshAndHideModal('userAddress','saveAddressMdl')">
+            <form id="addressForm" action="<?= requestUrl('profile'); ?>" class="js-form" on-success="jdRefreshAndHideModal('<?= $request_name ?>','saveAddressMdl')">
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="addressLine1" class="form-label">Address Line 1</label>

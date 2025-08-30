@@ -335,3 +335,12 @@
         font-size: 1.2rem;
     }
 }
+
+.empty-address .address-msg-container i {
+    font-size: 5rem;
+    color: #c2c1c1;
+}
+
+.empty-address .address-msg-container .text {
+    color: #c2c1c1;
+}

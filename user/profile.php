@@ -25,7 +25,10 @@ require_once 'includes/head.php';
 </div>
 
 <!-- Add/Edit Address Modal -->
-<?php require_once _DIR_ . 'components/modals/address-modal.php'; ?>
+<?php
+$request_name = 'userAddress';
+require_once _DIR_ . 'components/modals/address-modal.php';
+?>
 
 <!-- Profile Picture Upload/Crop Modal -->
 <?php require_once 'components/profile/crop-modal.php'; ?>

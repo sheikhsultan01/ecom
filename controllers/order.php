@@ -3,10 +3,12 @@ define('DIR', '../');
 require_once DIR . 'includes/db.php';
 
 if (isset($_POST['placeUserOrder'])) {
-    $address_uid = _POST('address_uid');
+    $address_uid = _post_param('address_uid', false);
     $amount = _POST('amount');
     $addresses = json_decode(LOGGED_IN_USER['address'], true);
     $user_id = LOGGED_IN_USER_ID;
+
+    if (!$address_uid) returnError("Please Add & Select Address!");
 
     $address = $addresses[$address_uid];
 
