@@ -193,20 +193,31 @@ function resetOrderTimeline() {
     setTimeout(updateProgressLine, 100);
 }
 
+function setStep(step, state, time = null) {
+    const $step = $(`.tracking-step-horizontal[data-step="${step}"]`);
+    if (!$step.length) return;
+
+    $step.removeClass("active completed").addClass(state);
+    $step.find(".tracking-icon-horizontal").removeClass("active completed").addClass(state);
+    if (time) $step.find(".tracking-time-horizontal").text(time);
+}
+
 function updateOrderTimeline(data) {
-    resetOrderTimeline(); // Reset Time line
+    resetOrderTimeline();
 
     const statusStepMap = {
         "pending": 1,
         "confirmed": 2,
         "preparing": 3,
         "in_transit": 4,
-        "completed": 5
+        "completed": 5,
+        "delivered": 6
     };
 
-    let lastStep = 1;
     let hasConfirmed = false;
     let confirmedTime = null;
+    let lastStep = 1;
+
 
     data.forEach(item => {
         const stepNumber = statusStepMap[item.status];
@@ -218,50 +229,30 @@ function updateOrderTimeline(data) {
             hasConfirmed = true;
             confirmedTime = formattedTime;
 
-            // Confirmed → completed
-            const $confirmedStep = $(`.tracking-step-horizontal[data-step="2"]`);
-            $confirmedStep.addClass("completed").removeClass("active");
-            $confirmedStep.find(".tracking-icon-horizontal").addClass("completed").removeClass("active");
-            $confirmedStep.find(".tracking-time-horizontal").text(formattedTime);
-
-            // Preparing → active (initially)
-            const $preparingStep = $(`.tracking-step-horizontal[data-step="3"]`);
-            $preparingStep.addClass("active").removeClass("completed");
-            $preparingStep.find(".tracking-icon-horizontal").addClass("active").removeClass("completed");
-            $preparingStep.find(".tracking-time-horizontal").text(formattedTime);
-
+            setStep(2, "completed", formattedTime);   // Confirmed → completed
+            setStep(3, "active", formattedTime);      // Preparing → active
             lastStep = 3;
+
         } else if (item.status === "in_transit" && hasConfirmed) {
-            // Agar in_transit hai → preparing ko complete karna hai
-            const $preparingStep = $(`.tracking-step-horizontal[data-step="3"]`);
-            $preparingStep.addClass("completed").removeClass("active");
-            $preparingStep.find(".tracking-icon-horizontal").addClass("completed").removeClass("active");
-            $preparingStep.find(".tracking-time-horizontal").text(confirmedTime); // same time from confirmed
-
-            // In transit → active
-            const $inTransitStep = $(`.tracking-step-horizontal[data-step="4"]`);
-            $inTransitStep.addClass("active").removeClass("completed");
-            $inTransitStep.find(".tracking-icon-horizontal").addClass("active").removeClass("completed");
-            $inTransitStep.find(".tracking-time-horizontal").text(formattedTime);
-
+            setStep(3, "completed", confirmedTime);   // Preparing → completed
+            setStep(4, "active", formattedTime);      // In-transit → active
             lastStep = 4;
-        } else {
-            // Normal case
-            const $step = $(`.tracking-step-horizontal[data-step="${stepNumber}"]`);
-            $step.addClass("completed").removeClass("active");
-            $step.find(".tracking-icon-horizontal").addClass("completed").removeClass("active");
-            $step.find(".tracking-time-horizontal").text(formattedTime);
 
+        } else if (item.status === "completed") {
+            // All steps → completed
+            Object.values(statusStepMap).forEach(step => setStep(step, "completed"));
+            setStep(5, "completed", formattedTime);   // Completed ka apna time
+            setStep(6, "completed", formattedTime);   // Completed delivered
+            lastStep = 6;
+
+        } else {
+            setStep(stepNumber, "completed", formattedTime); // Normal case
             lastStep = stepNumber;
         }
     });
 
-    // Agar last step complete ho gaya hai → usko active bana do
-    if (lastStep) {
-        const $lastStep = $(`.tracking-step-horizontal[data-step="${lastStep}"]`);
-        $lastStep.removeClass("completed").addClass("active");
-        $lastStep.find(".tracking-icon-horizontal").removeClass("completed").addClass("active");
-    }
+    // Last step → active
+    if (lastStep) setStep(lastStep, "active");
 
     setTimeout(updateProgressLine, 100);
     $('.order-tracking-horizontal').removeClass('d-none');
