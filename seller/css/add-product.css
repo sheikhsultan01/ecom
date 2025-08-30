@@ -403,6 +403,7 @@
     border-radius: 12px 0 0 12px;
     color: var(--text-dark);
     font-weight: 600;
+    height: 61px;
     padding: 16px 20px;
 }
 

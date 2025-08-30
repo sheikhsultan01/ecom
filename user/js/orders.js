@@ -287,8 +287,8 @@ function getOrderDetails(orderId) {
                     total = 0;
                 products.forEach(ele => {
                     let { images, price, qty, sale_price, title } = ele;
-                    let prodSubTotal = price * qty,
-                        prodTotal = sale_price * qty;
+                    let prodSubTotal = sale_price * qty,
+                        prodTotal = price * qty;
                     subTotal += toNumber(prodSubTotal);
                     total += toNumber(prodTotal);
 
@@ -308,7 +308,7 @@ function getOrderDetails(orderId) {
                 });
                 $orderProdCon.html(prodHtml);  // Set products
                 $orderCard.find('.subtotal').text(CURRENCY + subTotal);
-                $orderCard.find('.discount').text(CURRENCY + (total - subTotal));
+                $orderCard.find('.discount').text((total - subTotal));
                 $orderCard.find('.total-amount').text(CURRENCY + total);
 
                 // Set Shipping details of user

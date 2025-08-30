@@ -60,6 +60,6 @@ function getDiscountPercentage(originalPrice, salePrice) {
     if (!originalPrice || originalPrice <= 0) {
         return 0;
     }
-    let discount = ((originalPrice - salePrice) / originalPrice) * 100;
+    let discount = ((salePrice - originalPrice) / salePrice) * 100;
     return "-" + Math.round(discount) + "%"; // round to nearest integer
 }

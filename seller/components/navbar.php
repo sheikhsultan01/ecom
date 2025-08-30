@@ -35,10 +35,10 @@
                         <span class="nav-badge">12</span>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="ordersDropdown">
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-clock"></i>Pending Orders</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-check-circle"></i>Completed Orders</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-times-circle"></i>Cancelled Orders</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-truck"></i>Shipping</a></li>
+                        <li><a class="dropdown-item" href="orders"><i class="fas fa-clock"></i>Pending Orders</a></li>
+                        <li><a class="dropdown-item" href="orders?status=completed"><i class="fas fa-check-circle"></i>Completed Orders</a></li>
+                        <li><a class="dropdown-item" href="orders?status=cancelled"><i class="fas fa-times-circle"></i>Cancelled Orders</a></li>
+                        <li><a class="dropdown-item" href="orders?status=in_transit"><i class="fas fa-truck"></i>Shipping</a></li>
                     </ul>
                 </li>
 

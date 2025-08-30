@@ -144,11 +144,11 @@ require_once 'includes/head.php';
             <div class="product-info">
                 <a href="single-product?uid=${uid}" target="_blank" class="product-title">${title}</a>
                 <div class="product-price">
-                    <span class="current-price">${"$" + sale_price}</span>
-                    <span class="original-price">${"$" + price}</span>
+                    <span class="current-price">${"$" + price}</span>
+                    <span class="original-price">${"$" + sale_price}</span>
                 </div>
                 <div class="action-btn">
-                    ${checkProductAddedToCart(id,sale_price,cart_id, product_qty)}
+                    ${checkProductAddedToCart(id,price,cart_id, product_qty)}
                 </div>
             </div>
         </div>

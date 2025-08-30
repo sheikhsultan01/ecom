@@ -36,8 +36,8 @@ ss.fn.cb.showCustomerOrderDetailsCB = function ($popup, e) {
         count = 1;
     products.forEach(ele => {
         let { price, qty, sale_price, title } = ele;
-        let prodSubTotal = price * qty,
-            prodTotal = sale_price * qty;
+        let prodSubTotal = sale_price * qty,
+            prodTotal = price * qty;
 
         subTotal += toNumber(prodSubTotal);
         total += toNumber(prodTotal);
@@ -45,7 +45,7 @@ ss.fn.cb.showCustomerOrderDetailsCB = function ($popup, e) {
         productHtml += `<tr>
                                 <td>${count}</td>
                                 <td>${title}</td>
-                                <td>${CURRENCY + sale_price}</td>
+                                <td>${CURRENCY + price}</td>
                                 <td>${qty}</td>
                                 <td class="text-end">${CURRENCY + prodTotal}</td>
                             </tr>`;
@@ -54,7 +54,7 @@ ss.fn.cb.showCustomerOrderDetailsCB = function ($popup, e) {
 
     $productTable.html(productHtml);
     $productSummary.find('.subtotal').text(CURRENCY + subTotal);
-    $productSummary.find('.discount').text(CURRENCY + (total - subTotal));
+    $productSummary.find('.discount').text((total - subTotal));
     $productSummary.find('.total-amount').text(CURRENCY + total);
     $('#orderDetailsModal').find('.order-id').text(generateOrderId(data.created_at, data.id));
     $('#orderDetailsModal').find('.curr-order-id').attr('data-id', data.id);

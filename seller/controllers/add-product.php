@@ -115,7 +115,13 @@ if (isset($_POST['saveProductData'])) {
         'visibility' => $visibility
     ];
 
-    $save = $db->save("products", $dbData, ['uid' => $uid]);
+    $save = false;
+    if ($uid) {
+        $save = $db->update("products", $dbData, ['uid' => $uid]);
+    } else {
+        $dbData['uid'] = getRandom(25);
+        $save = $db->insert("products", $dbData);
+    }
     if ($save) returnSuccess("Product Saved Successfully!", ['redirect' => 'inventory']);
 }
 
