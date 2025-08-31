@@ -369,7 +369,7 @@ function checkProductAddedToCart(product_id, product_price, cart_id, product_qty
             'unit_price': product_price
         }).replace(/"/g, '&quot;');
 
-        btnHtml += `<button class="add-to-cart ss-jx-element" data-target="cart" data-submit="${dataSubmit}" data-callback="addProductToCartCB">
+        btnHtml += `<button class="add-to-cart ss-jx-element" data-target="${mergeUrl(SITE_URL, 'controllers/', 'cart')}" data-submit="${dataSubmit}" data-callback="addProductToCartCB">
                     <i class="hgi hgi-stroke hgi-shopping-cart-add-02"></i>
                     Add to Cart
                     </button>`;
@@ -420,4 +420,12 @@ function generateSlug(title, uid) {
         .replace(/\s+/g, '-');
 
     return slug + '-' + uid;
+}
+
+function getDiscountPercentage(originalPrice, salePrice) {
+    if (!originalPrice || originalPrice <= 0) {
+        return 0;
+    }
+    let discount = ((salePrice - originalPrice) / salePrice) * 100;
+    return "-" + Math.round(discount) + "%"; // round to nearest integer
 }

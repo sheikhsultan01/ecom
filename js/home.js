@@ -19,7 +19,7 @@ ss.fn.cb.addProductToCartCB = function ($btn, res) {
 
         let qtyBtnHtml = `<div class="quantity-controls">
                         <button class="quantity-btn" data-type="decrease"><i class="hgi hgi-stroke hgi-minus-sign"></i></button>
-                        <input type="number" name="qty" class="quantity-input ss-jx-element" id="quantityInput" value="1" min="1" readonly data-submit="${dataSubmit}" data-target="cart" data-listener="change" data-callback="quantityUpdateCB">
+                        <input type="number" name="qty" class="quantity-input ss-jx-element" id="quantityInput" value="1" min="1" readonly data-submit="${dataSubmit}" data-target="${mergeUrl(SITE_URL, 'controllers/', 'cart')}" data-listener="change" data-callback="quantityUpdateCB">
                         <button class="quantity-btn" data-type="increase"><i class="hgi hgi-stroke hgi-plus-sign"></i></button>
                       </div>`;
 
@@ -55,11 +55,3 @@ const observer = new IntersectionObserver(function (entries) {
         }
     });
 }, observerOptions);
-
-function getDiscountPercentage(originalPrice, salePrice) {
-    if (!originalPrice || originalPrice <= 0) {
-        return 0;
-    }
-    let discount = ((salePrice - originalPrice) / salePrice) * 100;
-    return "-" + Math.round(discount) + "%"; // round to nearest integer
-}

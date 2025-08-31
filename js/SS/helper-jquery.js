@@ -104,8 +104,10 @@ function ssJxRequestSend(request) {
         elementHtml = $elem.html(),
         jsonData = $elem.dataVal("res-type", true);
     jsonData = toBoolean(jsonData);
-    if (url.indexOf("./") === -1) {
-        url = `./controllers/${url}`;
+    if (url.indexOf("http://") === -1 && url.indexOf("https://") === -1) {
+        if (url.indexOf("./controllers/") === -1) {
+            url = `./controllers/${url}`;
+        }
     }
     // Callback
     let callback = $elem.dataVal("callback");

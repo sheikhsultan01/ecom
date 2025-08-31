@@ -70,63 +70,6 @@ require_once 'includes/head.php';
     </div>
 </section>
 
-<!-- Categories Section -->
-<section class="categories-section">
-    <div class="container">
-        <h2 class="section-title">Shop by Categories</h2>
-        <div class="row">
-            <div class="col-lg-2 col-md-4 col-sm-6">
-                <div class="category-card">
-                    <div class="category-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h5 class="category-title">Electronics</h5>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-4 col-sm-6">
-                <div class="category-card">
-                    <div class="category-icon">
-                        <i class="fas fa-tshirt"></i>
-                    </div>
-                    <h5 class="category-title">Fashion</h5>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-4 col-sm-6">
-                <div class="category-card">
-                    <div class="category-icon">
-                        <i class="fas fa-home"></i>
-                    </div>
-                    <h5 class="category-title">Home & Garden</h5>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-4 col-sm-6">
-                <div class="category-card">
-                    <div class="category-icon">
-                        <i class="fas fa-dumbbell"></i>
-                    </div>
-                    <h5 class="category-title">Sports & Fitness</h5>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-4 col-sm-6">
-                <div class="category-card">
-                    <div class="category-icon">
-                        <i class="fas fa-spa"></i>
-                    </div>
-                    <h5 class="category-title">Beauty & Health</h5>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-4 col-sm-6">
-                <div class="category-card">
-                    <div class="category-icon">
-                        <i class="fas fa-book"></i>
-                    </div>
-                    <h5 class="category-title">Books & Media</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <script>
     function SuccessCB(res, $ele) {
         initSsJxElements('.ss-jx-element'); // Jx Elements

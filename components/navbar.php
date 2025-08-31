@@ -36,11 +36,10 @@
                                         <?php $is_first = true;
                                         foreach ($categories as &$category) {
                                             $cat_id = $category['id'];
-                                            $cat_slug = $category['slug'] . "-" . $category['uid'];
                                             $category['sub_cat'] = $sub_cat_group[$cat_id] ?? [];
                                         ?>
                                             <div class="category-item <?= $is_first ? 'active' : '' ?>" data-id="<?= $cat_id ?>">
-                                                <a href="<?= page_url('products') . "/" . $cat_slug  ?>" class="category-link">
+                                                <a href="#" class="category-link">
                                                     <?= $category['name'] ?>
                                                 </a>
                                             </div>
