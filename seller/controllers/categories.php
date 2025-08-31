@@ -36,7 +36,13 @@ if (isset($_POST['saveCategoryData'])) {
         'status' => $status
     ];
 
-    $save = $db->save("categories", $dbData, ['id' => $id]);
+    $save = false;
+    if ($id) {
+        $save = $db->update("categories", $dbData, ['id' => $id]);
+    } else {
+        $dbData['uid'] = getRandom(25);
+        $save = $db->insert("categories", $dbData);
+    }
 
     if ($save) returnSuccess("Saved Category Successfully!");
 }
@@ -76,6 +82,13 @@ if (isset($_POST['saveSubCategory'])) {
         'status' => $status
     ];
 
-    $save = $db->save("categories", $dbData, ['id' => $id]);
+    $save = false;
+    if ($id) {
+        $save = $db->update("categories", $dbData, ['id' => $id]);
+    } else {
+        $dbData['uid'] = getRandom(25);
+        $save = $db->insert("categories", $dbData);
+    }
+
     if ($save) returnSuccess("Saved Sub Category Successfully!");
 }
