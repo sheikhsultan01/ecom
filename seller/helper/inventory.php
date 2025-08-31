@@ -20,7 +20,7 @@ $jdManager->defineData('products', [
             $conditions[] = "(p.title LIKE '%$query%' OR p.sku LIKE '%$query%')";
         }
         // Category Condition
-        if (!empty($category_id)) {
+        if (!empty($category_id) && $category_id != '*') {
             $conditions[] = "p.category_id = $category_id";
         }
 

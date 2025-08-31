@@ -74,8 +74,8 @@ require_once 'includes/head.php';
             </div>
             <div class="filter-group">
                 <label for="categoryFilter">Category</label>
-                <select class="form-select" id="categoryFilter" name="category_id" jd-filter="category_id">
-                    <option value="">All Categories</option>
+                <select class="form-select ss-select" id="categoryFilter" name="category_id" jd-filter="category_id">
+                    <option value="*">All Categories</option>
                     <?php $categories = $db->squery("SELECT id,name FROM categories WHERE parent_id != 0");
                     foreach ($categories as $category) {   ?>
                         <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>

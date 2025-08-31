@@ -119,7 +119,7 @@ require_once 'includes/head.php';
                     <div class="form-group">
                         <label class="form-label required">Category</label>
                         <select class="form-select ss-select" id="productCategory" name="category_id">
-                            <option value="0" disabled>-- Select Category --</option>
+                            <option value="0" selected disabled>-- Select Category --</option>
                             <?php $categories = $db->squery("SELECT id,name FROM categories WHERE parent_id != 0");
                             foreach ($categories as $category) {   ?>
                                 <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>

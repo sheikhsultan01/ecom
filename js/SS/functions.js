@@ -83,8 +83,8 @@ function ssSelectFn() {
         }
 
         if (options.filter(option => option.selected).length > 2 && showMoreButton) {
-            let moreButton = $(`<button class='more-button'>${LANGUAGE_DATA['table_functionality_show_more']}</button>`),
-                lessButton = $(`<button class='less-button'>${LANGUAGE_DATA['table_functionality_show_less']}</button>`),
+            let moreButton = $(`<button class='more-button'>Show More</button>`),
+                lessButton = $(`<button class='less-button'>Show Less</button>`),
                 container = $("<div class='bc-ss-select-container pull-right'></div>");
 
             container.append(moreButton, lessButton);
