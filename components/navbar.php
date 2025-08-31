@@ -9,10 +9,71 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-3">
-                <a href="<?= page_url('') ?>" class="logo">
-                    <i class="hgi hgi-stroke hgi-leaf-01"></i>
-                    GreenShop
-                </a>
+                <div class="navbar-logo">
+                    <a href="<?= page_url('') ?>" class="logo">
+                        <i class="hgi hgi-stroke hgi-leaf-01"></i>
+                        GreenShop
+                    </a>
+                    <ul class="main-nav categories-container">
+                        <li class="categories-item">
+                            <a href="#" class="categories-btn">
+                                Categories
+                                <i class="hgi hgi-stroke hgi-arrow-right-01 dropdown-arrow"></i>
+                            </a>
+                            <div class="mega-dropdown">
+                                <div class="dropdown-content">
+                                    <?php
+                                    $categories = $db->select('categories', 'id,uid,name,slug', ['parent_id' => 0], ['order_by' => 'id DESC']);
+                                    $cat_ids = array_column($categories, 'id');
+                                    $cat_ids = implode(',', $cat_ids);
+                                    $sub_categories = $db->squery("SELECT id,uid,name,parent_id,slug FROM categories WHERE parent_id IN ($cat_ids) AND parent_id != 0");
+                                    $sub_cat_group = [];
+                                    foreach ($sub_categories as $sub) {
+                                        $sub_cat_group[$sub['parent_id']][] = $sub;
+                                    }
+                                    ?>
+                                    <div class="categories-list">
+                                        <?php $is_first = true;
+                                        foreach ($categories as &$category) {
+                                            $cat_id = $category['id'];
+                                            $cat_slug = $category['slug'] . "-" . $category['uid'];
+                                            $category['sub_cat'] = $sub_cat_group[$cat_id] ?? [];
+                                        ?>
+                                            <div class="category-item <?= $is_first ? 'active' : '' ?>" data-id="<?= $cat_id ?>">
+                                                <a href="<?= page_url('products') . "/" . $cat_slug  ?>" class="category-link">
+                                                    <?= $category['name'] ?>
+                                                </a>
+                                            </div>
+                                        <?php
+                                            $is_first = false;
+                                        }
+                                        ?>
+                                    </div>
+
+                                    <div class="subcategories-panel">
+                                        <?php $is_first = true;
+                                        foreach ($categories as $cat) { ?>
+                                            <div class="subcategory-content <?= $is_first ? 'active' : '' ?>" id="<?= $cat['id'] ?>">
+                                                <h3 class="subcategory-title"><?= $cat['name'] ?></h3>
+                                                <ul class="subcategory-links">
+                                                    <?php foreach ($cat['sub_cat'] as $sub_cat) {
+                                                        $sub_cat_slug = $sub_cat['slug'] . "-" . $sub_cat['uid'];
+                                                    ?>
+                                                        <li>
+                                                            <a href="<?= page_url('products') . "/" . $sub_cat_slug  ?>"><?= $sub_cat['name'] ?></a>
+                                                        </li>
+                                                    <?php } ?>
+                                                </ul>
+                                            </div>
+                                        <?php
+                                            $is_first = false;
+                                        } ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="col-md-6">
                 <div class="search-container">

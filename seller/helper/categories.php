@@ -57,7 +57,7 @@ $jdManager->defineData('subCategories', [
 
         $condition = " WHERE c.parent_id != 0";
         if (!empty($query)) {
-            $condition .= " AND (c.name LIKE '%$query%' OR c.description LIKE '%$query%')";
+            $condition .= " AND (c.name LIKE '%$query%' OR c.description LIKE '%$query%' OR p.name LIKE '%$query%')";
         }
 
         $cat_query = "SELECT c.id,

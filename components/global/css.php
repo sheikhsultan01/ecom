@@ -3,6 +3,7 @@ $files = [
     'bootstrap.min.css',
     'hugeicons-font/hugeicons-font.css',
     'sweetalert.min.css',
+    "slimselect.min.css",
     'custom.css',
     'notify.css',
 ];

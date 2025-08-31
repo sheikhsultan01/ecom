@@ -9,6 +9,7 @@ if (INCLUDE_FOOTER)
     require_once 'components/footer.php';
 
 array_unshift($JS_FILES, [
+    _DIR_ . 'js/navbar.js',
     _DIR_ . 'js/AjaxHandler/index.js'
 ]);
 require_once global_file("footer");

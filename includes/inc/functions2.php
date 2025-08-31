@@ -36,3 +36,13 @@ function page_url($page)
 {
     return merge_url(SITE_URL, $page);
 }
+
+// Function to generate slug
+function generateSlug($title, $uid)
+{
+    $slug = strtolower($title);
+    $slug = preg_replace('/[^\w\s-]/u', '', $slug);
+    $slug = trim($slug);
+    $slug = preg_replace('/\s+/', '-', $slug);
+    return $slug . '-' . $uid;
+}
