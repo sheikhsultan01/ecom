@@ -2,7 +2,11 @@
 require_once 'includes/db.php';
 require_once 'Functions/single-product.php';
 $page_name = 'Product';
-$uid = _get_param('uid', false);
+
+$current_url = get_current_url();
+$slug = extract_slug_from_URL($current_url);
+$slug = _GET('slug');
+$uid = extract_id_from_slug($slug);
 
 // Get Location
 $product = [];

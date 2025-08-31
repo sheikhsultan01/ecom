@@ -239,25 +239,26 @@
 }
 
 .action-btn {
-    width: 35px;
-    height: 35px;
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: all 0.3s ease;
-    color: white;
     border: none;
     text-decoration: none;
 }
 
-.edit-btn {
-    background: var(--primary-gradient);
+.action-btn i {
+    font-size: 1rem;
 }
 
-.delete-btn {
-    background: linear-gradient(135deg, #f44336, #d32f2f);
+.edit-btn i {
+    color: var(--dark-green);
+}
+
+.delete-btn i {
+    color: #d32f2f;
 }
 
 .action-btn:hover {

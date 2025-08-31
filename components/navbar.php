@@ -9,7 +9,7 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-3">
-                <a href="./" class="logo">
+                <a href="<?= page_url('') ?>" class="logo">
                     <i class="hgi hgi-stroke hgi-leaf-01"></i>
                     GreenShop
                 </a>
@@ -24,7 +24,7 @@
             </div>
             <div class="col-md-3 text-end">
                 <div class="d-flex justify-content-between align-center">
-                    <a href="cart" class="cart-btn">
+                    <a href="<?= page_url('cart') ?>" class="cart-btn">
                         <i class="hgi hgi-stroke hgi-shopping-cart-01"></i>
                         Cart
                         <span class="cart-count <?= countCartItems() == 0 ? 'd-none' : '' ?>" data-count="<?= countCartItems(); ?>"><?= countCartItems() !== 0 ? countCartItems() : '' ?></span>
@@ -35,15 +35,15 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown" style="display: none;">
                             <?php if (LOGGED_IN_USER) { ?>
-                                <li><a class="dropdown-item" href="user/profile"><i class="fas fa-clock"></i>Profile</a></li>
-                                <li><a class="dropdown-item" href="user/orders"><i class="fas fa-check-circle"></i>Orders</a></li>
+                                <li><a class="dropdown-item" href="<?= page_url('user/profile') ?>"><i class="fas fa-clock"></i>Profile</a></li>
+                                <li><a class="dropdown-item" href="<?= page_url('user/orders') ?>"><i class="fas fa-check-circle"></i>Orders</a></li>
                                 <?php
-                                if (IS_ADMIN) echo '<li><a class="dropdown-item" href="admin/dashboard"><i class="fas fa-times-circle"></i>Admin Dashboard</a></li>';
-                                if (IS_SELLER) echo '<li><a class="dropdown-item" href="seller/dashboard"><i class="fas fa-times-circle"></i>Seller Dashboard</a></li>';
+                                if (IS_ADMIN) echo '<li><a class="dropdown-item" href="' . page_url('admin/dashboard') . '"><i class="fas fa-times-circle"></i>Admin Dashboard</a></li>';
+                                if (IS_SELLER) echo '<li><a class="dropdown-item" href="' . page_url('seller/dashboard') . '"><i class="fas fa-times-circle"></i>Seller Dashboard</a></li>';
                                 ?>
-                                <li><a class="dropdown-item" href="logout"><i class="fas fa-times-circle"></i>Logout</a></li>
+                                <li><a class="dropdown-item" href="<?= page_url('logout') ?>"><i class="fas fa-times-circle"></i>Logout</a></li>
                             <?php } else { ?>
-                                <li><a class="dropdown-item" href="login"><i class="fas fa-times-circle"></i>Login</a></li>
+                                <li><a class="dropdown-item" href="<?= page_url('login') ?>"><i class="fas fa-times-circle"></i>Login</a></li>
                             <?php } ?>
                         </ul>
                     </div>

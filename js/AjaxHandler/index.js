@@ -16,9 +16,9 @@ class AjaxBulkRequestSystem {
 
     main() {
         this.loadAllSources();
-        // Bind scroll pagination after initial load
+        // Bind load more buttons after initial load
         setTimeout(() => {
-            this.bindAllScrollPaginations();
+            this.bindAllLoadMoreButtons();
         }, 100);
     }
 
@@ -213,14 +213,14 @@ class AjaxBulkRequestSystem {
             return;
         }
 
-        const isScroll = $element.is('[jd-scroll-paginate]');
+        const isLoadMorePaginate = $element.is('[jd-scroll-paginate]');
         const currentPage = parseInt($element.attr('jd-page')) || (this.paginationState[sourceName]?.page || 1);
 
-        if (!(isScroll && currentPage > 1)) {
+        if (!(isLoadMorePaginate && currentPage > 1)) {
             this.setLoadingStateForSource(sourceName);
             this.showSkeletonForSource(sourceName);
         } else {
-            this.showScrollLoadingIndicator(sourceName);
+            this.showLoadMoreLoadingIndicator(sourceName);
         }
 
         this.queueRequestOnly($element);
@@ -276,7 +276,7 @@ class AjaxBulkRequestSystem {
             limit: defaultLimit
         };
 
-        // Reset loaded pages when starting over on scroll paginate (page 1 with filters)
+        // Reset loaded pages when starting over on load more paginate (page 1 with filters)
         if ($element.is('[jd-scroll-paginate]') && currentPage <= 1) {
             this.loadedPages[sourceName] = new Set();
         }
@@ -369,7 +369,7 @@ class AjaxBulkRequestSystem {
                 this.allRequests = {};
                 this.isProcessing = false;
                 this.removeAllLoadingStates();
-                this.hideScrollLoadingIndicators();
+                this.hideLoadMoreLoadingIndicators();
             }
         });
     }
@@ -384,7 +384,7 @@ class AjaxBulkRequestSystem {
 
         const $pick = $(pickSelector);
         const $drop = (dropSelector === 'this') ? $element : $(dropSelector);
-        const isScrollPaginate = $element.is('[jd-scroll-paginate]');
+        const isLoadMorePaginate = $element.is('[jd-scroll-paginate]');
 
         // Update pagination state FIRST
         if (response && response.pagination) {
@@ -433,8 +433,8 @@ class AjaxBulkRequestSystem {
                 htmlOutput += this.processTemplate(template, context);
             });
 
-            // Handle scroll vs regular pagination
-            if (isScrollPaginate && response.pagination && typeof response.pagination.page !== 'undefined') {
+            // Handle load more vs regular pagination
+            if (isLoadMorePaginate && response.pagination && typeof response.pagination.page !== 'undefined') {
                 const pageNum = parseInt(response.pagination.page) || 1;
                 if (!this.loadedPages[sourceName]) this.loadedPages[sourceName] = new Set();
 
@@ -467,7 +467,7 @@ class AjaxBulkRequestSystem {
         } else {
             console.error($element, 'No data available');
             // Remove skeleton even if no data
-            if (isScrollPaginate) {
+            if (isLoadMorePaginate) {
                 const pageNum = parseInt(response.pagination?.page) || 1;
                 if (pageNum === 1) {
                     $drop.find('[jd-skeleton]').remove();
@@ -479,9 +479,14 @@ class AjaxBulkRequestSystem {
             }
         }
 
-        // Render pagination for non-scroll sources
-        if (!isScrollPaginate && response && response.pagination) {
+        // Render pagination for non-load-more sources
+        if (!isLoadMorePaginate && response && response.pagination) {
             this.renderPaginationControls($element, this.paginationState[sourceName]);
+        }
+
+        // Update load more button visibility
+        if (isLoadMorePaginate) {
+            this.updateLoadMoreButtonVisibility(sourceName);
         }
 
         // Handle ref elements
@@ -777,7 +782,7 @@ class AjaxBulkRequestSystem {
             // Handle main jd-source="source"
             $(`[jd-source="${source}"]`).each((index, element) => {
                 const $el = $(element);
-                const count = parseInt($el.attr('jd-loading-count')) || 1; // Default to 3 skeleton items
+                const count = parseInt($el.attr('jd-loading-count')) || 1; // Default to 1 skeleton item
                 let template = cache.skeleton || cache.data || '';
 
                 // Remove js-script tags from skeleton template
@@ -829,25 +834,57 @@ class AjaxBulkRequestSystem {
         }
     }
 
-    // Show loading indicator for scroll pagination
-    showScrollLoadingIndicator(sourceName) {
+    // Show loading indicator for load more button
+    showLoadMoreLoadingIndicator(sourceName) {
         const $element = $(`[jd-source="${sourceName}"]`);
-        const dropSelector = $element.attr('jd-drop');
-        const $drop = dropSelector === 'this' ? $element : $(dropSelector);
+        const loadMoreSelector = $element.attr('jd-scroll-paginate');
 
-        if ($drop.length) {
-            // Remove existing indicator
-            $drop.find('.jd-scroll-loading').remove();
-
-            // Add loading indicator at the end
-            const loadingHtml = '<div class="jd-scroll-loading" style="text-align: center; padding: 20px;">Loading more...</div>';
-            $drop.append(loadingHtml);
+        if (loadMoreSelector) {
+            const $loadMoreBtn = $(loadMoreSelector);
+            if ($loadMoreBtn.length) {
+                const originalText = $loadMoreBtn.data('original-text') || $loadMoreBtn.html();
+                $loadMoreBtn.data('original-text', originalText);
+                $loadMoreBtn.prop('disabled', true).html('Loading...');
+            }
         }
     }
 
-    // Hide all scroll loading indicators
-    hideScrollLoadingIndicators() {
-        $('.jd-scroll-loading').remove();
+    // NEW: Hide all load more loading indicators
+    hideLoadMoreLoadingIndicators() {
+        $('[jd-source][jd-scroll-paginate]').each((index, element) => {
+            const $element = $(element);
+            const sourceName = $element.attr('jd-source');
+            const loadMoreSelector = $element.attr('jd-scroll-paginate');
+
+            if (loadMoreSelector) {
+                const $loadMoreBtn = $(loadMoreSelector);
+                if ($loadMoreBtn.length) {
+                    const originalText = $loadMoreBtn.data('original-text');
+                    if (originalText) {
+                        $loadMoreBtn.prop('disabled', false).html(originalText);
+                    }
+                }
+            }
+        });
+    }
+
+    // NEW: Update load more button visibility based on pagination state
+    updateLoadMoreButtonVisibility(sourceName) {
+        const $element = $(`[jd-source="${sourceName}"]`);
+        const loadMoreSelector = $element.attr('jd-scroll-paginate');
+        const state = this.paginationState[sourceName];
+
+        if (loadMoreSelector && state) {
+            const $loadMoreBtn = $(loadMoreSelector);
+            if ($loadMoreBtn.length) {
+                // Hide button if we've reached the last page
+                if (state.page >= state.pages) {
+                    $loadMoreBtn.hide();
+                } else {
+                    $loadMoreBtn.show();
+                }
+            }
+        }
     }
 
     // Render numeric pagination controls for table-like sources
@@ -910,67 +947,55 @@ class AjaxBulkRequestSystem {
         this.loadSource($element);
     }
 
-    // Bind scroll-based pagination for card-like grids
-    bindAllScrollPaginations() {
+    // NEW: Bind all load more buttons instead of scroll pagination
+    bindAllLoadMoreButtons() {
         $('[jd-source][jd-scroll-paginate]').each((index, element) => {
             const $element = $(element);
             const sourceName = $element.attr('jd-source');
-            this.bindScrollPagination($element);
+            this.bindLoadMoreButton($element);
         });
     }
 
-    bindScrollPagination($element) {
+    // NEW: Bind load more button functionality
+    bindLoadMoreButton($element) {
         const sourceName = $element.attr('jd-source');
         if (!sourceName) return;
-        const dropSelector = $element.attr('jd-drop');
-        const $drop = dropSelector === 'this' ? $element : $(dropSelector);
-        if (!$drop.length) return;
 
-        const onScroll = () => {
+        const loadMoreSelector = $element.attr('jd-scroll-paginate');
+        if (!loadMoreSelector) return;
+
+        const $loadMoreBtn = $(loadMoreSelector);
+        if (!$loadMoreBtn.length) return;
+
+        // Remove any existing click handlers and bind new one
+        $loadMoreBtn.off('click.jdLoadMore').on('click.jdLoadMore', (e) => {
+            e.preventDefault();
+
             const state = this.paginationState[sourceName];
-
             if (!state) return;
-            if (state.page >= state.pages) return; // No more pages
-            if (this.isProcessing) return; // avoid concurrent
 
-            const threshold = 150; // px from bottom
-            const scrollContainer = $drop.get(0);
-            const scrollTop = scrollContainer.scrollTop;
-            const scrollHeight = scrollContainer.scrollHeight;
-            const clientHeight = scrollContainer.clientHeight;
-            const nearBottom = (scrollHeight - scrollTop - clientHeight) < threshold;
+            // Check if we've reached the last page
+            if (state.page >= state.pages) return;
 
-            if (nearBottom) {
-                const nextPage = state.page + 1;
-                if (!this.loadedPages[sourceName]) this.loadedPages[sourceName] = new Set();
-                if (this.loadedPages[sourceName].has(nextPage)) {
-                    return; // already loaded
-                }
+            // Check if already processing
+            if (this.isProcessing) return;
 
-                // Update pagination state for next page
-                this.paginationState[sourceName] = {
-                    ...state,
-                    page: nextPage
-                };
-
-                // Set page and load source
-                $element.attr('jd-page', nextPage);
-                this.loadSource($element);
+            const nextPage = state.page + 1;
+            if (!this.loadedPages[sourceName]) this.loadedPages[sourceName] = new Set();
+            if (this.loadedPages[sourceName].has(nextPage)) {
+                return; // already loaded
             }
-        };
 
-        // Ensure container is scrollable
-        if ($drop.css('overflow-y') === 'visible' || !$drop.css('overflow-y')) {
-            $drop.css('overflow-y', 'auto');
-        }
+            // Update pagination state for next page
+            this.paginationState[sourceName] = {
+                ...state,
+                page: nextPage
+            };
 
-        // Make sure container has a height if not set
-        if (!$drop.height() || $drop.height() === 0) {
-            $drop.css('max-height', '400px'); // Default max height
-        }
-
-        // Remove any existing scroll handlers and bind new one
-        $drop.off('scroll.jdScrollPaginate').on('scroll.jdScrollPaginate', onScroll);
+            // Set page and load source
+            $element.attr('jd-page', nextPage);
+            this.loadSource($element);
+        });
     }
 
     // Method to handle filter changes
@@ -985,7 +1010,7 @@ class AjaxBulkRequestSystem {
         };
         $element.attr('jd-page', 1);
 
-        // Clear loaded pages for scroll pagination
+        // Clear loaded pages for load more pagination
         if ($element.is('[jd-scroll-paginate]')) {
             this.loadedPages[sourceName] = new Set();
         }
@@ -1006,7 +1031,7 @@ class AjaxBulkRequestSystem {
         };
         $element.attr('jd-page', 1);
 
-        // Clear loaded pages for scroll pagination
+        // Clear loaded pages for load more pagination
         if ($element.is('[jd-scroll-paginate]')) {
             this.loadedPages[sourceName] = new Set();
         }
@@ -1021,7 +1046,7 @@ const AS = new AjaxBulkRequestSystem();
 // Load all sources when document is ready
 $(document).ready(function () {
     AS.main();
-    AS.bindAllScrollPaginations();
+    AS.bindAllLoadMoreButtons();
 });
 
 // Send source request on applying filter

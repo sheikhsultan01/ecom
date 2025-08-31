@@ -165,12 +165,12 @@ require_once 'includes/head.php';
         <td><span class="badge-custom badge-${checkStockStatus(quantity,alert_qty,'class')}">${checkStockStatus(quantity,alert_qty)}</span></td>
         <td>
             <div class="d-flex gap-2">
-                <a href="add-product?uid=${uid}" class="action-btn edit-btn">
+                <a href="add-product?uid=${uid}" class="action-btn edit-btn me-2">
                     <i class="hgi hgi-stroke hgi-pencil-edit-02"></i>
                 </a>
-                <button class="action-btn delete-btn delete-data-btn" data-target="${id}" data-action="product">
+                <a href="#" class="action-btn delete-btn delete-data-btn" data-target="${id}" data-action="product">
                     <i class="hgi hgi-stroke hgi-delete-01"></i>
-                </button>
+                </a>
             </div>
         </td>
     </tr>

@@ -12,7 +12,6 @@ $JS_FILES = [
     'home.js'
 ];
 
-define('INCLUDE_FOOTER', false);
 require_once 'includes/head.php';
 ?>
 
@@ -43,9 +42,9 @@ require_once 'includes/head.php';
             </a>
         </div>
 
-        <div class="row" id="productsGrid" jd-source="featureProducts" jd-pick="#singleProduct" jd-drop="this" jd-success="SuccessCB" jd-scroll-paginate>
+        <div class="row" id="productsGrid" jd-source="featureProducts" jd-pick="#singleProduct" jd-drop="this" jd-success="SuccessCB" jd-scroll-paginate="#productsLoadBtn">
             <?php for ($i = 0; $i < 3; $i++) {  ?>
-                <div class="col-lg-3 col-md-4 col-sm-6 mb-3" jd-skeleton>
+                <div class="col-lg-3 col-xl-3 col-xxl-2 col-md-4 col-sm-6 mb-3" jd-skeleton>
                     <div class="product-card">
                         <div class="product-image" jd-data>
                             <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300&h=200&fit=crop" alt="Wireless Headphones">
@@ -64,6 +63,9 @@ require_once 'includes/head.php';
                     </div>
                 </div>
             <?php } ?>
+        </div>
+        <div class="load-more-container">
+            <button class="btn load-more-btn" id="productsLoadBtn">Load More</button>
         </div>
     </div>
 </section>
@@ -133,16 +135,16 @@ require_once 'includes/head.php';
 
 <!-- Single Product Template -->
 <script type="text/html" id="singleProduct">
-    <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
+    <div class="col-lg-3 col-xl-3 col-xxl-2 col-md-4 col-sm-6 mb-3">
         <div class="product-card">
             <div class="product-image">
-                <a href="single-product?uid=${uid}" target="_blank">
+                <a href="<?= page_url('single-product/') ?>${generateSlug(title,uid)}" target="_blank">
                     <img src="<?= merge_url(SITE_URL, 'images/products/') ?>${image}" alt="Wireless Headphones">
                 </a>
                 <div class="discount-badge">${getDiscountPercentage(price, sale_price)}</div>
             </div>
             <div class="product-info">
-                <a href="single-product?uid=${uid}" target="_blank" class="product-title">${title}</a>
+                <a href="<?= page_url('single-product/') ?>${generateSlug(title,uid)}" target="_blank" class="product-title">${title}</a>
                 <div class="product-price">
                     <span class="current-price">${"$" + price}</span>
                     <span class="original-price">${"$" + sale_price}</span>

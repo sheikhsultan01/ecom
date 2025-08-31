@@ -1,5 +1,16 @@
 RewriteEngine On
+RewriteCond %{REQUEST_URI} ^/ecom/single-product/(css|js|images|fonts)/ [NC]
+RewriteRule ^single-product/(css|js|images|fonts)/(.*)$ $1/$2 [L]
+RewriteCond %{REQUEST_URI} \.(css|js|png|jpg|jpeg|gif|svg|webp|ico|woff|woff2|ttf|eot|map|pdf|txt|xml)$ [NC]
+RewriteRule .* - [L]
+
+# Single product page rule
+RewriteRule ^single-product/([a-zA-Z0-9-_]+)/?$ single-product.php?slug=$1 [L,QSA]
+
+# General file extension handling
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+# HTML to PHP conversion
 RewriteRule ^(.*)\.html$ $1.php [L]

@@ -411,3 +411,13 @@ function getPrimaryImage(imagesJson) {
     // Return primary if found, otherwise first image
     return primary ? primary.name : images[0].name;
 }
+
+function generateSlug(title, uid) {
+    let slug = title
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, '')
+        .trim()
+        .replace(/\s+/g, '-');
+
+    return slug + '-' + uid;
+}

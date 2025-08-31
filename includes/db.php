@@ -3,6 +3,7 @@
 if (!defined('DIR')) define('DIR', './');
 if (!defined('_DIR_')) define('_DIR_', DIR);
 require_once _DIR_ . 'includes/inc/database.php';
+require_once _DIR_ . 'includes/inc/functions2.php';
 require_once "inc/asset-templates.php";
 
 @define('CLASSES', []);
