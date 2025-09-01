@@ -59,7 +59,7 @@
                                                         $sub_cat_slug = $sub_cat['slug'] . "-" . $sub_cat['uid'];
                                                     ?>
                                                         <li>
-                                                            <a href="<?= page_url('products') . "/" . $sub_cat_slug  ?>"><?= $sub_cat['name'] ?></a>
+                                                            <a href="<?= page_url('category') . "/" . $sub_cat_slug  ?>"><?= $sub_cat['name'] ?></a>
                                                         </li>
                                                     <?php } ?>
                                                 </ul>
