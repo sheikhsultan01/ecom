@@ -454,16 +454,6 @@ class AjaxBulkRequestSystem {
                 $drop.find('[jd-skeleton]').remove();
                 $drop.html(htmlOutput);
             }
-
-            // Execute success callback
-            const successCallback = $element.attr('jd-success');
-            if (successCallback && typeof window[successCallback] === 'function') {
-                try {
-                    window[successCallback](response, $element);
-                } catch (e) {
-                    console.error(`Error in jd-success callback '${successCallback}':`, e);
-                }
-            }
         } else {
             console.error($element, 'No data available');
             // Remove skeleton even if no data
@@ -492,7 +482,17 @@ class AjaxBulkRequestSystem {
         // Handle ref elements
         this.processRefElements(response, $element);
 
-        // IMPROVED: Remove loading state for this specific source
+        // Execute success callback at the very end
+        const successCallback = $element.attr('jd-success');
+        if (successCallback && typeof window[successCallback] === 'function') {
+            try {
+                window[successCallback](response, $element);
+            } catch (e) {
+                console.error(`Error in jd-success callback '${successCallback}':`, e);
+            }
+        }
+
+        // Remove loading state for this specific source
         this.removeLoadingStateForSource(sourceName);
     }
 
