@@ -34,6 +34,7 @@
     transition: color 0.3s ease;
 }
 
+.nav-item.dropdown.active .nav-link,
 .nav-link:hover {
     color: var(--accent-color) !important;
 }
@@ -43,6 +44,7 @@
     box-shadow: none !important;
 }
 
+.nav-item.dropdown.active .nav-link::after,
 .nav-link::after {
     content: '';
     position: absolute;
@@ -54,6 +56,7 @@
     transition: width 0.3s ease;
 }
 
+.nav-item.dropdown.active .nav-link::after,
 .nav-link:hover::after,
 .nav-link.active::after {
     width: 100%;
