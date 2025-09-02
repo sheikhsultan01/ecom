@@ -65,13 +65,13 @@ require_once 'includes/head.php';
                     <li class="list-group-item px-0 bg-transparent">
                         <div class="prcing-row" jd-data>
                             <span>Cart Subtotal:</span>
-                            <span id="cart-subtotal" class="gs-price-value animate__animated">${"$" + summary.sub_total}</span>
+                            <span id="cart-subtotal" class="gs-price-value animate__animated"><?= CURRENCY ?>${summary.sub_total}</span>
                         </div>
                     </li>
                     <li class="list-group-item px-0 bg-transparent">
                         <div class="prcing-row" jd-data>
                             <span>Discount: </span>
-                            <span class="text-danger gs-price-value animate__animated" id="cart-discount">${summary.discount}</span>
+                            <span class="text-danger gs-price-value animate__animated" id="cart-discount">${summary.discount.toFixed(2)}</span>
                         </div>
                     </li>
                     <li class="list-group-item px-0 bg-transparent">
@@ -83,7 +83,7 @@ require_once 'includes/head.php';
                 </ul>
                 <div class="d-flex justify-content-between align-items-center mb-3" jd-data>
                     <h4 class="mb-0 gs-section-title">Total:</h4>
-                    <h4 class="mb-0 gs-total-price" id="cart-grand-total">${"$" + summary.total_amount}</h4>
+                    <h4 class="mb-0 gs-total-price" id="cart-grand-total"><?= CURRENCY ?>${summary.total_amount}</h4>
                 </div>
                 <div class="coupon-input d-none">
                     <input type="text" placeholder="Enter coupon code" class="form-control">
@@ -217,7 +217,8 @@ require_once 'components/modals/address-modal.php';
 
 <script type="text/html" id="singleCartItem">
     <js-script>
-        let subTotal = '$' + sale_price * qty;
+        let subTotal = price * qty;
+        let actualTotal = sale_price * qty;
     </js-script>
     <tr class="gs-cart-item-row" data-item-id="1">
         <td>
@@ -226,17 +227,17 @@ require_once 'components/modals/address-modal.php';
                 <span class="gs-item-name">${title}</span>
             </div>
         </td>
-        <td class="item-price" data-price="75">${'$' + sale_price}</td>
+        <td class="item-price" data-price="75"><?= CURRENCY ?>${price} <small class="text-decoration-line-through"><?= CURRENCY ?>${sale_price}</small></td>
         <td>
             <div class="d-flex justify-content-between">
                 <div class="quantity-controls">
                     <button class="quantity-btn" data-type="decrease"><i class="hgi hgi-stroke hgi-minus-sign"></i></button>
-                    <input type="number" name="qty" class="quantity-input ss-jx-element" value="${qty}" min="1" readonly data-submit='{"updateProductQty" : true, "id" : ${id}}' data-target="cart" data-listener="change" data-callback="quantityUpdateCB">
+                    <input type="number" name="qty" class="quantity-input ss-jx-element" value="${qty}" min="1" readonly data-submit='{"updateProductQty" : true, "id" : ${id}}' data-target="cart" data-listener="change" data-callback="cartQuantityUpdateCB">
                     <button class="quantity-btn" data-type="increase"><i class="hgi hgi-stroke hgi-plus-sign"></i></button>
                 </div>
             </div>
         </td>
-        <td class="gs-item-subtotal">${subTotal}</td>
+        <td class="gs-item-subtotal"><?= CURRENCY ?>${subTotal} <small class="text-decoration-line-through"><?= CURRENCY ?>${actualTotal}</small></td>
         <td>
             <button class="btn gs-btn-remove-item delete-data-btn" data-target="${id}" data-action="cart" data-callback="deleteCartItemCB">
                 <i class="hgi hgi-stroke hgi-delete-02"></i>

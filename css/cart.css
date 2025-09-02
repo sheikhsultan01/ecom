@@ -211,12 +211,14 @@
     font-weight: 500;
     transition: all 0.3s;
     margin-top: 10px;
+    color: #fff !important;
 }
 
 .checkout-btn:hover {
     background-color: #218838;
     transform: translateY(-2px);
     box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+    color: #fff !important;
 }
 
 .checkout-btn:active {

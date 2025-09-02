@@ -1,10 +1,10 @@
 // Callback on update Quantity 
-ss.fn.cb.quantityUpdateCB = function ($form, res) {
+ss.fn.cb.cartQuantityUpdateCB = function ($form, res) {
     if (res.status == "success") {
         refreshSource('cartItems');
         return true;
     }
-    notify(res.data, res.status)
+    notify(res.data, res.status);
 }
 
 // Callback on delete Cart Item

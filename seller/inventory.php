@@ -133,7 +133,7 @@ require_once 'includes/head.php';
     function SuccessCB(res, $ele) {
         initSsJxElements('.ss-jx-element'); // Jx Elements
         // Update Product Quantity Callback
-        ss.fn.cb.QuantityUpdateCB = function($form, res) {
+        ss.fn.cb.StockUpdateCB = function($form, res) {
             if (res.status === "success") {
                 notify(res.data, res.status)
             } else {
@@ -159,7 +159,7 @@ require_once 'includes/head.php';
         <td>${price}</td>
         <td>
             <div class="d-flex justify-content-center">
-                <input type="number" name="quantity" class="form-control w-50 ss-jx-element" value="${quantity}" data-target="add-product" data-submit='{"updateProductQuantity" : true, "id" : ${id}}' data-listener="change" data-callback="QuantityUpdateCB">
+                <input type="number" name="quantity" class="form-control w-50 ss-jx-element" value="${quantity}" data-target="add-product" data-submit='{"updateProductQuantity" : true, "id" : ${id}}' data-listener="change" data-callback="StockUpdateCB">
             </div>
         </td>
         <td><span class="badge-custom badge-${checkStockStatus(quantity,alert_qty,'class')}">${checkStockStatus(quantity,alert_qty)}</span></td>
