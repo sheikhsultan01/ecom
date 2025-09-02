@@ -11,6 +11,16 @@ ss.fn.cb.cartQuantityUpdateCB = function ($form, res) {
 ss.fn.cb.deleteCartItemCB = function ($form, res) {
     if (res.status == "success") {
         refreshSource('cartItems');
+
+        let $cartButton = $('.cart-btn'),
+            oldCartVal = toNumber($cartButton.find('.cart-count').attr('data-count'));
+
+        // Set cart count
+        if (oldCartVal - 1 == 0) {
+            $cartButton.find('.cart-count').addClass('d-none');
+        }
+        $cartButton.find('.cart-count').text(oldCartVal - 1);
+        $cartButton.find('.cart-count').attr('data-count', oldCartVal - 1);
         return true;
     }
     notify(res.data, res.status)
