@@ -460,3 +460,8 @@ function getDiscountPercentage(originalPrice, salePrice) {
     let discount = ((salePrice - originalPrice) / salePrice) * 100;
     return "-" + Math.round(discount) + "%"; // round to nearest integer
 }
+
+// Page Url
+function pageUrl(page) {
+    return mergeUrl(SITE_URL, page);
+}

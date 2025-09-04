@@ -46,8 +46,8 @@ class AdvancedProductSearch
         }
 
         return [
-            'products' => $results,
-            'total' => count($results),
+            'products' => $results['data'],
+            'total' => $results['total'],
             'search_type' => $searchType,
             'search_terms' => $searchTerms,
             'original_query' => $searchQuery
@@ -117,12 +117,16 @@ class AdvancedProductSearch
 
         $sql = "
             SELECT DISTINCT
-                p.*,
-                c.name as category_name,
-                c.slug as category_slug,
-                c.description as category_description,
-                pc.name as parent_category_name,
-                -- Relevance calculation
+                    p.uid,
+                    p.title,
+                    p.id,
+                    p.sku,
+                    p.images,
+                    p.price,
+                    p.sale_price,
+                    p.quantity,
+                    p.alert_qty,
+                    c.name AS category_name,
                 (
                     (CASE WHEN p.title LIKE :{$relevanceParams[0]} THEN 100 ELSE 0 END) +
                     (CASE WHEN p.brand LIKE :{$relevanceParams[1]} THEN 80 ELSE 0 END) +
@@ -141,9 +145,14 @@ class AdvancedProductSearch
 
         $sql = $this->addFilters($sql, $filters, $params);
         $sql .= " ORDER BY relevance_score DESC, p.id DESC";
+        $total = $this->db->query($sql, $params)->rowCount();
         $sql = $this->addLimit($sql, $filters);
 
-        return $this->db->squery($sql, $params);
+        $data = $this->db->squery($sql, $params);
+        return [
+            'data' => $data,
+            'total' => $total
+        ];
     }
 
     // Execute category-based search (Step 2)
@@ -181,12 +190,16 @@ class AdvancedProductSearch
 
         $sql = "
             SELECT DISTINCT
-                p.*,
-                c.name as category_name,
-                c.slug as category_slug,
-                c.description as category_description,
-                pc.name as parent_category_name,
-                -- Category relevance scoring
+                    p.uid,
+                    p.title,
+                    p.id,
+                    p.sku,
+                    p.images,
+                    p.price,
+                    p.sale_price,
+                    p.quantity,
+                    p.alert_qty,
+                    c.name AS category_name,
                 (
                     (CASE WHEN c.name LIKE :{$relevanceParams[0]} THEN 90 ELSE 0 END) +
                     (CASE WHEN pc.name LIKE :{$relevanceParams[1]} THEN 80 ELSE 0 END) +
@@ -204,9 +217,14 @@ class AdvancedProductSearch
 
         $sql = $this->addFilters($sql, $filters, $params);
         $sql .= " ORDER BY relevance_score DESC, p.id DESC";
+        $total = $this->db->query($sql, $params)->rowCount();
         $sql = $this->addLimit($sql, $filters);
 
-        return $this->db->squery($sql, $params);
+        $data = $this->db->squery($sql, $params);
+        return [
+            'data' => $data,
+            'total' => $total
+        ];
     }
 
     // Execute fuzzy search (Step 3) - broader search with partial matches
@@ -217,7 +235,6 @@ class AdvancedProductSearch
         $paramIndex = 0;
 
         foreach ($searchTerms as $term) {
-            // More relaxed search - only for terms with 3+ characters
             if (strlen($term) >= 3) {
                 $paramKeys = [];
                 for ($i = 0; $i < 5; $i++) {
@@ -253,12 +270,16 @@ class AdvancedProductSearch
 
         $sql = "
             SELECT DISTINCT
-                p.*,
-                c.name as category_name,
-                c.slug as category_slug,
-                c.description as category_description,
-                pc.name as parent_category_name,
-                -- Lower relevance scores for fuzzy matches
+                    p.uid,
+                    p.title,
+                    p.id,
+                    p.sku,
+                    p.images,
+                    p.price,
+                    p.sale_price,
+                    p.quantity,
+                    p.alert_qty,
+                    c.name AS category_name,
                 (
                     (CASE WHEN p.title LIKE :{$relevanceParams[0]} THEN 50 ELSE 0 END) +
                     (CASE WHEN p.brand LIKE :{$relevanceParams[1]} THEN 40 ELSE 0 END) +
@@ -277,9 +298,14 @@ class AdvancedProductSearch
 
         $sql = $this->addFilters($sql, $filters, $params);
         $sql .= " ORDER BY relevance_score DESC, p.id DESC";
+        $total = $this->db->query($sql, $params)->rowCount();
         $sql = $this->addLimit($sql, $filters);
 
-        return $this->db->squery($sql, $params);
+        $data = $this->db->squery($sql, $params);
+        return [
+            'data' => $data,
+            'total' => $total
+        ];
     }
 
     //  Add filters to query
@@ -311,8 +337,15 @@ class AdvancedProductSearch
     //  Add limit to query
     private function addLimit($sql, $filters)
     {
-        $limit = !empty($filters['limit']) ? (int)$filters['limit'] : 50;
-        $sql .= " LIMIT {$limit}";
+        $limit  = !empty($filters['limit']) ? (int)$filters['limit'] : 50;
+        $offset = isset($filters['offset']) ? (int)$filters['offset'] : null;
+
+        if ($offset !== null && $offset >= 0) {
+            $sql .= " LIMIT {$limit} OFFSET {$offset}";
+        } else {
+            $sql .= " LIMIT {$limit}";
+        }
+
         return $sql;
     }
 
