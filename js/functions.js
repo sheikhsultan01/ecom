@@ -378,6 +378,37 @@ function checkProductAddedToCart(product_id, product_price, cart_id, product_qty
     return btnHtml;
 }
 
+function IsSearchProductAddedToCart(product_id, product_price, cart_id, product_qty) {
+    let btnHtml = '';
+
+    if (cart_id) {
+        let dataSubmit = JSON.stringify({
+            'updateProductQty': true,
+            'id': cart_id
+        }).replace(/"/g, '&quot;');
+
+        btnHtml += `<div class="quantity-controls">
+                        <button class="quantity-btn" data-type="decrease"><i class="hgi hgi-stroke hgi-minus-sign"></i></button>
+                        <input type="number" name="qty" class="quantity-input ss-jx-element" id="quantityInput" value="${product_qty}" min="1" readonly data-submit="${dataSubmit}" data-target="cart" data-listener="change" data-callback="quantityUpdateCB">
+                        <button class="quantity-btn" data-type="increase"><i class="hgi hgi-stroke hgi-plus-sign"></i></button>
+                    </div>`;
+
+    } else {
+
+        let dataSubmit = JSON.stringify({
+            'addToCartProduct': true,
+            'product_id': product_id,
+            'unit_price': product_price
+        }).replace(/"/g, '&quot;');
+
+        btnHtml += `<button class="add-to-cart ss-jx-element" data-target="${mergeUrl(SITE_URL, 'controllers/', 'cart')}" data-submit="${dataSubmit}" data-callback="addProductToCartCB">
+                    +
+                    </button>`;
+    }
+
+    return btnHtml;
+}
+
 // Funciton to format date
 function formatDate(datetime, format = "YYYY-MM-DD") {
     return moment(datetime).format(format);

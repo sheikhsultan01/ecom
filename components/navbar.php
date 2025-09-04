@@ -76,7 +76,8 @@
             </div>
             <div class="col-md-6">
                 <div class="search-container">
-                    <input type="text" class="search-input" placeholder="Search in GreenShop" id="searchInput">
+                    <input type="text" class="ec-search-input" placeholder="Search in GreenShop" id="searchInput">
+                    <div class="search-results"></div>
                     <button class="search-btn">
                         <i class="hgi hgi-stroke hgi-search-01"></i>
                     </button>

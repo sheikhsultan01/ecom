@@ -75,3 +75,66 @@ $(document).on('click', '.back-to-top', function () {
         behavior: 'smooth'
     });
 });
+
+// Display search results
+function displaySearchResults($searchCon, data) {
+
+    if (data.length === 0) {
+        $searchCon.html('<div class="no-results">No products found. Try a different search term.</div>');
+        return;
+    }
+
+    let html = '';
+    data.forEach(product => {
+        let { id, primary_image, title, description, price, cart_id, product_qty } = product;
+        html += `
+            <div class="search-item" data-id="${id}">
+                <div class="product-image"><img src="${mergeUrl(SITE_URL, 'images/products/', primary_image)}"></div>
+                <div class="product-info">
+                <div class="product-detail">
+                    <div class="product-title">${title}</div>
+                    <div class="product-description">${description}</div>
+                    <div class="product-price">${price}</div>
+                </div>
+                <div class="action-btn">
+                    ${IsSearchProductAddedToCart(id, price, cart_id, product_qty)}
+                </div>
+                </div>
+            </div>
+        `;
+    });
+
+    $searchCon.html(html);
+}
+
+// Send Search Request on search page
+$(document).on('keyup', '.ec-search-input', function (e) {
+    e.preventDefault();
+    const keyword = $(this).val().trim();
+    let $searchCon = $('.search-container').find('.search-results');
+
+    if (keyword.length === 0) {
+        $searchCon.removeClass('show');
+        return;
+    }
+
+    // Show loading
+    $searchCon.html('<div class="loading">Searching...</div>').addClass('show');
+
+    $.ajax({
+        url: "controllers/search",
+        type: "POST",
+        data: { searchProducts: true, keyword },
+        dataType: "json",
+        success: function (res) {
+            let { status, data } = res;
+            if (status === 'success') {
+                displaySearchResults($searchCon, data);
+                initSsJxElements('.ss-jx-element'); // Jx Elements
+            } else {
+                $searchCon.html('<div class="no-results">No products found. Try a different search term.</div>');
+            }
+
+        }
+    });
+});
