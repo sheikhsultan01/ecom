@@ -243,3 +243,7 @@
     border-radius: 10px;
     width: 95%;
 }
+
+.orders-stats .stats-card .progress {
+    background: #ccc;
+}

@@ -59,7 +59,7 @@
                                                         $sub_cat_slug = $sub_cat['slug'] . "-" . $sub_cat['uid'];
                                                     ?>
                                                         <li>
-                                                            <a href="<?= page_url('products') . "/" . $sub_cat_slug  ?>"><?= $sub_cat['name'] ?></a>
+                                                            <a href="<?= page_url('category') . "/" . $sub_cat_slug  ?>"><?= $sub_cat['name'] ?></a>
                                                         </li>
                                                     <?php } ?>
                                                 </ul>
@@ -76,7 +76,8 @@
             </div>
             <div class="col-md-6">
                 <div class="search-container">
-                    <input type="text" class="search-input" placeholder="Search in GreenShop" id="searchInput">
+                    <input type="text" class="ec-search-input" placeholder="Search in GreenShop" id="searchInput">
+                    <div class="search-results"></div>
                     <button class="search-btn">
                         <i class="hgi hgi-stroke hgi-search-01"></i>
                     </button>

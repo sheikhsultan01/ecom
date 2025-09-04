@@ -2,16 +2,21 @@
 define('CLASSES', ['jd']);
 require_once 'includes/db.php';
 
-require_once "./helper/products.php";
-$page_name = 'Products';
+$current_url = get_current_url();
+$slug = extract_slug_from_URL($current_url);
+$slug = _GET('slug');
+$category_uid = extract_id_from_slug($slug);
+
+require_once "./helper/category.php";
+$page_name = 'Category';
 
 
 $CSS_FILES = [
-    'products.css'
+    'category.css'
 ];
 
 $JS_FILES = [
-    'products.js'
+    'category.js'
 ];
 
 define('INCLUDE_FOOTER', false);
@@ -22,10 +27,10 @@ require_once 'includes/head.php';
 <section class="products-section">
     <div class="products-container">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="section-title mb-0">All Products</h2>
+            <h2 class="section-title mb-0">Category</h2>
         </div>
 
-        <div class="row" id="productsGrid" jd-source="products" jd-pick="#singleProduct" jd-drop="this" jd-success="SuccessCB" jd-scroll-paginate="#productsLoadBtn">
+        <div class="row" id="productsGrid" jd-source="categoryProducts" jd-pick="#singleProduct" jd-drop="this" jd-success="SuccessCB" jd-scroll-paginate="#productsLoadBtn">
             <?php for ($i = 0; $i < 3; $i++) {  ?>
                 <div class="col-lg-3 col-xl-3 col-xxl-2 col-md-4 col-sm-6 mb-3" jd-skeleton>
                     <div class="product-card">

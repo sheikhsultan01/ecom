@@ -95,3 +95,23 @@ $(document).on('click', '.update-order-status .dropdown-item:not(.active)', func
         }
     });
 });
+
+// Function to calculate the orders percenage
+function calOrdersPer(total, completed) {
+    let percentage = (completed / total) * 100;
+    return Math.round(percentage);
+}
+
+// Function to set the orders percentage
+function setOrdersPercentage() {
+    let $orderPer = $('.orders-stats').find('.progress-bar');
+    $orderPer.each(function () {
+        let percentage = $(this).attr('data-percentage');
+        $(this).css('width', `${percentage}%`);
+    });
+}
+
+// Orders Success Callback
+function OrdersSuccessCB(res, $ele) {
+    setOrdersPercentage();
+}

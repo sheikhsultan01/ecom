@@ -1,17 +1,15 @@
 <?php
 define('CLASSES', ['jd']);
 require_once 'includes/db.php';
+require_once 'includes/Classes/SearchProducts.php';
 
-require_once "./helper/products.php";
-$page_name = 'Products';
+$search_key = _get_param('search', false);
+require_once "./helper/search.php";
+$page_name = 'Search';
 
 
 $CSS_FILES = [
     'products.css'
-];
-
-$JS_FILES = [
-    'products.js'
 ];
 
 define('INCLUDE_FOOTER', false);
@@ -65,7 +63,7 @@ require_once 'includes/head.php';
         <div class="product-card">
             <div class="product-image">
                 <a href="<?= page_url('single-product/') ?>${generateSlug(title,uid)}" target="_blank">
-                    <img src="<?= merge_url(SITE_URL, 'images/products/') ?>${image}" alt="Img">
+                    <img src="<?= merge_url(SITE_URL, 'images/products/') ?>${primary_image}" alt="Img">
                 </a>
                 <div class="discount-badge">${getDiscountPercentage(price, sale_price)}</div>
             </div>

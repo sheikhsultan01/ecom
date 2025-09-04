@@ -1,4 +1,32 @@
 <?php
+function getUserCartItems($user_id, $type = 'total_amount')
+{
+    global $db;
+    $cart_items = $db->squery("SELECT c.qty,
+                        p.price,
+                        p.sale_price 
+                FROM carts c 
+                    LEFT JOIN products p ON c.product_id = p.id 
+                WHERE c.user_id = $user_id
+                    AND 
+                      c.status = 'pending'
+                ");
+
+    // Calculate total and subTotal
+    $sub_total = 0;
+    $total_amount = 0;
+    foreach ($cart_items as &$item) {
+        $sub_total += $item['sale_price'] * $item['qty'];
+        $total_amount += $item['price'] * $item['qty'];
+    }
+
+    $data = [
+        'sub_total' => $sub_total,
+        'total_amount' => $total_amount
+    ];
+
+    return $data[$type];
+}
 // Cart Items
 $jdManager->defineData('cartItems', [
     'data' => function ($params) use ($db) {
@@ -25,17 +53,15 @@ $jdManager->defineData('cartItems', [
         ";
         $cart_items = $db->squery($query);
 
-        $sub_total = 0;
-        $total_amount = 0;
         foreach ($cart_items as &$item) {
             $primary_image = getPrimaryImage($item['images']);
             $item['primary_image'] = $primary_image;
             unset($item['images']);
-
-            // Calculate total and subTotal
-            $sub_total += $item['sale_price'] * $item['qty'];
-            $total_amount += $item['price'] * $item['qty'];
         }
+
+        // Total Cart Items
+        $total_amount = getUserCartItems($user_id, 'total_amount');
+        $sub_total = getUserCartItems($user_id, 'sub_total');
 
         $discount = $total_amount - $sub_total;
 

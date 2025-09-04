@@ -27,19 +27,21 @@ require_once 'includes/head.php';
     </div>
 
     <!-- Stats Cards -->
-    <div class="row mb-4">
+    <div class="row mb-4 orders-stats" jd-ref="orders">
         <div class="col-md-3 col-sm-6">
             <div class="stats-card card h-100">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-3" jd-data>
                         <div class="stats-icon stats-pending">
                             <i class="fas fa-clock"></i>
                         </div>
                     </div>
-                    <h3 class="stats-value">42</h3>
-                    <p class="stats-label">Pending Orders</p>
-                    <div class="progress mt-3" style="height: 6px;">
-                        <div class="progress-bar bg-warning" role="progressbar" style="width: 25%"></div>
+                    <div jd-data>
+                        <h3 class="stats-value">${stats.pending}</h3>
+                        <p class="stats-label">Pending Orders</p>
+                    </div>
+                    <div class="progress mt-3" style="height: 6px;" jd-data>
+                        <div class="progress-bar bg-warning" role="progressbar" data-percentage="${calOrdersPer(stats.total, stats.pending)}"></div>
                     </div>
                 </div>
             </div>
@@ -47,15 +49,17 @@ require_once 'includes/head.php';
         <div class="col-md-3 col-sm-6">
             <div class="stats-card card h-100">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-3" jd-data>
                         <div class="stats-icon stats-completed">
                             <i class="fas fa-check-circle"></i>
                         </div>
                     </div>
-                    <h3 class="stats-value">187</h3>
-                    <p class="stats-label">Completed Orders</p>
-                    <div class="progress mt-3" style="height: 6px;">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 65%"></div>
+                    <div jd-data>
+                        <h3 class="stats-value">${stats.completed}</h3>
+                        <p class="stats-label">Completed Orders</p>
+                    </div>
+                    <div class="progress mt-3" style="height: 6px;" jd-data>
+                        <div class="progress-bar bg-success" role="progressbar" data-percentage="${calOrdersPer(stats.total, stats.completed)}"></div>
                     </div>
                 </div>
             </div>
@@ -63,15 +67,17 @@ require_once 'includes/head.php';
         <div class="col-md-3 col-sm-6">
             <div class="stats-card card h-100">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-3" jd-data>
                         <div class="stats-icon stats-transit">
                             <i class="fas fa-truck"></i>
                         </div>
                     </div>
-                    <h3 class="stats-value">28</h3>
-                    <p class="stats-label">In Transit</p>
-                    <div class="progress mt-3" style="height: 6px;">
-                        <div class="progress-bar bg-info" role="progressbar" style="width: 15%"></div>
+                    <div jd-data>
+                        <h3 class="stats-value">${stats.in_transit}</h3>
+                        <p class="stats-label">In Transit</p>
+                    </div>
+                    <div class="progress mt-3" style="height: 6px;" jd-data>
+                        <div class="progress-bar bg-info" role="progressbar" data-percentage="${calOrdersPer(stats.total, stats.in_transit)}"></div>
                     </div>
                 </div>
             </div>
@@ -79,15 +85,17 @@ require_once 'includes/head.php';
         <div class="col-md-3 col-sm-6">
             <div class="stats-card card h-100">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-3" jd-data>
                         <div class="stats-icon stats-cancelled">
                             <i class="fas fa-times-circle"></i>
                         </div>
                     </div>
-                    <h3 class="stats-value">13</h3>
-                    <p class="stats-label">Cancelled Orders</p>
-                    <div class="progress mt-3" style="height: 6px;">
-                        <div class="progress-bar bg-danger" role="progressbar" style="width: 8%"></div>
+                    <div jd-data>
+                        <h3 class="stats-value">${stats.cancelled}</h3>
+                        <p class="stats-label">Cancelled Orders</p>
+                    </div>
+                    <div class="progress mt-3" style="height: 6px;" jd-data>
+                        <div class="progress-bar bg-danger" role="progressbar" data-percentage="${calOrdersPer(stats.total, stats.cancelled)}"></div>
                     </div>
                 </div>
             </div>
@@ -129,7 +137,7 @@ require_once 'includes/head.php';
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody jd-source="orders" jd-pick="#orderTemplate" jd-drop="this" jd-pagination="#ordersPagination">
+                    <tbody jd-source="orders" jd-pick="#orderTemplate" jd-drop="this" jd-pagination="#ordersPagination" jd-success="OrdersSuccessCB">
                         <?= skeleton("table", [
                             'columns' => 6,
                         ]) ?>

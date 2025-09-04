@@ -40,9 +40,10 @@
     transition: all 0.3s ease;
 }
 
+.dropdown-item.active,
 .dropdown-item:hover {
-    background: var(--secondary-gradient);
-    color: var(--accent-color);
+    background: var(--secondary-gradient) !important;
+    color: var(--accent-color) !important;
     transform: translateX(5px);
     border-radius: 10px;
     width: 95%;
