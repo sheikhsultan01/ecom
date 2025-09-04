@@ -62,7 +62,7 @@ require_once 'includes/head.php';
 
                 <!-- Product Information -->
                 <div class="col-lg-6 col-md-6 col-12">
-                    <form action="cart" class="js-form h-100" data-callback="addProductToCartCB">
+                    <form action="<?= page_url('controllers/cart') ?>" class="js-form h-100" data-callback="addSingleProductToCartCB">
                         <div class="product-info h-100">
                             <div class="product-details">
                                 <h1 class="product-title"><?= $product['title'] ?></h1>

@@ -107,7 +107,6 @@ $(document).on('submit', '.js-form, .ajax-form', function (e) {
     e.preventDefault();
 
     const $form = $(this);
-    let action = $form.attr('action') || '';
     const $fileInputs = $form.find('input[type="file"]');
 
     // Remove empty file inputs before creating FormData
@@ -128,8 +127,11 @@ $(document).on('submit', '.js-form, .ajax-form', function (e) {
     if (!confirmContiue) return;
 
     // Normalize action URL
-    if (!action.endsWith('.php')) action += '.php';
-    if (!action.includes('controllers/')) action = 'controllers/' + action;
+
+    let action = $form.attr("action"),
+        form_controller = 'controllers/';
+    if (action.indexOf('./') !== -1) form_controller = action;
+    else form_controller += action;
 
     // Build AJAX request
     const ajaxRequest = {
