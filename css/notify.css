@@ -1,0 +1,142 @@
+:root {
+    --toast-success: #1e9e3c;
+    --toast-error: #d43e2d;
+    --toast-warning: #d48d1a;
+    --toast-info: #2b8ecf;
+    --toast-thanks: #29a89e;
+    --toast-bg: #5a57eb;
+    --toast-text: #fff;
+}
+
+.toast-container {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 320px;
+    z-index: 999999;
+    pointer-events: none;
+}
+
+/* Toast Box */
+.toast-notification {
+    display: flex;
+    flex-direction: column;
+    color: var(--toast-text);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    transform: translateX(100%);
+    animation: toastSlideIn 0.5s forwards;
+    pointer-events: auto;
+}
+
+.toast-notification.is-removable {
+    animation: toastSlideIn 0.5s forwards, toastFadeOut 0.5s ease forwards 3.5s;
+}
+
+/* Toast Body */
+.toast-body {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.toast-body i,
+.toast-body svg {
+    font-size: 26px;
+    color: inherit;
+}
+
+/* Toast Content */
+.toast-content h5 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: inherit;
+}
+
+.toast-content p {
+    margin: 2px 0 0;
+    font-size: 13px;
+    line-height: 1.4;
+    color: #f1f1f1;
+}
+
+/* Variants */
+.toast-success {
+    background: var(--toast-success);
+}
+
+.toast-error {
+    background: var(--toast-error);
+}
+
+.toast-warning {
+    background: var(--toast-warning);
+}
+
+.toast-info {
+    background: var(--toast-info);
+}
+
+.toast-thanks {
+    background: var(--toast-thanks);
+}
+
+/* Animations */
+@keyframes toastSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes toastFadeOut {
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+/* Spinner (loading) */
+.toast-spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid #ccc;
+    border-top-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    animation: spin 0.8s linear infinite;
+}
+
+.toast-spinner-dark {
+    border-color: #444;
+    border-top-color: transparent;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .toast-container {
+        bottom: 70px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+    }
+
+    .toast-notification {
+        width: 100%;
+    }
+}

@@ -1,0 +1,108 @@
+:root {
+    --primary-gradient: linear-gradient(135deg, #2E8B57 0%, #228B22 50%, #32CD32 100%);
+    --secondary-gradient: linear-gradient(135deg, #90EE90 0%, #98FB98 100%);
+    --accent-color: #228B22;
+    --text-dark: #2F4F4F;
+    --text-light: #6B8E6B;
+    --card-shadow: 0 8px 30px rgba(34, 139, 34, 0.15);
+    --hover-shadow: 0 15px 40px rgba(34, 139, 34, 0.25);
+    --primary-color: #28a745;
+    --secondary-color: #218838;
+    --light-green: #e8f5e9;
+    --dark-green: #1e7e34;
+    --super-light-green: #f5fbf6;
+    --border-color: #dee2e6;
+    --border-radius: 0.75rem;
+    --text-muted: #6c757d;
+    --card-bg: #fff;
+}
+
+.main-navbar .profile-btn {
+    color: #fff;
+}
+
+/* Dropdown styling */
+.dropdown-menu {
+    border: none;
+    border-radius: 10px;
+    box-shadow: var(--card-shadow);
+    padding: 0.5rem 0;
+    min-width: 280px;
+    margin-top: 0;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.dropdown-item {
+    padding: 0.75rem 1.5rem;
+    color: var(--text-dark);
+    font-size: 0.9rem;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.dropdown-item.active,
+.dropdown-item:hover {
+    background: var(--secondary-gradient) !important;
+    color: var(--accent-color) !important;
+    transform: translateX(5px);
+    border-radius: 10px;
+    width: 95%;
+}
+
+.dropdown-item i {
+    margin-right: 10px;
+    width: 16px;
+    text-align: center;
+}
+
+.dropdown-menu.dropdown-menu-end {
+    right: 0;
+    left: auto;
+}
+
+.dropdown-menu.dropdown-menu-start {
+    left: 0;
+    right: auto;
+}
+
+/* Quantity added products button style*/
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    border: none;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.quantity-btn {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: var(--secondary-color);
+    cursor: pointer;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--text-dark);
+    transition: all 0.3s ease;
+}
+
+.quantity-btn i {
+    font-size: 1rem;
+    color: #fff;
+}
+
+.quantity-input {
+    width: 70px;
+    height: 30px;
+    border: none;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: bold;
+    background: var(--secondary-color);
+    color: #fff;
+}
+
+.quantity-input:focus-visible {
+    border: none;
+    outline: none;
+}

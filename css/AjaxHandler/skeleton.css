@@ -1,0 +1,197 @@
+/* Skeleton loading container */
+[jd-data]:not([jd-data="loaded"]),
+[jd-data="loading"],
+.skeleton-loading {
+    overflow: hidden;
+    background-color: #e0e0e0;
+    border-radius: 0.375rem;
+    color: transparent !important;
+    user-select: none;
+    pointer-events: none;
+    min-height: 1rem;
+}
+
+span[jd-data]:not([jd-data="loaded"]) {
+    display: inline-block;
+    vertical-align: middle;
+    min-width: 2rem;
+    min-height: 1rem;
+    line-height: 1rem;
+    color: transparent !important;
+}
+
+/* Prevent child elements (like headings or text) from showing */
+[jd-data]:not([jd-data="loaded"]) * {
+    visibility: hidden !important;
+}
+
+/* Shimmer effect overlay */
+[jd-data]:not([jd-data="loaded"])::after,
+.skeleton-loading::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background-image: linear-gradient(90deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.25) 25%,
+            rgba(255, 255, 255, 0.6) 50%,
+            rgba(255, 255, 255, 0.25) 75%,
+            rgba(255, 255, 255, 0) 100%);
+    animation: shimmer 1.4s ease-in-out infinite;
+}
+
+/* Explicit loaded state → reset */
+[jd-data="loaded"] {
+    background-color: transparent;
+    color: inherit;
+    user-select: auto;
+    pointer-events: auto;
+}
+
+/* Remove shimmer overlay in loaded */
+[jd-data="loaded"]::after {
+    display: none !important;
+    content: none !important;
+}
+
+/* Allow content visible when loaded */
+[jd-data="loaded"] * {
+    visibility: visible !important;
+    color: inherit !important;
+}
+
+/* Table row skeleton sizing */
+table tr [jd-data]:not([jd-data="loaded"]) {
+    height: 1.25rem;
+    margin: 0;
+    border-radius: 0.25rem;
+}
+
+/* Shimmer animation */
+@keyframes shimmer {
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.stats {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 20px 0;
+}
+
+.stats-item {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    min-width: 160px;
+    flex: 1;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.recent-activities {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.activity-card {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 16px 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e5e7eb;
+    transition: background-color 0.2s ease;
+}
+
+.activity-card:hover {
+    background-color: #f9fafb;
+}
+
+.activity-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.activity-name {
+    font-size: 15px;
+    font-weight: 500;
+    color: #333;
+}
+
+.activity-time {
+    font-size: 13px;
+    color: #888;
+}
+
+.jd-pagination {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 2rem;
+    padding-top: 1rem;
+}
+
+/* Container */
+.pagination {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.4rem 0.6rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    user-select: none;
+}
+
+/* Page buttons */
+.jd-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 34px;
+    height: 34px;
+    padding: 0 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-dark);
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+/* Hover effect */
+.jd-page:not(.active):not([disabled]):hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--primary-color, #007bff);
+}
+
+/* Active state */
+.jd-page.active {
+    background: var(--primary-gradient, linear-gradient(45deg, #007bff, #0056d2));
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 123, 255, 0.25);
+}
+
+/* Disabled state */
+.jd-page[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: transparent;
+    box-shadow: none;
+}
+
+/* Prev/Next icons */
+.jd-prev,
+.jd-next {
+    font-size: 16px;
+    padding: 0 12px;
+}

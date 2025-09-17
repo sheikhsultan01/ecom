@@ -1,0 +1,187 @@
+<?php
+define('_DIR_', '../');
+require_once 'includes/db.php';
+require_once 'helper/orders.php';
+$page_name = 'Orders';
+
+$get_status = _get_param('status', false);
+if (!$get_status) $get_status = 'pending';
+
+$CSS_FILES = [
+    'orders.css'
+];
+
+$JS_FILES = [
+    'orders.js'
+];
+
+add_assets_template('date-input');
+require_once 'includes/head.php';
+?>
+<div class="order-container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0 fw-bold">Orders Management</h2>
+        <button class="btn btn-filter btn-main">
+            <i class="fas fa-plus me-2"></i> Create Order
+        </button>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row mb-4 orders-stats" jd-ref="orders">
+        <div class="col-md-3 col-sm-6">
+            <div class="stats-card card h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3" jd-data>
+                        <div class="stats-icon stats-pending">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                    </div>
+                    <div jd-data>
+                        <h3 class="stats-value">${stats.pending}</h3>
+                        <p class="stats-label">Pending Orders</p>
+                    </div>
+                    <div class="progress mt-3" style="height: 6px;" jd-data>
+                        <div class="progress-bar bg-warning" role="progressbar" data-percentage="${calOrdersPer(stats.total, stats.pending)}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="stats-card card h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3" jd-data>
+                        <div class="stats-icon stats-completed">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                    <div jd-data>
+                        <h3 class="stats-value">${stats.completed}</h3>
+                        <p class="stats-label">Completed Orders</p>
+                    </div>
+                    <div class="progress mt-3" style="height: 6px;" jd-data>
+                        <div class="progress-bar bg-success" role="progressbar" data-percentage="${calOrdersPer(stats.total, stats.completed)}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="stats-card card h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3" jd-data>
+                        <div class="stats-icon stats-transit">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                    </div>
+                    <div jd-data>
+                        <h3 class="stats-value">${stats.in_transit}</h3>
+                        <p class="stats-label">In Transit</p>
+                    </div>
+                    <div class="progress mt-3" style="height: 6px;" jd-data>
+                        <div class="progress-bar bg-info" role="progressbar" data-percentage="${calOrdersPer(stats.total, stats.in_transit)}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="stats-card card h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3" jd-data>
+                        <div class="stats-icon stats-cancelled">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                    </div>
+                    <div jd-data>
+                        <h3 class="stats-value">${stats.cancelled}</h3>
+                        <p class="stats-label">Cancelled Orders</p>
+                    </div>
+                    <div class="progress mt-3" style="height: 6px;" jd-data>
+                        <div class="progress-bar bg-danger" role="progressbar" data-percentage="${calOrdersPer(stats.total, stats.cancelled)}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Orders Table -->
+    <div class="custom-card card my-4">
+        <div class="card-header" jd-filters="orders">
+            <div class="row g-3">
+                <div class="col-lg-6 col-md-6">
+                    <input type="text" name="query" class="form-control search-input" id="search-input" placeholder="Order ID, Customer..." jd-filter="query">
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <select class="form-select search-input" name="status" jd-filter="status">
+                        <option value="*">All Statuses</option>
+                        <?php
+                        $order_status = ['pending', 'confirmed', 'completed', 'in_transit', 'cancelled'];
+                        foreach ($order_status as $name) { ?>
+                            <option value="<?= $name ?>" <?= $get_status == $name ? 'selected' : '' ?>><?= toCapitalize($name) ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <?php __gcomp('date-input'); ?>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive orders-table">
+                <table class="table table-hover mb-0" id="orders-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody jd-source="orders" jd-pick="#orderTemplate" jd-drop="this" jd-pagination="#ordersPagination" jd-success="OrdersSuccessCB">
+                        <?= skeleton("table", [
+                            'columns' => 6,
+                        ]) ?>
+                    </tbody>
+                </table>
+                <div class="jd-pagination">
+                    <ul id="ordersPagination" class="mt-2 pagination"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Order Details Modal -->
+<?php require_once 'components/modals/order-details.php'; ?>
+
+<script type="text/html" id="orderTemplate">
+    <tr>
+        <td class="order-id">${generateOrderId(created_at, id)}</td>
+        <td>
+            <div class="customer-info">
+                <div class="customer-avatar">${fname.charAt(0) + lname.charAt(0)}</div>
+                <div>
+                    <p class="customer-name">${name}</p>
+                    <p class="customer-email">${email}</p>
+                </div>
+            </div>
+        </td>
+        <td class="date-cell">${moment(created_at).format("MMM DD, YYYY")}</td>
+        <td class="amount-cell">${'$' + amount}</td>
+        <td><span class="status-badge ${status}">${toCapitalize(status)}</span></td>
+        <td>
+            <a href="#" class="action-btn view-btn view-order" data-bs-toggle="modal" data-bs-target="#orderDetailsModal">
+                <code class="d-none">${item}</code>
+                <i class="hgi hgi-stroke hgi-view"></i>
+            </a>
+            <a href="#" class="action-btn edit-btn">
+                <i class="hgi hgi-stroke hgi-pencil-edit-02"></i>
+            </a>
+            <a href="#" class="action-btn delete-btn">
+                <i class="hgi hgi-stroke hgi-delete-01"></i>
+            </a>
+        </td>
+    </tr>
+</script>
+
+<?php require_once 'includes/foot.php'; ?>

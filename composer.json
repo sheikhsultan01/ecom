@@ -1,0 +1,17 @@
+{
+    "name": "test/ecom",
+    "autoload": {
+        "psr-4": {
+            "Test\\Ecom\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "sheikhsultan01",
+            "email": "sheikhsultan13579@gmail.com"
+        }
+    ],
+    "require": {
+        "sendinblue/api-v3-sdk": "^8.4"
+    }
+}
