@@ -376,7 +376,7 @@
     align-items: center;
 }
 
-.product-info {
+.product-container .product-info {
     display: flex;
     flex-direction: column;
     justify-content: space-between;

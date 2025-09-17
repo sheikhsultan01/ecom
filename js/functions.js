@@ -357,7 +357,7 @@ function checkProductAddedToCart(product_id, product_price, cart_id, product_qty
 
         btnHtml += `<div class="quantity-controls">
                         <button class="quantity-btn" data-type="decrease"><i class="hgi hgi-stroke hgi-minus-sign"></i></button>
-                        <input type="number" name="qty" class="quantity-input ss-jx-element" id="quantityInput" value="${product_qty}" min="1" readonly data-submit="${dataSubmit}" data-target="cart" data-listener="change" data-callback="quantityUpdateCB">
+                        <input type="number" name="qty" class="quantity-input ss-jx-element" id="quantityInput" value="${product_qty}" min="1" readonly data-submit="${dataSubmit}" data-target="${pageUrl('controllers/cart')}" data-listener="change" data-callback="quantityUpdateCB">
                         <button class="quantity-btn" data-type="increase"><i class="hgi hgi-stroke hgi-plus-sign"></i></button>
                     </div>`;
 
@@ -389,7 +389,7 @@ function IsSearchProductAddedToCart(product_id, product_price, cart_id, product_
 
         btnHtml += `<div class="quantity-controls">
                         <button class="quantity-btn" data-type="decrease"><i class="hgi hgi-stroke hgi-minus-sign"></i></button>
-                        <input type="number" name="qty" class="quantity-input ss-jx-element" id="quantityInput" value="${product_qty}" min="1" readonly data-submit="${dataSubmit}" data-target="cart" data-listener="change" data-callback="quantityUpdateCB">
+                        <input type="number" name="qty" class="quantity-input ss-jx-element" id="quantityInput" value="${product_qty}" min="1" readonly data-submit="${dataSubmit}" data-target="${pageUrl('controllers/cart')}" data-listener="change" data-callback="quantityUpdateCB">
                         <button class="quantity-btn" data-type="increase"><i class="hgi hgi-stroke hgi-plus-sign"></i></button>
                     </div>`;
 
@@ -464,4 +464,13 @@ function getDiscountPercentage(originalPrice, salePrice) {
 // Page Url
 function pageUrl(page) {
     return mergeUrl(SITE_URL, page);
+}
+
+// Function to round off number
+function toFixedNumber(value, limit) {
+    let num = Number(value);
+    if (isNaN(num)) {
+        return null;
+    }
+    return Number(num.toFixed(limit));
 }

@@ -1,6 +1,6 @@
 .header {
     background: var(--primary-gradient);
-    padding: 0.5rem 0;
+    padding: 0.5rem 5rem;
     box-shadow: 0 4px 20px rgba(34, 139, 34, 0.2);
     position: sticky;
     top: 0;
@@ -162,7 +162,6 @@
 }
 
 .categories-container .categories-item {
-    position: relative;
     list-style: none;
 }
 
@@ -206,6 +205,7 @@
 }
 
 .categories-container .mega-dropdown {
+    width: 100% !important;
     position: absolute;
     top: 100%;
     left: 0;
@@ -223,6 +223,7 @@
 }
 
 .categories-container .categories-item:hover .mega-dropdown {
+    width: 100%;
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
@@ -502,4 +503,139 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.user-area {
+    gap: 20px;
+}
+
+@media (max-width:1000px) {
+    .header {
+        padding: 0.5rem 2rem;
+    }
+
+    .user-area {
+        gap: 10px;
+    }
+}
+
+@media(max-width:758px) {
+    .navbar-logo {
+        padding: 2px 5px !important;
+    }
+}
+
+@media (max-width: 709px) {
+    .header {
+        padding: 0.5rem 0.3rem 0.8rem 0.3rem !important;
+    }
+
+    .main-navbar {
+        font-size: 0.9rem !important;
+    }
+
+    .logo-text {
+        display: none;
+    }
+
+    .cart-text {
+        display: none;
+    }
+
+    .text-end {
+        position: relative;
+    }
+
+    .cart-count {
+        position: absolute;
+        top: -8px;
+        left: 35px;
+    }
+
+    .navbar-logo {
+        padding: 0px 8px;
+    }
+
+    .categories-btn {
+        position: absolute !important;
+        top: 50px;
+        left: 13px;
+    }
+
+    .cart-btn {
+        padding: 0.6rem 0.8rem !important;
+    }
+
+    .search-bar {
+        margin-left: auto;
+    }
+
+    .profile-btn i {
+        font-size: 1.2rem !important;
+    }
+}
+
+@media(max-width:426px) {
+    .header {
+        padding: 0.3rem 0rem !important;
+    }
+
+    .logo-div {
+        padding: 0% !important;
+    }
+
+    .cart-btn {
+        padding: 0.4rem 0.5rem !important;
+    }
+
+    .text-end {
+        margin-right: 10px !important;
+        padding: 0px 5px !important;
+    }
+
+    .cart-count {
+        top: -7px;
+        left: 19px;
+        font-size: 0.5rem;
+    }
+
+    .search-bar {
+        padding: 0 !important;
+        margin-left: auto;
+        font-size: 1rem;
+    }
+
+    .search-btn {
+        padding: 0.3rem 0.5rem !important;
+    }
+
+    .ec-search-input {
+        padding: 0.4rem 0.5rem !important;
+    }
+
+    .ec-search-input::placeholder {
+        font-size: 0.7rem !important;
+    }
+
+    .categories-btn {
+        top: 20px;
+        left: 35px;
+    }
+
+    .profile-btn i {
+        font-size: 1.1rem !important;
+        margin-right: 5px !important;
+    }
+
+    .navbar-logo i {
+        font-size: 1rem;
+    }
+
+    .cat-name {
+        font-size: 0.5rem !important;
+    }
+
+    .categories-btn i {
+        font-size: 0.4rem !important;
+    }
 }

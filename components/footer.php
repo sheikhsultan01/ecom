@@ -3,7 +3,7 @@
         <div class="footer-container">
             <div class="row">
                 <!-- About Section -->
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-3 col-md-6 col-12">
                     <div class="footer-section">
                         <h4 class="footer-title">About GreenShop</h4>
                         <p class="footer-description">
@@ -27,7 +27,7 @@
                 </div>
 
                 <!-- Quick Links -->
-                <div class="col-lg-2 col-md-6">
+                <div class="col-lg-2 col-md-6 col-12">
                     <div class="footer-section">
                         <h4 class="footer-title">Quick Links</h4>
                         <ul class="footer-links">
@@ -41,7 +41,7 @@
                 </div>
 
                 <!-- Customer Service -->
-                <div class="col-lg-2 col-md-6">
+                <div class="col-lg-2 col-md-6 col-12">
                     <div class="footer-section">
                         <h4 class="footer-title">Customer Service</h4>
                         <ul class="footer-links">
@@ -55,7 +55,7 @@
                 </div>
 
                 <!-- Contact Info -->
-                <div class="col-lg-2 col-md-6">
+                <div class="col-lg-2 col-md-6 col-12">
                     <div class="footer-section">
                         <h4 class="footer-title">Contact Info</h4>
                         <div class="contact-info">
@@ -85,7 +85,7 @@
                 </div>
 
                 <!-- Newsletter -->
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-3 col-md-6 col-12">
                     <div class="footer-section">
                         <h4 class="footer-title">Newsletter</h4>
                         <p class="footer-description">

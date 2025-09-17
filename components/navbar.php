@@ -6,18 +6,18 @@
 
 <!-- Header -->
 <header class="header main-navbar">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row align-items-center">
-            <div class="col-md-3">
+            <div class="col-md-4 col-lg-3 col-sm-3 col-2 logo-div">
                 <div class="navbar-logo">
                     <a href="<?= page_url('') ?>" class="logo">
-                        <i class="hgi hgi-stroke hgi-leaf-01"></i>
-                        GreenShop
+                        <i class="hgi hgi-stroke hgi-leaf-01 my-sm-1"></i>
+                        <span class="logo-text">GreenShop</span>
                     </a>
                     <ul class="main-nav categories-container">
                         <li class="categories-item">
                             <a href="#" class="categories-btn">
-                                Categories
+                                <span class="cat-name">Categories</span>
                                 <i class="hgi hgi-stroke hgi-arrow-right-01 dropdown-arrow"></i>
                             </a>
                             <div class="mega-dropdown">
@@ -74,8 +74,8 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="search-container">
+            <div class="col-lg-6 col-md-4 col-sm-7 col-6 search-bar">
+                <div class=" search-container">
                     <input type="text" class="ec-search-input" placeholder="Search in GreenShop" id="searchInput">
                     <div class="search-results"></div>
                     <button class="search-btn">
@@ -83,14 +83,14 @@
                     </button>
                 </div>
             </div>
-            <div class="col-md-3 text-end">
-                <div class="d-flex justify-content-between align-center">
+            <div class="col-md-2  col-lg-3 col-sm-2 col-3 text-end">
+                <div class=" d-flex align-center user-area">
                     <a href="<?= page_url('cart') ?>" class="cart-btn">
                         <i class="hgi hgi-stroke hgi-shopping-cart-01"></i>
-                        Cart
+                        <span class="cart-text">Cart</span>
                         <span class="cart-count <?= countCartItems() == 0 ? 'd-none' : '' ?>" data-count="<?= countCartItems(); ?>"><?= countCartItems() !== 0 ? countCartItems() : '' ?></span>
                     </a>
-                    <div class="nav-item dropdown" data-hoverable="true">
+                    <div class="nav-item dropdown mx-sm-2" data-hoverable="true">
                         <a class="profile-btn" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="hgi hgi-stroke hgi-user-circle-02 me-1"></i>
                         </a>

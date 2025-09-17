@@ -409,7 +409,7 @@
     background: white;
     border-radius: 10px;
     padding: 15px;
-    margin: 0 10px;
+    margin: 0.2rem 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     text-align: center;
     transition: all 0.3s;
@@ -600,4 +600,133 @@
 
 .empty-address .address-msg-container .text {
     color: #c2c1c1;
+}
+
+@media(max-width:609px) {
+    .related-product {
+        margin-bottom: 0.2rem;
+    }
+
+    .related-name {
+        font-size: 0.8rem;
+    }
+
+    .related-price {
+        font-size: 0.8rem;
+    }
+
+    .related-btn {
+        padding: 4px 29px;
+        font-size: 0.7rem;
+    }
+
+    .gs-page-title {
+        font-size: 1.5rem;
+        margin-bottom: 2.4rem !important;
+    }
+
+    .gs-cart-table {
+        font-size: 0.8rem;
+    }
+
+    .gs-cart-table thead th {
+        padding-left: 3.3rem !important;
+    }
+
+    .gs-cart-item-row {
+        font-size: 0.8rem;
+    }
+
+    .quantity-btn i,
+    .quantity-input {
+        font-size: 0.5rem !important;
+        width: 35%;
+        height: 20px;
+        text-align: center;
+    }
+
+    .quantity-btn {
+        width: 17px;
+        height: 20px;
+    }
+
+    .gs-item-img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .page-item {
+        font-size: 0.8rem;
+        padding: 5px 5px;
+    }
+
+    .pagination {
+        gap: 0;
+        padding: 0;
+        margin: 0 !important;
+    }
+
+    .jd-pagination {
+        padding-top: 0 !important;
+    }
+
+    .gs-btn-outline-primary {
+        font-size: 0.8rem;
+    }
+
+    .gs-section-title {
+        font-size: 1.2rem;
+    }
+
+    .order-summary-container li {
+        font-size: 0.8rem !important;
+    }
+
+    .gs-total-price {
+        font-size: 1.3rem;
+    }
+
+    .gs-accordion .accordion-item .accordion-button {
+        font-size: 0.8rem !important;
+        padding: 7px 7px;
+    }
+
+    .accordion-button::after {
+        width: 16px;
+        height: 16px;
+        background-size: cover;
+    }
+
+    .checkout-btn {
+        padding: 8px;
+        font-size: 0.8rem;
+    }
+
+    .related-title {
+        margin: 10px 0 25px;
+        font-size: 1.2rem;
+    }
+
+    .table {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        overflow-x: auto;
+    }
+
+    .back-to-top i {
+        font-size: 0.8rem !important;
+    }
+}
+
+@media(max-width:456px) {
+    .jd-pagination {
+        justify-content: center;
+        padding-right: 0px !important;
+    }
+
+    .back-to-home {
+        justify-content: center !important;
+    }
 }

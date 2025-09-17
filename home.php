@@ -34,17 +34,17 @@ require_once 'includes/head.php';
 <!-- Products Section -->
 <section class="products-section">
     <div class="products-container">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-4 Product-Section">
             <h2 class="section-title mb-0">Featured Products</h2>
             <a href="products" class="shop-all-btn">
-                SHOP ALL PRODUCTS
+                ALL PRODUCTS
                 <i class="hgi hgi-stroke hgi-arrow-right-02"></i>
             </a>
         </div>
 
         <div class="row" id="productsGrid" jd-source="featureProducts" jd-pick="#singleProduct" jd-drop="this" jd-success="SuccessCB" jd-scroll-paginate="#productsLoadBtn">
             <?php for ($i = 0; $i < 3; $i++) {  ?>
-                <div class="col-lg-3 col-xl-3 col-xxl-2 col-md-4 col-sm-6 mb-3" jd-skeleton>
+                <div class="col-lg-3 col-xl-3 col-xxl-2 col-md-4 col-sm-4  col-6 mb-2" jd-skeleton>
                     <div class="product-card">
                         <div class="product-image" jd-data>
                             <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300&h=200&fit=crop" alt="Wireless Headphones">
@@ -78,7 +78,7 @@ require_once 'includes/head.php';
 
 <!-- Single Product Template -->
 <script type="text/html" id="singleProduct">
-    <div class="col-lg-3 col-xl-3 col-xxl-2 col-md-4 col-sm-6 mb-3">
+    <div class="col-lg-3 col-xl-3 col-xxl-2 col-md-4 col-sm-4  col-6 mb-2">
         <div class="product-card">
             <div class="product-image">
                 <a href="<?= page_url('single-product/') ?>${generateSlug(title,uid)}" target="_blank">

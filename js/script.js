@@ -75,6 +75,16 @@ $(document).on('click', '.back-to-top', function () {
         behavior: 'smooth'
     });
 });
+// prevent 
+// Jab search-item pr click ho → product page open ho
+$(document).on("click", ".search-item", function (e) {
+    // Agar click action-btn ke andar hua to ignore
+    if ($(e.target).closest(".action-btn").length) return;
+    let url = $(this).data("url");
+    if (url) {
+        window.open(url, "_blank"); // naya page open kare
+    }
+});
 
 $(document).ready(function () {
     let selectedIndex = -1; // Track selected item
@@ -89,28 +99,30 @@ $(document).ready(function () {
         let html = '';
         data.forEach(product => {
             let { id, primary_image, title, description, price, cart_id, product_qty, uid, sale_price } = product;
+
+            let productUrl = pageUrl('single-product/') + generateSlug(title, uid);
+
             html += `
-                <a href="${pageUrl('single-product/') + generateSlug(title, uid)}" 
-                   target="_blank" 
-                   class="search-item">
-                    <div class="product-image"><img src="${mergeUrl(SITE_URL, 'images/products/', primary_image)}"></div>
-                    <div class="product-info">
-                        <div class="product-detail">
-                            <div class="product-title">${title}</div>
-                            <div class="product-description">${description}</div>
-                            <div class="product-price">
-                                ${CURRENCY + price} 
-                                <small class="sale-price">${CURRENCY + sale_price}</small>
-                            </div>
-                        </div>
-                        <div class="action-btn">
-                            ${IsSearchProductAddedToCart(id, price, cart_id, product_qty)}
+            <div class="search-item" data-url="${productUrl}">
+                <div class="product-image">
+                    <img src="${mergeUrl(SITE_URL, 'images/products/', primary_image)}">
+                </div>
+                <div class="product-info">
+                    <div class="product-detail">
+                        <div class="product-title">${title}</div>
+                        <div class="product-description">${description}</div>
+                        <div class="product-price">
+                            ${CURRENCY + price} 
+                            <small class="sale-price">${CURRENCY + sale_price}</small>
                         </div>
                     </div>
-                </a>
-            `;
+                    <div class="action-btn">
+                        ${IsSearchProductAddedToCart(id, price, cart_id, product_qty)}
+                    </div>
+                </div>
+            </div>
+        `;
         });
-
         $searchCon.html(html);
         selectedIndex = -1; // reset when new results come
     }
@@ -132,7 +144,7 @@ $(document).ready(function () {
         $searchCon.html('<div class="loading">Searching...</div>').addClass('show');
 
         $.ajax({
-            url: "controllers/search",
+            url: pageUrl('controllers/search'),
             type: "POST",
             data: { searchProducts: true, keyword },
             dataType: "json",

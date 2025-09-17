@@ -124,12 +124,15 @@
 
 .newsletter-form {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.5rem;
     margin-top: 1rem;
 }
 
 .newsletter-input {
-    flex: 1;
+    flex: 1 1 auto;
+    /* shrink properly */
+    min-width: 0;
     padding: 0.8rem 1rem;
     border: none;
     border-radius: 25px;
@@ -365,5 +368,89 @@
         right: 20px;
         width: 45px;
         height: 45px;
+    }
+
+    .footer-section {
+        margin-bottom: 1.5rem;
+    }
+
+    .footer {
+        padding: 1.7rem 0 1rem;
+        margin-top: 0;
+    }
+
+    .footer .footer-section span {
+        font-size: 0.6rem !important;
+    }
+
+    .footer .footer-sectioni {
+        font-size: 0.6rem !important;
+    }
+
+    .footer .footer-section p {
+        font-size: 0.6rem !important;
+    }
+
+    .footer .footer-section a {
+        font-size: 0.6rem !important;
+    }
+
+    .footer .footer-section div {
+        font-size: 0.6rem !important;
+    }
+
+
+    .footer .footer-section .social-link {
+        font-size: 0.7rem !important;
+    }
+
+    .footer-bottom-content {
+        font-size: 0.7rem !important;
+    }
+
+    .footer-container {
+        padding: 0 1rem;
+    }
+}
+
+@media(max-width:441px) {
+    .newsletter-input::placeholder {
+        font-size: 0.7rem;
+    }
+
+    .footer-title {
+        font-size: 0.7rem;
+    }
+
+    .footer-section {
+        margin-bottom: 0.5rem;
+    }
+
+    .footer {
+        padding: 1.7rem 0 1rem;
+        margin-top: 0;
+    }
+
+    .newsletter-btn {
+        height: 30px !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .newsletter-input {
+        height: 30px !important;
+        padding: 10px 10px;
+
+    }
+
+    .trust-badges {
+        gap: 1rem;
+        margin-top: 0.5rem;
+    }
+
+    .back-to-top {
+        width: 35px;
+        height: 35px;
     }
 }

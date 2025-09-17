@@ -49,7 +49,7 @@ require_once 'includes/head.php';
                 </div>
             </div>
 
-            <div class="d-flex justify-content-start">
+            <div class="d-flex justify-content-start back-to-home">
                 <a href="home.html" class="btn gs-btn-outline-primary">
                     <i class="fas fa-arrow-left me-2"></i> Continue Shopping
                 </a>
@@ -232,12 +232,12 @@ require_once 'components/modals/address-modal.php';
             <div class="d-flex justify-content-between">
                 <div class="quantity-controls">
                     <button class="quantity-btn" data-type="decrease"><i class="hgi hgi-stroke hgi-minus-sign"></i></button>
-                    <input type="number" name="qty" class="quantity-input ss-jx-element" value="${qty}" min="1" readonly data-submit='{"updateProductQty" : true, "id" : ${id}}' data-target="cart" data-listener="change" data-callback="cartQuantityUpdateCB">
+                    <input type="number" name="qty" class="quantity-input ss-jx-element" value="${qty}" min="1" readonly data-submit='{"updateProductQty" : true, "id" : ${id}}' data-target="${pageUrl('controllers/cart')}" data-listener="change" data-callback="cartQuantityUpdateCB">
                     <button class="quantity-btn" data-type="increase"><i class="hgi hgi-stroke hgi-plus-sign"></i></button>
                 </div>
             </div>
         </td>
-        <td class="gs-item-subtotal"><?= CURRENCY ?>${subTotal} <small class="text-decoration-line-through"><?= CURRENCY ?>${actualTotal}</small></td>
+        <td class="gs-item-subtotal"><?= CURRENCY ?>${toFixedNumber(subTotal, 2)} <small class="text-decoration-line-through"><?= CURRENCY ?>${toFixedNumber(actualTotal, 2)}</small></td>
         <td>
             <button class="btn gs-btn-remove-item delete-data-btn" data-target="${id}" data-action="cart" data-callback="deleteCartItemCB">
                 <i class="hgi hgi-stroke hgi-delete-02"></i>
